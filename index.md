@@ -1,39 +1,25 @@
-## Welcome to GitHub Pages
+# Under Construction
 
-You can access the list of posts [here](https://github.com/shindeshu/shindeshu.github.io/edit/main/contents.md).
+## Shubham Shinde's Personal Site
 
-You can use the [editor on GitHub](https://github.com/shindeshu/shindeshu.github.io/edit/main/index.md) to maintain and preview the content for your website in Markdown files.
+### An Introduction
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+I am a data scientist with an experience of 3 years in building data solutions for a variety of applications, ranging from aerospace, utilities to insurance. I am passionate about deep learning, and exploring the world of AI.
 
-### Markdown
+## My Blogposts
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+I love to blog about AI, some posts of mine are linked below:
 
-```markdown
-Syntax highlighted code block
+- What are Graph Neural Networks?
 
-# Header 1
-## Header 2
-### Header 3
+- Few-Shot Learning for Image Classification
 
-- Bulleted
-- List
+- Self-Supervised Learning, an Introduction
 
-1. Numbered
-2. List
+Rest of my posts you can check out at [this link](https://shindeshu.github.io/contents.html)
 
-**Bold** and _Italic_ and `Code` text
+## About Me
 
-[Link](url) and ![Image](src)
-```
+In my free time, I love reading- my favorite authors are Tolkien, Sir Arthur Conan Doyle, among others. I am fond of classics, history and all things old. I blog about non-technical things (movies, books, music) here.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/shindeshu/shindeshu.github.io/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+[help page](https://shindeshu.github.io/helppage.html)
