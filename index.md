@@ -6,11 +6,11 @@
 
 I am a data scientist with an experience of 3 years in building data solutions for a variety of applications, ranging from aerospace, utilities to insurance. I am passionate about deep learning, and exploring the world of AI.
 
-## My Blogposts
+### My Blogposts
 
 I love to blog about AI, some posts of mine are linked below:
 
-- What are Graph Neural Networks?
+- [A Brief Intro to Graph Neural Networks](https://shindeshu.github.io/gnn_posts/intro_gnn.html)
 
 - Few-Shot Learning for Image Classification
 
@@ -18,7 +18,7 @@ I love to blog about AI, some posts of mine are linked below:
 
 Rest of my posts you can check out at [this link](https://shindeshu.github.io/contents.html)
 
-## About Me
+### About Me
 
 In my free time, I love reading- my favorite authors are Tolkien, Sir Arthur Conan Doyle, among others. I am fond of classics, history and all things old. I blog about non-technical things (movies, books, music) here.
 
