@@ -5,7 +5,15 @@
 Deep Learning has revolutionized machine learning on all types of tasks ranging from computer vision to natural language processing or sequence modeling. Most of these applications however involve mostly euclidean data that are constrained to some fixed dimensions.
 
 What happens when your data is of non-euclidean nature? Graphs are one way to represent such non-euclidean data, which represent it in form of objects linked with each other through relationships. Machine learning using graphs has always been around, however with the advances in deep learning, recently there have been some exciting developments for learning on graphs.
+
 ![image source: stanford cs224w](assets/images/euclidean.png)
+
+![image source: stanford cs224w](https://github.com/shindeshu/shindeshu.github.io/tree/main/assets/images/euclidean.png)
+
+![image source: stanford cs224w](shindeshu.github.io/assets/images/euclidean.png)
+
+![image source: stanford cs224w](https://shindeshu.github.io/assets/images/euclidean.png)
+
 
 What is a graph, you say? Graph is a set of vertices / nodes (our objects of interest), with edges (relationships between our objects). For example in a social media graph, an account would be a node, and them following someone could be an edge. Numerically, a graph can be represented as a matrix (adjacency), or as a list (of edges).
 
