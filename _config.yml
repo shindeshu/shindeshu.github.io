@@ -1,5 +1,5 @@
-theme: jekyll-theme-slate
-title: welcome to shubham's homepage
+theme: minima # jekyll-theme-slate
+# title: welcome to shubham's homepage
 author:
   name: Shubham Shinde
   email: shinde.shubham85@gmail.com
