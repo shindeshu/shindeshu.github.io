@@ -1,6 +1,5 @@
-# Under Construction
-
 ## Shubham Shinde's Personal Site
+(under construction)
 
 ### An Introduction
 
@@ -21,5 +20,3 @@ Rest of my posts you can check out at [this link](https://shindeshu.github.io/co
 ### About Me
 
 In my free time, I love reading- my favorite authors are Tolkien, Sir Arthur Conan Doyle, among others. I am fond of classics, history and all things old. I blog about non-technical things (movies, books, music) here.
-
-[help page](https://shindeshu.github.io/helppage.html)
