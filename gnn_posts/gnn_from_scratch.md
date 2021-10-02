@@ -1,3 +1,8 @@
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
 # Implementing a Graph Neural Network from Scratch
 
 In this notebook we'll try to implement a simple message passing neural network (Graph Convolution Layer) from scratch, and a step-by-step introduction to the topic.
@@ -18,7 +23,7 @@ Visually, a graph would look something like this:
 
 The vertices are <img src="https://render.githubusercontent.com/render/math?math=V=\{1,2,3,4,5,6,7,8\}">, and edges <img src="https://render.githubusercontent.com/render/math?math=E=\{(1,5), (2,1), (2,8), (3,4), ...\}">.
 
-There are many ways to represent graphs in memory- two of them include "adjacency matrix" (a) and "edge list". If the number of nodes is n, the adjacency matrix is n x n. If there's an edge from node n_i to n_j, the element a_{ij} is equal to 1. Likewise, the other elements of a are populated.
+There are many ways to represent graphs in memory- two of them include "adjacency matrix" ($$a$$) and "edge list". If the number of nodes is $$n$$, the adjacency matrix is $$n x n$$. If there's an edge from node $$n_i$$ to $$n_j$$, the element $$a_{ij}$ is equal to 1. Likewise, the other elements of $$a$$ are populated.
 
 ```python
 [[ 0 1 0 0 ]
@@ -126,18 +131,18 @@ adj.shape, node_feat_proj.shape
 
 How it does achieve our objective, i.e. summing up of messages from neighbouring nodes of a particular node?
 
-For simplicity, lets take an example where the adj matrix is $ 7 \times 7$ and the message matrix is $ 7 \times 5 $.
+For simplicity, lets take an example where the adj matrix is $$ 7 \times 7$$ and the message matrix is $$ 7 \times 5 $$.
 
-Consider a single row from the adjacency matrix, that corresponds to a node $n_i$. It might look something like
+Consider a single row from the adjacency matrix, that corresponds to a node $$n_i$$. It might look something like
 $$
 A = \begin{bmatrix}
     0 & 1 & 0 & 0 & 1 & 0 & 1\\
 \end{bmatrix}
 $$
 
-And the message matrix is $7 \times 5$. (seven rows, five columns).
+And the message matrix is $$7 \times 5$$. (seven rows, five columns).
 
-For this node, we can observe there are edges existent only for nodes ${2, 5, 7}$. When we multiple the above matrix with the message/feature matrix, we will get the elements corresponding to those indexes summed up (since others are multiplied by zero), along the second axis of the feature matrix i.e. we will get a $1 \times 5$ size vector.
+For this node, we can observe there are edges existent only for nodes $${2, 5, 7}$$. When we multiple the above matrix with the message/feature matrix, we will get the elements corresponding to those indexes summed up (since others are multiplied by zero), along the second axis of the feature matrix i.e. we will get a $$1 \times 5$$ size vector.
 
 Here, you can see that only the neighbouring nodes' features have been summed up to get the final d-length vector.
 
