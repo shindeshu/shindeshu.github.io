@@ -23,7 +23,7 @@ Visually, a graph would look something like this:
 
 The vertices are <img src="https://render.githubusercontent.com/render/math?math=V=\{1,2,3,4,5,6,7,8\}">, and edges <img src="https://render.githubusercontent.com/render/math?math=E=\{(1,5), (2,1), (2,8), (3,4), ...\}">.
 
-There are many ways to represent graphs in memory- two of them include "adjacency matrix" ($$a$$) and "edge list". If the number of nodes is $$n$$, the adjacency matrix is $$n x n$$. If there's an edge from node $$n_i$$ to $$n_j$$, the element $$a_{ij}$ is equal to 1. Likewise, the other elements of $$a$$ are populated.
+There are many ways to represent graphs in memory- two of them include "adjacency matrix" ($$a$$) and "edge list". If the number of nodes is $$n$$, the adjacency matrix is $$n x n$$. If there's an edge from node $$n_i$$ to $$n_j$$, the element $$a_{ij}$$ is equal to 1. Likewise, the other elements of $$a$$ are populated.
 
 ```python
 [[ 0 1 0 0 ]
@@ -38,7 +38,7 @@ Working with adjacency matrix for graph operations is easier, although they have
 
 Graph convolutions are somewhat similar to image convolutions, in that they take their neighbourhood information and aggregate to get a richer understanding of their position. Also, the "parameters" of the filters are shared across the entire image, which is analogous to a graph convolution as well, where the parameters are shared across the graph.
 
-GCNs rely on the message passing paradigm. Each node has a feature vector associated with it. For a given node u, each of its neighbouring nodes $v_i$ send a message derived from its feature vector to it. All these messages are aggregated alongwith its own feature vector, and this is used to update this node $u$ to get the final feature vector (or embedding).
+GCNs rely on the message passing paradigm. Each node has a feature vector associated with it. For a given node u, each of its neighbouring nodes $$v_i$$ send a message derived from its feature vector to it. All these messages are aggregated alongwith its own feature vector, and this is used to update this node $$u$$ to get the final feature vector (or embedding).
 
 ## Current Implementation 
 
