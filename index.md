@@ -1,5 +1,6 @@
+# Under Construction
+
 ## Shubham Shinde's Personal Site
-(under construction)
 
 ### An Introduction
 
@@ -9,7 +10,9 @@ I am a data scientist with an experience of 3 years in building data solutions f
 
 I love to blog about AI, some posts of mine are linked below:
 
-- [A Brief Intro to Graph Neural Networks](https://shindeshu.github.io/gnn_posts/intro_gnn.html)
+- [A Brief Intro to Graph Neural Networks](gnn_posts/intro_gnn.html)
+
+- [Implementing a Graph Neural Network from Scratch](gnn_posts/gnn_from_scratch.html)
 
 - Few-Shot Learning for Image Classification
 
@@ -20,3 +23,5 @@ Rest of my posts you can check out at [this link](https://shindeshu.github.io/co
 ### About Me
 
 In my free time, I love reading- my favorite authors are Tolkien, Sir Arthur Conan Doyle, among others. I am fond of classics, history and all things old. I blog about non-technical things (movies, books, music) here.
+
+[help page](https://shindeshu.github.io/helppage.html)
