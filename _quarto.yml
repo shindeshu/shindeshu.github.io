@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Shubham Shinde"
+  google-analytics: "G-E3Z2GSDBB7"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: index.qmd
+        text: About
+      - blog.qmd
+  site-url: https://shindeshu.github.io/
+
+page-footer: 
+    left: "Shubham Shinde" 
+    right: 
+        - icon: linkedin
+          text: LinkedIn
+          href: https://www.linkedin.com/in/shubham-shinde-a41b44124/
+        - icon: github
+          text: Github
+          href: https://github.com/shindeshu
+        - icon: twitter
+          text: Twitter
+          href: https://twitter.com/ShindeShubham85
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
