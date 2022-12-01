@@ -13,6 +13,11 @@ website:
         text: About
       - blog.qmd
   site-url: https://shindeshu.github.io/
+  favicon: favicon.png
+  description: "Blog for data science related topics"
+  twitter-card:
+     creator: "@ShindeShubham85"
+  open-graph: true
 
 page-footer: 
     left: "Shubham Shinde" 

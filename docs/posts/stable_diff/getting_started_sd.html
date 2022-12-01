@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Shubham Shinde">
-<meta name="dcterms.date" content="2022-11-25">
-<meta name="description" content="I decided to get on with the generative AI hype, and here’s what I found.">
+<meta name="dcterms.date" content="2022-11-30">
+<meta name="description" content="I tried my hands on stable diffusion, trying to create styled images of myself. Here’s what I found.">
 
-<title>Shubham Shinde - Getting Started With Stable Diffusion</title>
+<title>Shubham Shinde - Creating AI Art of Myself With Stable Diffusion + Dreambooth</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,6 +33,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -73,6 +74,13 @@ gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Shubham Shinde - Creating AI Art of Myself With Stable Diffusion + Dreambooth">
+<meta property="og:description" content="I tried my hands on stable diffusion, trying to create styled images of myself. Here’s what I found.">
+<meta property="og:site-name" content="Shubham Shinde">
+<meta name="twitter:title" content="Shubham Shinde - Creating AI Art of Myself With Stable Diffusion + Dreambooth">
+<meta name="twitter:description" content="I tried my hands on stable diffusion, trying to create styled images of myself. Here’s what I found.">
+<meta name="twitter:creator" content="@ShindeShubham85">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -115,7 +123,12 @@ gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started-with-stable-diffusion" id="toc-getting-started-with-stable-diffusion" class="nav-link active" data-scroll-target="#getting-started-with-stable-diffusion">Getting Started With Stable Diffusion</a></li>
+  <li><a href="#what-is-stable-diffusion" id="toc-what-is-stable-diffusion" class="nav-link active" data-scroll-target="#what-is-stable-diffusion">What is Stable Diffusion</a></li>
+  <li><a href="#the-magic" id="toc-the-magic" class="nav-link" data-scroll-target="#the-magic">The Magic</a></li>
+  <li><a href="#dreambooth" id="toc-dreambooth" class="nav-link" data-scroll-target="#dreambooth">Dreambooth</a></li>
+  <li><a href="#finetuning-approach" id="toc-finetuning-approach" class="nav-link" data-scroll-target="#finetuning-approach">Finetuning Approach</a></li>
+  <li><a href="#finding-the-right-prompts" id="toc-finding-the-right-prompts" class="nav-link" data-scroll-target="#finding-the-right-prompts">Finding the Right Prompts</a></li>
+  <li><a href="#results-on-myself" id="toc-results-on-myself" class="nav-link" data-scroll-target="#results-on-myself">Results on Myself</a></li>
   </ul>
 </nav>
     </div>
@@ -124,17 +137,15 @@ gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Getting Started With Stable Diffusion</h1>
+<h1 class="title">Creating AI Art of Myself With Stable Diffusion + Dreambooth</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">news</div>
-    <div class="quarto-category">code</div>
-    <div class="quarto-category">analysis</div>
+    <div class="quarto-category">ai-art</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    I decided to get on with the generative AI hype, and here’s what I found.
+    I tried my hands on stable diffusion, trying to create styled images of myself. Here’s what I found.
   </div>
 </div>
 
@@ -151,7 +162,7 @@ gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 25, 2022</p>
+      <p class="date">November 30, 2022</p>
     </div>
   </div>
     
@@ -160,10 +171,152 @@ gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
 
 </header>
 
-<section id="getting-started-with-stable-diffusion" class="level2">
-<h2 class="anchored" data-anchor-id="getting-started-with-stable-diffusion">Getting Started With Stable Diffusion</h2>
-<p>So I decided to get on with the generative AI hype train, and produce some cool pics.</p>
-<p><img src="corgi.jpeg" class="img-fluid" style="width:40.0%"></p>
+<section id="what-is-stable-diffusion" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-stable-diffusion">What is Stable Diffusion</h2>
+<p>For years, style transfer and image generation was the domain of an architecture called GANs. It produced results that were, well, not enough to impress a person not into the topic. And it look a lot of time, compute, and didn’t always converge. That is history anyway, so we do not need to trouble ourselves.</p>
+<p>This year changed everything in generative AI. Three models, particularly Stable Diffusion took the world of art by storm. The text-to-image model could produce images with high fidelity, coherence, and able to produce images with so many styles. It was a 4GB checkpoint that contained in itself majority of the visual world created by man. With a bunch of text it could bring imagination to reality.</p>
+</section>
+<section id="the-magic" class="level2">
+<h2 class="anchored" data-anchor-id="the-magic">The Magic</h2>
+<p>All of these images are generated by AI completely on its own. There are some sites like <a href="lexica.art">lexica.art</a> where you can scroll through tons of AI-generated art like this, as well as the prompts that led to them.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/art_ex3.webp" style="height:40.0%" class="figure-img"></p>
+<p></p><figcaption class="figure-caption">Some Examples of AI generated art</figcaption><p></p>
+</figure>
+</div>
+<p>You can try it for yourself at any one of the many huggingface spaces:</p>
+<ul>
+<li><a href="https://huggingface.co/spaces/runwayml/stable-diffusion-v1-5">App for Stability Diffusion 1.5</a></li>
+<li><a href="https://huggingface.co/spaces/stabilityai/stable-diffusion">App for Stability Diffusion 2, recently released</a></li>
+<li><a href="https://huggingface.co/spaces/anzorq/finetuned_diffusion">App that runs models for many styles</a></li>
+</ul>
+<p>It can take 10-20s to generate an image.</p>
+<p>If you prefer a more hands-on approach, use this colab notebook - <a href="https://colab.research.google.com/github/TheLastBen/fast-stable-diffusion/blob/main/fast_stable_diffusion_AUTOMATIC1111.ipynb#scrollTo=PjzwxTkPSPHf">fast_stable_diffusion_AUTOMATIC1111.ipynb</a>, in this notebook, give the path to model hosted on huggingface (I used <code>runwayml/stable-diffusion-v1-5</code> for my base model). The notebook has all the code for installing dependencies, and will launch a GUI which you can use for experimentation.</p>
+</section>
+<section id="dreambooth" class="level2">
+<h2 class="anchored" data-anchor-id="dreambooth">Dreambooth</h2>
+<p>However, the publicly released stable diffusion model includes only those concepts, people, artstyles that were present in the training dataset of it. What if you want to add new people/concepts/styles, and use them to generate art?</p>
+<p>That’s where dreambooth comes in. This technique allows you to add a person/concept to the stable diffusion model using only ~20 images of it, and takes only ~1 hour on free colab to train! Because of dreambooth, fine-tuning the stable diffusion model on a given style or person is a breeze.</p>
+</section>
+<section id="finetuning-approach" class="level2">
+<h2 class="anchored" data-anchor-id="finetuning-approach">Finetuning Approach</h2>
+<p>My primary resource for fine-tuning, i.e.&nbsp;adding myself to the stable diffusion space was this blog post: <a href="https://bytexd.com/how-to-use-dreambooth-to-fine-tune-stable-diffusion-colab/">How to Use DreamBooth to Fine-Tune Stable Diffusion (Colab)</a>. Which points to a beautiful colab notebook - <a href="https://colab.research.google.com/github/TheLastBen/fast-stable-diffusion/blob/main/fast-DreamBooth.ipynb#scrollTo=iAZGngFcI8hq">TheLastBen/fast-stable-diffusion</a>, which has it all ready- you only need to give the links to the base model, huggingface token (you need to signup to this website), and upload your images, and hit train.</p>
+<p>Follow the advice in the blogpost and the notebook, and you’ll have a gradio app in your browser. Now you can add any text prompt you want in the text box, and generate results!</p>
+</section>
+<section id="finding-the-right-prompts" class="level2">
+<h2 class="anchored" data-anchor-id="finding-the-right-prompts">Finding the Right Prompts</h2>
+<p>Yeah, except, <em>any</em> prompt will not give you the best results. Prompt Engineering is a big deal here. You have to construct a prompt, add labels and styles in order to direct the model to get an acceptable image. You also can tinker with the hyperparameters- adjust the CFG scale, sampling steps, to get better results.</p>
+<p>My experience- prompt engineering sucks. It’s more of an art that engineering, and there’s no other way but trial and error. Fortunately there are resources on the internet that can help you.</p>
+<p>For me the process looked like:</p>
+<ol type="1">
+<li>Go to a resource like <a href="lexica.art">lexica.art</a>, and find an image you like</li>
+<li>Copy the prompt and settings, and modify the prompt to include your token used during training.</li>
+</ol>
+<p>This will generally give you good results, and how I got most of my good images. However tuning of hyperparameters requireds trial and error, and hence time. I didn’t spend too much time on this, so I fixed my sampling method at euler-a and steps at 40-50. I only tinked with CFG scale.</p>
+</section>
+<section id="results-on-myself" class="level2">
+<h2 class="anchored" data-anchor-id="results-on-myself">Results on Myself</h2>
+<p>Finally, the meat of the post- let’s see the actual results on myself.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="assets/port1.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="assets/port2.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="assets/port3.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/port6.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">As a Naruto(?) Character</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/port5.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Style of Japanese Woodblock</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/shubham_pixar.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Me As a Pixar Character</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p>Some Portraits of Me</p>
+</div>
+</div>
+</div>
+<p>Some generated art of my wife and me.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ss1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">As a Disney Princess</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ss2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">As a Studio Ghibli Character</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ss3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">As Pixar Characters</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ss4.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Anime Character</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ss5.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Stylized Portrait</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/ss6.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">As a Japanese Woodblock</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
