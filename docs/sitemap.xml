@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://shindeshu.github.io/blog.html</loc>
-    <lastmod>2022-12-01T07:05:14.101Z</lastmod>
+    <lastmod>2022-12-01T07:13:51.908Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/index.html</loc>
-    <lastmod>2022-12-01T07:05:14.800Z</lastmod>
+    <lastmod>2022-12-01T07:13:52.634Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/gnns/gnn_from_scratch.html</loc>
-    <lastmod>2022-12-01T07:05:16.563Z</lastmod>
+    <lastmod>2022-12-01T07:13:53.593Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/gnns/intro_to_gnn.html</loc>
-    <lastmod>2022-12-01T07:05:17.321Z</lastmod>
+    <lastmod>2022-12-01T07:13:54.260Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shindeshu.github.io/posts/stable_diff/getting_started_sd.html</loc>
+    <lastmod>2022-12-01T07:13:55.048Z</lastmod>
   </url>
 </urlset>

@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "gnn\n\n\n\n\nIn this notebook we’ll try to implement a simple message passing neural network (Graph Convolution Layer) from scratch, and a step-by-step introduction to the topic.\n\n\n\n\n\n\nJan 25, 2022\n\n\nShubham Shinde\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\ngnn\n\n\n\n\nA brief, very brief, introduction to the hot field of graph neural networks.\n\n\n\n\n\n\nJan 25, 2022\n\n\nShubham Shinde\n\n\n\n\n\n\nNo matching items"
+    "text": "ai-art\n\n\n\n\nI tried my hands on stable diffusion, trying to create styled images of myself. Here’s what I found.\n\n\n\n\n\n\nNov 30, 2022\n\n\nShubham Shinde\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\ngnn\n\n\n\n\nIn this notebook we’ll try to implement a simple message passing neural network (Graph Convolution Layer) from scratch, and a step-by-step introduction to the topic.\n\n\n\n\n\n\nJan 25, 2022\n\n\nShubham Shinde\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\ngnn\n\n\n\n\nA brief, very brief, introduction to the hot field of graph neural networks.\n\n\n\n\n\n\nJan 25, 2022\n\n\nShubham Shinde\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -68,5 +68,47 @@
     "title": "A Brief Intro To Graph Neural Networks",
     "section": "",
     "text": "Deep Learning has revolutionized machine learning on all types of tasks ranging from computer vision to natural language processing or sequence modeling. Most of these applications however involve mostly euclidean data that are constrained to some fixed dimensions.\nWhat happens when your data is of non-euclidean nature? Graphs are one way to represent such non-euclidean data, which represent it in form of objects linked with each other through relationships. Machine learning using graphs has always been around, however with the advances in deep learning, recently there have been some exciting developments for learning on graphs.\n\nWhat is a graph, you say? Graph is a set of vertices / nodes (our objects of interest), with edges (relationships between our objects). For example in a social media graph, an account would be a node, and them following someone could be an edge. Numerically, a graph can be represented as a matrix (adjacency), or as a list (of edges).\nWhat data can be represented in the form of graphs? A lot of it! Interactions on a social media site, financial transactions, citation networks, molecules, all these can be represented in the form of graphs and can then be leveraged for machine learning.\nGraph representation learning: when we do have a graph (i.e. our nodes, their features, their edges, their features), our objective is to learn embeddings for each node, such that two “similar” nodes will have their embeddings closer in space. This embedding for a node should bake into itself its relationships and its neighbourhood and their features (apart from its own). This embedding vector can then be used for our downstream tasks.\n\nLearning the embedding: while there are many ways to skin this particular cat, the one that’s hot right now is called “message passing” or a graph convolution layer. The core concept is pretty simple. Lets say our current node of interest, has three neighbours. Each one of these will pass a “message” to our node, this message being the current state of the node. These messages will be aggregated together with our node’s current state, and this will be used to update the node’s state to next state. After covering for all nodes, you’d get a complete pass over the entire graph, for a single graph convolution layer. Different frameworks will have different ways of passing messages, or updating them, but the underlying principle is pretty same.\nThe details of message passing, we’ll go over in another post- since this is supposed to be a “brief” introduction."
+  },
+  {
+    "objectID": "posts/stable_diff/getting_started_sd.html",
+    "href": "posts/stable_diff/getting_started_sd.html",
+    "title": "Creating AI Art of Myself With Stable Diffusion + Dreambooth",
+    "section": "",
+    "text": "For years, style transfer and image generation was the domain of an architecture called GANs. It produced results that were, well, not enough to impress a person not into the topic. And it look a lot of time, compute, and didn’t always converge. That is history anyway, so we do not need to trouble ourselves.\nThis year changed everything in generative AI. Three models, particularly Stable Diffusion took the world of art by storm. The text-to-image model could produce images with high fidelity, coherence, and able to produce images with so many styles. It was a 4GB checkpoint that contained in itself majority of the visual world created by man. With a bunch of text it could bring imagination to reality."
+  },
+  {
+    "objectID": "posts/stable_diff/getting_started_sd.html#the-magic",
+    "href": "posts/stable_diff/getting_started_sd.html#the-magic",
+    "title": "Creating AI Art of Myself With Stable Diffusion + Dreambooth",
+    "section": "The Magic",
+    "text": "The Magic\nAll of these images are generated by AI completely on its own. There are some sites like lexica.art where you can scroll through tons of AI-generated art like this, as well as the prompts that led to them.\n\n\n\nSome Examples of AI generated art\n\n\nYou can try it for yourself at any one of the many huggingface spaces:\n\nApp for Stability Diffusion 1.5\nApp for Stability Diffusion 2, recently released\nApp that runs models for many styles\n\nIt can take 10-20s to generate an image.\nIf you prefer a more hands-on approach, use this colab notebook - fast_stable_diffusion_AUTOMATIC1111.ipynb, in this notebook, give the path to model hosted on huggingface (I used runwayml/stable-diffusion-v1-5 for my base model). The notebook has all the code for installing dependencies, and will launch a GUI which you can use for experimentation."
+  },
+  {
+    "objectID": "posts/stable_diff/getting_started_sd.html#dreambooth",
+    "href": "posts/stable_diff/getting_started_sd.html#dreambooth",
+    "title": "Creating AI Art of Myself With Stable Diffusion + Dreambooth",
+    "section": "Dreambooth",
+    "text": "Dreambooth\nHowever, the publicly released stable diffusion model includes only those concepts, people, artstyles that were present in the training dataset of it. What if you want to add new people/concepts/styles, and use them to generate art?\nThat’s where dreambooth comes in. This technique allows you to add a person/concept to the stable diffusion model using only ~20 images of it, and takes only ~1 hour on free colab to train! Because of dreambooth, fine-tuning the stable diffusion model on a given style or person is a breeze."
+  },
+  {
+    "objectID": "posts/stable_diff/getting_started_sd.html#finetuning-approach",
+    "href": "posts/stable_diff/getting_started_sd.html#finetuning-approach",
+    "title": "Creating AI Art of Myself With Stable Diffusion + Dreambooth",
+    "section": "Finetuning Approach",
+    "text": "Finetuning Approach\nMy primary resource for fine-tuning, i.e. adding myself to the stable diffusion space was this blog post: How to Use DreamBooth to Fine-Tune Stable Diffusion (Colab). Which points to a beautiful colab notebook - TheLastBen/fast-stable-diffusion, which has it all ready- you only need to give the links to the base model, huggingface token (you need to signup to this website), and upload your images, and hit train.\nFollow the advice in the blogpost and the notebook, and you’ll have a gradio app in your browser. Now you can add any text prompt you want in the text box, and generate results!"
+  },
+  {
+    "objectID": "posts/stable_diff/getting_started_sd.html#finding-the-right-prompts",
+    "href": "posts/stable_diff/getting_started_sd.html#finding-the-right-prompts",
+    "title": "Creating AI Art of Myself With Stable Diffusion + Dreambooth",
+    "section": "Finding the Right Prompts",
+    "text": "Finding the Right Prompts\nYeah, except, any prompt will not give you the best results. Prompt Engineering is a big deal here. You have to construct a prompt, add labels and styles in order to direct the model to get an acceptable image. You also can tinker with the hyperparameters- adjust the CFG scale, sampling steps, to get better results.\nMy experience- prompt engineering sucks. It’s more of an art that engineering, and there’s no other way but trial and error. Fortunately there are resources on the internet that can help you.\nFor me the process looked like:\n\nGo to a resource like lexica.art, and find an image you like\nCopy the prompt and settings, and modify the prompt to include your token used during training.\n\nThis will generally give you good results, and how I got most of my good images. However tuning of hyperparameters requireds trial and error, and hence time. I didn’t spend too much time on this, so I fixed my sampling method at euler-a and steps at 40-50. I only tinked with CFG scale."
+  },
+  {
+    "objectID": "posts/stable_diff/getting_started_sd.html#results-on-myself",
+    "href": "posts/stable_diff/getting_started_sd.html#results-on-myself",
+    "title": "Creating AI Art of Myself With Stable Diffusion + Dreambooth",
+    "section": "Results on Myself",
+    "text": "Results on Myself\nFinally, the meat of the post- let’s see the actual results on myself.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAs a Naruto(?) Character\n\n\n\n\n\n\n\nStyle of Japanese Woodblock\n\n\n\n\n\n\n\nMe As a Pixar Character\n\n\n\n\n\n\nSome Portraits of Me\n\n\n\nSome generated art of my wife and me.\n\n\n\n\n\n\nAs a Disney Princess\n\n\n\n\n\n\n\nAs a Studio Ghibli Character\n\n\n\n\n\n\n\nAs Pixar Characters\n\n\n\n\n\n\n\n\n\nAnime Character\n\n\n\n\n\n\n\nStylized Portrait\n\n\n\n\n\n\n\nAs a Japanese Woodblock"
   }
 ]

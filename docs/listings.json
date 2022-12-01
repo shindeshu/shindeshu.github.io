@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/stable_diff/getting_started_sd.html",
       "/posts/gnns/gnn_from_scratch.html",
       "/posts/gnns/intro_to_gnn.html"
     ]
