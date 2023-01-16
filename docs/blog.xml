@@ -10,7 +10,861 @@
 <atom:link href="https://shindeshu.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Blog for data science related topics</description>
 <generator>quarto-1.1.251</generator>
-<lastBuildDate>Tue, 29 Nov 2022 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 14 Feb 2023 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>A Roadmap for Getting into Data Science</title>
+  <dc:creator>Shubham Shinde</dc:creator>
+  <link>https://shindeshu.github.io/posts/roadmap/start.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="everyone-wants-to-be-in" class="level2">
+<h2 class="anchored" data-anchor-id="everyone-wants-to-be-in">Everyone Wants to Be In</h2>
+<p>It’s no news nowadays that folks are flocking towards data science- there are quite many aspiring data scientists around who want to do AI things. I wrote this post as a starter for those beginner data scientists who want to break in. This post does not discuss whether you <em>should</em>, or about the quantum of opportunity in this space, that’s a different topic.</p>
+<p>This post also does not give you a big list of links. We try to create a structure of our learning process, and in the end give a few resources.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/roadmap/assets/robot_learning.jpg" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption"><em>Images generated using Stable Diffusion</em></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="what-is-dsmlai" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-dsmlai">What is DS/ML/AI?</h2>
+<p>Definitions are of no help here. There aren’t well-defined boundaries around these terms, no self-evident ground truths that distinguish ML from AI or DS.</p>
+<p>Broadly, the field is about learning patterns from data to solve various business problems. Take for instance, price of a house. Traditionally, you could make up basic if-else rules that incorporate business logic to get a value for a house price. With data science you could utilize algorithms to learn these rules and predict these values given the attributes of a house. Similarly, you could</p>
+<ul>
+<li>Predict when a given machine part could fail</li>
+<li>Flag a Credit Card Fraud</li>
+<li>Assess Credit-Worthiness given financial attributes of an individual</li>
+</ul>
+<p>Ability to identify complex patterns in a data is useful in almost every domain that has any significant data, and underlying structure in it.</p>
+<section id="some-real-use-cases-of-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="some-real-use-cases-of-data-science">Some Real Use Cases of Data Science</h3>
+<ul>
+<li><a href="https://www.analyticsvidhya.com/blog/2021/04/how-aviation-industry-uses-data-science/">Read how Aviation Industry Uses DS for Optimizing their Business Activities</a></li>
+<li><a href="https://newsroom.prattwhitney.com/2016-02-16-Pratt-Whitney-Applies-Big-Data-to-Predict-Engine-Maintenance-Frequency-and-Planning">Read how Pratt and Whitney Uses DS for Predictive Maintenance of Engines</a></li>
+</ul>
+</section>
+<section id="types-of-data---tabular-image-and-text" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-data---tabular-image-and-text">Types of Data - Tabular, Image and Text</h3>
+<p>The examples cited above are of tabular data. As the name explains, it is data that’s stored in a tabular format. This is the most common data format, and easier to work on as well. But there’s also image data and text data, both are also increasingly forming the proportion of useful industrial models.</p>
+<ul>
+<li>On Pinterest, the images that get recommended to you are based on ML models.</li>
+<li>Facebook, Twitter recommending feeds to you are recommended using ML models as well.</li>
+<li>Face Recognition softwares are used worldwide.</li>
+<li>Chatbots, Translation all use text-based ML models underneath them.</li>
+</ul>
+</section>
+</section>
+<section id="an-overview-of-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="an-overview-of-requirements">An Overview of Requirements</h2>
+<p>What do you need to become a data scientist, and what do you do on a day-to-day basis on your job?</p>
+<p>I’d divide this into four topics - Technical Skills, Theoretical Knowledge, Domain and Business Knowledge, and Project Management. For a beginner, we’d be only interested in the first two.</p>
+<section id="technical-skills" class="level3">
+<h3 class="anchored" data-anchor-id="technical-skills">Technical Skills</h3>
+<p>These are divided into parts.</p>
+<ul>
+<li><strong>Software Engineering</strong>: You should know how to code.</li>
+<li><strong>Tools Specific to Data Science</strong>: Know thy tools!</li>
+</ul>
+</section>
+<section id="theoretical-knowledge" class="level3">
+<h3 class="anchored" data-anchor-id="theoretical-knowledge">Theoretical Knowledge</h3>
+<ul>
+<li><strong>Theory of Data Science</strong>: Learn from the wisdom of ancients!</li>
+<li><strong>Mathematics</strong>: Basics will do fine.</li>
+</ul>
+</section>
+</section>
+<section id="structure-your-machine-learning-journey" class="level2">
+<h2 class="anchored" data-anchor-id="structure-your-machine-learning-journey">Structure Your Machine Learning Journey</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/roadmap/assets/structure.jpg" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">.</figcaption><p></p>
+</figure>
+</div>
+<p>Here, we’ll expand on what are these skills, and how do you go about acquiring them, and in what order.</p>
+<p><strong>Python</strong>: For a beginner, the first step should be to learn how to code. Python is the most used language in this space, and it is great language for a first-time coder to learn. In fact, the ease of coding is exactly the reason why python came to dominate the machine learning landscape. <a href="https://www.youtube.com/watch?v=rfscVS0vtbw&amp;t=5717s">This</a> is a good free resource to start learning.</p>
+<p>Basics of the language are enough to get started- you don’t need to leetcode yourself. You do need to get a hang of jupyter notebooks, an IDE like VS-Code, and be able to install packages.</p>
+<p><strong>Tabular vs Deep Learning</strong>: As a newcomer, you should aim to get proficient in tabular data before you move to tackling image or text datasets.</p>
+<p><strong>Tools</strong>: Knowing pandas (library that handles tabular data) and matplotlib/seaborn (data visualization library) is another starting step. Knowing basic methods is enough at this stage.</p>
+<p>Now that we have warmed up, we’ll step into the main process and discuss the sources to learn from.</p>
+<section id="the-problem-of-plenty" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem-of-plenty">The Problem Of Plenty</h3>
+<p>Where to learn from? There is just so much to choose, so many courses, books, websites, twitter influencers, linkedin influencers, an overflowing bookmarks folder, pdfs of unread papers. The progress is overwhelming too- What’s a standard practice a year ago may not be the same today.</p>
+<p>This can be overwhelming for a veteran, let alone a beginner. Separating the noise from the signal can be daunting, as well as finding the best possible source to learn from.</p>
+<p>Speaking from experience, what works best for me is learning on the job. Whatever projects I’ve worked on, that knowledge stays with me forever. Courses and Books are tougher to retain. So if you’re employed, give your best in your own project, it’s the best way to upskill.</p>
+<p>However, if you’re not employed, or your job is narrow in its scope and you want to upskill, the problem persists. There should be a process to identify and follow the materials. (My personal recommendations are at the end of this post.)</p>
+<p><strong>Courses</strong>: Instead of sampling and browsing dozens of courses, it is better to simply pick one and get started. The time you waste in finding the perfect course can be better utilized in completing an okay course. Most important thing is to get moving and not be stagnant.</p>
+<p><strong>Books</strong>: There are some books that are structured as tutorials. Don’t delve deep into theory at this stage, if a book contains code snippets, is a latest copy, and is easy to read - that’s the one.</p>
+<p><strong>Websites and Blogs</strong>: Keeping browsing medium, towardsdatascience, kdnuggets, etc. Keep it light.</p>
+</section>
+</section>
+<section id="blind-men-and-the-elephant" class="level2">
+<h2 class="anchored" data-anchor-id="blind-men-and-the-elephant">Blind Men and the Elephant</h2>
+<p>Due to the problem of plenty, it is important to keep things simple. Don’t follow too many threads, pick a few sources and stick with it. Course- pick any one and complete it without distraction, but remember that this is not everything, and it has only shown you a part of the elephant. Much like the parable of the blind men and the elephant, where each of the men describe the elephant differently since they’re feeling a different part of the elephant.</p>
+<p>Doing an online course could show you one part of this elephant- the theory behind the many algorithms like linear regression, random forest. There are many helpful books too that can do this. To cover other topics you’ll need other things.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/roadmap/assets/elephant.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Understanding the Elephant</figcaption><p></p>
+</figure>
+</div>
+<section id="it-can-get-overwhelming" class="level3">
+<h3 class="anchored" data-anchor-id="it-can-get-overwhelming">It Can Get Overwhelming</h3>
+<p>I know that’s a lot of stuff, right? Data science can be overwhelming for a veteran, let alone one who’s just starting their journey. There is so much to learn, from the theory to the latest tools, the latest research, etc. Which is why it is important to remember that it is not necessary to learn <em>everything</em>.</p>
+</section>
+</section>
+<section id="list-of-topics" class="level2">
+<h2 class="anchored" data-anchor-id="list-of-topics">List of Topics</h2>
+<p>This is a rough outline of how your learning journey could look like. Not exhaustive.</p>
+<ul>
+<li>Python, SQL (Basics)</li>
+<li>Pandas and Matplotlib (Basics)
+<ul>
+<li>Reading and basic operations on dataframes</li>
+<li>Basic plotting</li>
+</ul></li>
+<li>Data Science Theory
+<ul>
+<li>Supervised vs Unsupervised Learning</li>
+<li>Different ways of representing data (encoding, binning)</li>
+<li>supervised learning algorithms (linear regression, trees)</li>
+<li>unsupervised learning algorithms (clustering, PCA)</li>
+<li>model evaluation and metrics</li>
+<li>overfitting, underfitting</li>
+<li>ensembles, correlation, feature engineering, outliers, regularization</li>
+</ul></li>
+<li>Practice
+<ul>
+<li>use datasets to create models</li>
+<li>data visualization and EDA</li>
+</ul></li>
+<li>Full-Fledged Projects</li>
+</ul>
+<p>This is a rough outline of the process. My recommended resource to start with is the book <strong>Introduction to Machine Learning using Python</strong> by Andreas Muller. It is a very easy-to-read book that contains code snippets and gradually introduces all topics. You can also complete the <strong>Kaggle Courses</strong> at <a href="https://www.kaggle.com/learn">here</a>, they’re quite friendly and brief tutorials, plus you can run them in your browser itself.</p>
+<p>This outline doesn’t include deep learning (computer vision or natural language processing), or model deployment.</p>
+</section>
+<section id="a-practice-first-discipline" class="level2">
+<h2 class="anchored" data-anchor-id="a-practice-first-discipline">A Practice-First Discipline</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/roadmap/assets/blacksmith.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Learn by Doing! <em>Image by mastervector on freepik</em></figcaption><p></p>
+</figure>
+</div>
+<p>The first two blocks are in place, the coding environment and the theory of data science. DS is a very practice-oriented discipline. Theoretical knowledge constitutes a small proportion of the data scientist mindspace. It is in the dirty trenches of the notebooks where the real are proven.</p>
+<p>If your resume contains just a bunch of courses, it does not give an interviewer any idea of your prowess. But having a project, notebooks, repos is a sign that you have been there and done those things that matter the most. What things, you ask?</p>
+<p>Reading data, understanding, cleaning, processing, preparing is the single most important aspect of data science that is often not given the necessary important even by those long in the game. These skills cannot be taught in any course or book, but be learned by doing.</p>
+<p>Exploratory Data Analysis (EDA) is a term you’ll come across quite often, and it is an art more than a science, another skill that you’ll learn through practice. Understanding the contents of your data, asking it the right questions and making it answer, this is our bread and butter.</p>
+<p>Then there are feature engineering, dealing with imbalanced data, model training, model evaluation, all skills which are practical in nature. Fortunately for us, there is a single place to learn all of the above- <strong>Kaggle</strong>.</p>
+<p>Kaggle is a website where you can train machine learning models for free using many datasets available there. (It also hosts competitions, but at this point we are focussed on learning). Simply copy-and-editing someone else’s publicly available notebooks can be incredibly helpful to understand various work flows. Spend your time creating a chimaera of a dozen code blocks from dozen notebooks in a single task, and it will be exponentially helpful from a learning perspective.</p>
+<section id="dont-heed-the-kaggle-haters" class="level3">
+<h3 class="anchored" data-anchor-id="dont-heed-the-kaggle-haters">Don’t Heed the Kaggle Haters</h3>
+<p>There has been criticism about Kaggle that it is not helpful for a data science job, since you always get a clean dataset in hand which is never the case in real life. While it is true that real life data is much messier than Kaggle, practicing in Kaggle has much more returns than handicap. You learn to max out your feature engineering skills, data visualization and EDA skills, and are also able to learn how to rapid iterations. Kaggle is helpful without a doubt.</p>
+<p>You also get to learn about the latest techniques, libraries, models, you observe empirical evidence on what methods work and what don’t.</p>
+</section>
+</section>
+<section id="projects" class="level2">
+<h2 class="anchored" data-anchor-id="projects">Projects</h2>
+<p>Once you are able to write a kaggle notebook from start to end, you have pretty much achieved the baseline of what you set out to do. So if you’re at this stage, you should sit back and congratulate yourself.</p>
+<p>If you want to graduate to the next level, you should start doing full fledged projects that solve a meaningful problem. Here, you can use data that’s not from kaggle for a challenge.</p>
+<p>This includes some advanced topics that can be skipped by a beginner, but if you are employed as a data scientist, these would be quite important.</p>
+<p>How would this differ from a kaggle project</p>
+<ul>
+<li>work with .py files instead of a notebook</li>
+<li>write comments, docstrings in order to be helpful to the reader</li>
+<li>use sklearn pipelines in order to save the pre-processing steps, making it easier for inference.</li>
+<li>write modular, readable code.</li>
+<li>learn about code-writing guidelines. PEP8. Use black, isort, etc. tools.</li>
+<li>write tests.</li>
+</ul>
+</section>
+<section id="domain-knowledge" class="level2">
+<h2 class="anchored" data-anchor-id="domain-knowledge">Domain Knowledge</h2>
+<p>This section is not applicable for a complete beginner.</p>
+<p>Nobody pays you to fit a model to a csv. The purpose of data scientists, at the end of the day, is to use their skills to add value to the business. This purpose, and that of understanding the data, formulating problems to solve, and evaluating solutions, all require you to have knowledge of the business systems that you work in. This includes industry knowledge, how processes flow inside your own firm, the meaning behind the data, and more. Acquiring this knowledge needs communication skills, and ability to ask the right questions.</p>
+<p>Unlike specialists, data scientists also need to rotate over different businesses. If today you are building a recommender system for ecommerce, tomorrow you could be building a failure prediction model for aircraft engines. The variety of domains we operate in is vast, so the ability to quickly onboard is important too.</p>
+</section>
+<section id="deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="deep-learning">Deep Learning</h2>
+<p>Well, we only learned about tabular data! Where’s the cool stuff about neural networks, chat-GPT? This post was supposed to include deep learning topics as well, however the length has gotten too long hence they’ll be covered in a separate post.</p>
+<p>However if you need a quick tutorial on them, you can follow <a href="https://www.kaggle.com/learn">the kaggle courses</a>.</p>
+<p>Second place to grokk deep learning is reading and running public kernels on kaggle. Third place is the <a href="https://keras.io/examples/">official documentation</a> of libraries like keras.</p>
+<p>Deep learning is a very empirical field where practice and theory go hand-in-hand. The traditional serial approach of reading up theory and then taking up examples will not work for deep learning, they have to go together. It is best if, as a beginner, you don’t go too deep into theoretical aspects of deep learning before getting hands-on experience with their applications.</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>In order to avoid the problem of plenty, I will keep this list as short as possible.</p>
+<ol type="1">
+<li><p>Book - Introduction to Machine Learning by Andreas Muller. This covers theory and practice at the same time while being beginner friendly.</p></li>
+<li><p>Course - Most courses like that of Andrew Ng are quite heavy on mathematics and the “backend” of ML algorithms. I personally think this is not a good place to start for a newcomer. However if you have a background in STEM, you might like this approach of thinking from first principles.</p></li>
+<li><p>Kaggle Learn - Most people know kaggle for building models and competitions. But kaggle also has a courses section where there are easy-to-follow and brief tutorials on various topics like pandas, data visualization, etc. They are fantastic for a beginner.</p></li>
+<li><p>Kaggle Notebooks - Spending time here will teach you about almost everything about model building.</p></li>
+</ol>
+<p>This is all for this beginner’s notebook. Good luck to your machine learning journey!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>getting-started</category>
+  <category>data-science</category>
+  <guid>https://shindeshu.github.io/posts/roadmap/start.html</guid>
+  <pubDate>Tue, 14 Feb 2023 18:30:00 GMT</pubDate>
+  <media:content url="https://shindeshu.github.io/posts/roadmap/assets/robot_learning.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>A Friendly ☺️ Introduction to CNNs with Keras</title>
+  <dc:creator>Shubham Shinde</dc:creator>
+  <link>https://shindeshu.github.io/posts/tutorials/keras_cnns_intro.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="computer-vision" class="level2">
+<h2 class="anchored" data-anchor-id="computer-vision">Computer Vision</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/tutorials/assets/computer_vision.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Computer Vision</figcaption><p></p>
+</figure>
+</div>
+<p>This was originally a <a href="https://www.kaggle.com/code/shindeshubham85/a-friendly-introduction-to-cnns-in-keras"><img src="https://shindeshu.github.io/posts/tutorials/assets/kaggle.png" class="img-fluid" style="width:10.0%"></a> notebook.</p>
+<p>In a nutshell, CNNs are special deep learning architectures that have revolutionized the field of computer vision. Computer Vision is a field that is concerned about deriving information from images using computers. Some examples of computer vision include- Identifying whether a given image contains an item, like identifying a pedestrian in traffic, identifying cracks in an industrial machine, identifying if an X-Ray is abnormal. Self-Driving cars rely on computer vision algorithms, which are often CNNs. Filters on Instagram, face recognition systems, all use deep learning under the hood.</p>
+<p>But some general types of computer vision problems are:</p>
+<ul>
+<li>Image Classification (Is this image of a cat?)</li>
+<li>Object Detection (Is there a cat in this image, and WHERE exactly is it?)</li>
+<li>Segmentation (give me the exact outline of the cat in this image, if it exists)</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/tutorials/assets/tasks.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Computer Vision Tasks</figcaption><p></p>
+</figure>
+</div>
+<section id="difference-from-traditional-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="difference-from-traditional-modeling">Difference from Traditional Modeling</h3>
+<p>If you’re here, it probably means you’re familiar with basic machine learning concepts- like training data, predictions, feature engineering, etc. on tabular data. However image data is different from tabular data due to having a different structure, hence traditional algorithms like random forest cannot be used for classifying images.</p>
+</section>
+<section id="the-cnn-breakthrough" class="level3">
+<h3 class="anchored" data-anchor-id="the-cnn-breakthrough">The CNN Breakthrough</h3>
+<p>This is where CNNs made the breakthrough, and achieved tremendous results on image data. Before CNNs, image analytics required a lot of feature engineering and pre-processing (tons of hand-made filters). CNNs outperformed all the traditional methods without requiring such feature engineering. CNNs learnt the features and filters by itself. All you had to do was feed a lot of data to the model.</p>
+</section>
+</section>
+<section id="deep-learning-and-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="deep-learning-and-neural-networks">Deep Learning and Neural Networks</h2>
+<p>CNN, that is, Convolutional Neural Networks are a subfield of neural networks, a family of algorithms. A neural network is a collection of nodes or neurons, where each neuron has a weight*. These weights are learnt during the training process such that the model is able to predict the output when input is given. When a lot of such neurons are stacked together, we get a neural network. A neural network with a lot of layers would be called deep neural network, a phenomenon which has driven majority of the AI success in the last decade.</p>
+<p>In CNNs, the neurons are arranged and stacked in a manner suitable for images.</p>
+<section id="convolutional-neural-networks" class="level3">
+<h3 class="anchored" data-anchor-id="convolutional-neural-networks">Convolutional Neural Networks</h3>
+<p>In CNN, we have filters (which are tiny 3x3 matrices) which “convolve” an image to get a transformed matrix. We won’t worry about the theory and filters here. All you need to know, that filters transform the image to a new matrix. This matrix is made smaller by a method called Pooling. These two operations create one Convolution Layer, and several such Layers create a CNN. This order isn’t mandatory, as we’ll see later.</p>
+<p>This is a <a href="https://www.youtube.com/watch?v=YRhxdVk_sIs">nice animation</a> that showcases the convolution operation.</p>
+<div data-align="center">
+<iframe align="middle" width="790" height="440" src="https://www.youtube.com/embed/YRhxdVk_sIs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="">
+</iframe>
+</div>
+</section>
+<section id="transfer-learning" class="level3">
+<h3 class="anchored" data-anchor-id="transfer-learning">Transfer Learning</h3>
+<p>There’s a neat trick in deep learning called transfer learning- which is covered at the end of the notebook in case you make it.</p>
+<p>That’s quite a lot of theory, on to the problem at hand.</p>
+</section>
+</section>
+<section id="problem-at-hand" class="level2">
+<h2 class="anchored" data-anchor-id="problem-at-hand">Problem At Hand</h2>
+<p>The task at hand is an image classification task. You’re given a ton of images that are either a cat image or a dog image. Now, if you give a new image, you should be able to predict if it’s of a dog or a cat.</p>
+<p>We are going to train a CNN to do this. Using the keras library.</p>
+</section>
+<section id="typical-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="typical-workflow">Typical Workflow</h2>
+<p>Typically when you work on a CNN task, this is how your notebook flow will look like: Whatever time you spend with CNNs, it will be in one of these sections.</p>
+<ol type="1">
+<li><strong>Get the Images</strong></li>
+</ol>
+<p>(collecting images itself can be either a herculean task or sometimes ready-made data is available, time and effort varies with dataset)</p>
+<p>Difficulty Level: Varies Time Needed: Varies</p>
+<ol start="2" type="1">
+<li><strong>Look at the Images and the Targets</strong></li>
+</ol>
+<p>(see how the images actually look like, what are the classes, how many of them.)</p>
+<ol start="3" type="1">
+<li><strong>Create a Data Loader</strong></li>
+</ol>
+<p>(in most libraries you need a guy that reads the images and feeds to the model, and does the intermediate work- batching, augmentation, split, multiprocessing, etc. configuring this step will be a good chunk of your time )</p>
+<ol start="4" type="1">
+<li><strong>Define Your Model</strong></li>
+</ol>
+<p>(how many CNN layers? How many filters, the optimizer, the loss function? this could be as easy as downloading/pasting an existing model in ten minutes, or the experiments could go on forever)</p>
+<ol start="5" type="1">
+<li><strong>Train the Model</strong></li>
+</ol>
+<p>(now throw the dataloader function on the model and let it train. sit back and sip coffee.)</p>
+<ol start="6" type="1">
+<li><strong>Get The Predictions</strong></li>
+</ol>
+<p>(here you actually use the model. for some task, or just to check if it’s doing good. evaluating whether the model is giving good predictions can also be challenging in some use cases.)</p>
+<ol start="7" type="1">
+<li><strong>Debugging</strong></li>
+</ol>
+<p>If you keep it simple, load pre-built modules, the model will work. But there could be many possible problems that might arise in the task. These will be covered at the end.</p>
+<p>::: {.cell _cell_guid=‘b1076dfc-b9ad-4769-8c92-a6c4dae69d19’ _uuid=‘8f2839f25d086af736a60e9eeb907d3b93b6e0e5’ execution=‘{“iopub.execute_input”:“2023-01-07T11:37:46.774008Z”,“iopub.status.busy”:“2023-01-07T11:37:46.773068Z”,“iopub.status.idle”:“2023-01-07T11:37:52.956681Z”,“shell.execute_reply”:“2023-01-07T11:37:52.955647Z”}’ papermill=‘{“duration”:6.19509,“end_time”:“2023-01-07T11:37:52.959543”,“exception”:false,“start_time”:“2023-01-07T11:37:46.764453”,“status”:“completed”}’ tags=‘[]’ execution_count=1}</p>
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">import</span> numpy <span class="im" style="color: #00769E;">as</span> np</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;">import</span> pandas <span class="im" style="color: #00769E;">as</span> pd </span>
+<span id="cb1-3"><span class="im" style="color: #00769E;">from</span> tensorflow.keras.preprocessing.image <span class="im" style="color: #00769E;">import</span> ImageDataGenerator, load_img</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;">from</span> tensorflow.keras.utils <span class="im" style="color: #00769E;">import</span> plot_model</span>
+<span id="cb1-5"><span class="im" style="color: #00769E;">from</span> tensorflow.keras.utils <span class="im" style="color: #00769E;">import</span> to_categorical</span>
+<span id="cb1-6"><span class="im" style="color: #00769E;">from</span> sklearn.model_selection <span class="im" style="color: #00769E;">import</span> train_test_split</span>
+<span id="cb1-7"><span class="im" style="color: #00769E;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;">as</span> plt</span>
+<span id="cb1-8"><span class="im" style="color: #00769E;">import</span> random</span>
+<span id="cb1-9"><span class="im" style="color: #00769E;">import</span> os</span>
+<span id="cb1-10"><span class="im" style="color: #00769E;">from</span> PIL <span class="im" style="color: #00769E;">import</span> Image</span>
+<span id="cb1-11"><span class="im" style="color: #00769E;">import</span> glob</span></code></pre></div>
+<p>:::</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:37:52.977159Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:37:52.975428Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:37:53.924902Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:37:53.923709Z&quot;}" data-papermill="{&quot;duration&quot;:0.960419,&quot;end_time&quot;:&quot;2023-01-07T11:37:53.927312&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:37:52.966893&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="op" style="color: #5E5E5E;">!</span>ls ..<span class="op" style="color: #5E5E5E;">/</span><span class="bu" style="color: null;">input</span><span class="op" style="color: #5E5E5E;">/</span>dogs<span class="op" style="color: #5E5E5E;">-</span>vs<span class="op" style="color: #5E5E5E;">-</span>cats<span class="op" style="color: #5E5E5E;">/</span></span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;"># the images are in a zip file in this folder</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>sampleSubmission.csv  test1.zip  train.zip</code></pre>
+</div>
+</div>
+</section>
+<section id="get-the-images" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-images">1. Get the Images</h2>
+<p>Extract the images from the zip file. Now there are two folders: train/ and test1/</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:37:53.959044Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:37:53.958255Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:10.454469Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:10.453237Z&quot;}" data-papermill="{&quot;duration&quot;:16.507658,&quot;end_time&quot;:&quot;2023-01-07T11:38:10.457557&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:37:53.949899&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;">import</span> zipfile</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="cf" style="color: #003B4F;">with</span> zipfile.ZipFile(<span class="st" style="color: #20794D;">"../input/dogs-vs-cats/train.zip"</span>,<span class="st" style="color: #20794D;">"r"</span>) <span class="im" style="color: #00769E;">as</span> z:</span>
+<span id="cb4-4">    z.extractall(<span class="st" style="color: #20794D;">"."</span>)</span>
+<span id="cb4-5">    </span>
+<span id="cb4-6"><span class="cf" style="color: #003B4F;">with</span> zipfile.ZipFile(<span class="st" style="color: #20794D;">"../input/dogs-vs-cats/test1.zip"</span>,<span class="st" style="color: #20794D;">"r"</span>) <span class="im" style="color: #00769E;">as</span> z:</span>
+<span id="cb4-7">    z.extractall(<span class="st" style="color: #20794D;">"."</span>)</span>
+<span id="cb4-8"><span class="op" style="color: #5E5E5E;">!</span>ls <span class="op" style="color: #5E5E5E;">/</span>kaggle<span class="op" style="color: #5E5E5E;">/</span>working<span class="op" style="color: #5E5E5E;">/</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>__notebook__.ipynb  test1  train</code></pre>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:10.480187Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:10.479766Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:10.598919Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:10.597850Z&quot;}" data-papermill="{&quot;duration&quot;:0.133456,&quot;end_time&quot;:&quot;2023-01-07T11:38:10.601783&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:10.468327&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="co" style="color: #5E5E5E;"># let's look at any five files in the train folder</span></span>
+<span id="cb6-2">glob.glob(<span class="st" style="color: #20794D;">"/kaggle/working/train/*.jpg"</span>)[:<span class="dv" style="color: #AD0000;">5</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>['/kaggle/working/train/dog.8701.jpg',
+ '/kaggle/working/train/dog.9481.jpg',
+ '/kaggle/working/train/cat.104.jpg',
+ '/kaggle/working/train/cat.8800.jpg',
+ '/kaggle/working/train/dog.6199.jpg']</code></pre>
+</div>
+</div>
+<p>You now notice that the label is encoded in the filename itself- cat or dog! We need to extract that to be able to train the model.</p>
+<p>We are collecting each filename, and the corresponding label in a pandas dataframe (needed later)</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:10.645446Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:10.645005Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:10.800698Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:10.799509Z&quot;}" data-papermill="{&quot;duration&quot;:0.169767,&quot;end_time&quot;:&quot;2023-01-07T11:38:10.803124&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:10.633357&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">train_files <span class="op" style="color: #5E5E5E;">=</span> glob.glob(<span class="st" style="color: #20794D;">"/kaggle/working/train/*.jpg"</span>)</span>
+<span id="cb8-2">train_labels <span class="op" style="color: #5E5E5E;">=</span> [i.strip(<span class="st" style="color: #20794D;">'/kaggle/working/train/'</span>)[:<span class="dv" style="color: #AD0000;">3</span>] <span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> train_files]</span>
+<span id="cb8-3">train_df <span class="op" style="color: #5E5E5E;">=</span> pd.DataFrame({<span class="st" style="color: #20794D;">'filename'</span>: train_files, <span class="st" style="color: #20794D;">'class'</span>: train_labels})</span>
+<span id="cb8-4">train_df.head()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>filename</th>
+      <th>class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>/kaggle/working/train/dog.8701.jpg</td>
+      <td>dog</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>/kaggle/working/train/dog.9481.jpg</td>
+      <td>dog</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>/kaggle/working/train/cat.104.jpg</td>
+      <td>cat</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>/kaggle/working/train/cat.8800.jpg</td>
+      <td>cat</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>/kaggle/working/train/dog.6199.jpg</td>
+      <td>dog</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>First step is done- we have the images, and we have the labels. Let’s move to the second step.</p>
+</section>
+<section id="look-at-them" class="level2">
+<h2 class="anchored" data-anchor-id="look-at-them">2. Look at Them!</h2>
+<p>We now observe what the images look like. We’ll look at four random images from the data.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:10.848325Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:10.848020Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:11.537208Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:11.536377Z&quot;}" data-papermill="{&quot;duration&quot;:0.704933,&quot;end_time&quot;:&quot;2023-01-07T11:38:11.544590&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:10.839657&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">fig, axs <span class="op" style="color: #5E5E5E;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">2</span>, figsize<span class="op" style="color: #5E5E5E;">=</span>(<span class="dv" style="color: #AD0000;">10</span>,<span class="dv" style="color: #AD0000;">10</span>))</span>
+<span id="cb9-2">axs <span class="op" style="color: #5E5E5E;">=</span> axs.ravel()</span>
+<span id="cb9-3"><span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(<span class="dv" style="color: #AD0000;">0</span>,<span class="dv" style="color: #AD0000;">4</span>):</span>
+<span id="cb9-4">    idx <span class="op" style="color: #5E5E5E;">=</span> random.choice(train_df.index)</span>
+<span id="cb9-5">    axs[i].imshow(Image.<span class="bu" style="color: null;">open</span>(train_df[<span class="st" style="color: #20794D;">'filename'</span>][idx]))</span>
+<span id="cb9-6">    axs[i].set_title(train_df[<span class="st" style="color: #20794D;">'class'</span>][idx])</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://shindeshu.github.io/posts/tutorials/keras_cnns_intro_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>This is a pretty clean dataset- that’s good. The subjects of the image are in center, occupy a majority of the image, no blurriness or anything. (Ideally you’d look at more images than a dozen tho,:) )</p>
+<p>You might’ve noticed that the dimensions of the images are not constant, they vary a lot. This will be a problem for the CNN- it expects images of a fixed size! How do we take care of it? We don’t, our data loader guy will do it for us.</p>
+<p>(Well, sometimes we might want to do it ourselves, if we think the resizing needs extra attention- but in this case, we’ll let it be automated.)</p>
+</section>
+<section id="release-the-loader" class="level2">
+<h2 class="anchored" data-anchor-id="release-the-loader">3. Release the Loader!</h2>
+<p>Dataloaders are the unsung heroes of the CNN world- they take care of a lot of nasty work that would be a nightmare if we had to do it by hand. What they essentially do is simple- read the data from the disk, and feed to the model. But under the hood they take care of many things, like…</p>
+<ol type="1">
+<li>Resizing, as we discussed. Ensuring that each image is of a fixed size.</li>
+<li>Batching. Feeding images one-by-one to the model is tedious, would take a lot of time. It’s better to feed a large number of them at once (as much your computer will allow)</li>
+<li>Label Encoding. Computers don’t understand string like ‘cat’ or ‘dog’, you have to convert them to numbers like 0 or 1.</li>
+<li>Data Augmentation. Create more images by slightly modifying an image (flipping it, rotating it teeny bit, adding some spots, etc.)</li>
+<li>Validation Split. Keras now has support for validation splitting.</li>
+<li>Sometimes the data is too large to fit into memory (10+ GB, say), then loaders can iterate through the dataset on disk chunk-by-chunk instead of loading everything at once.</li>
+</ol>
+<p>We are using keras’s <code>ImageDataGenerator</code> to create our training data loader.</p>
+<p>Two steps:</p>
+<ol type="1">
+<li>Define a <code>ImageDataGenerator</code> instance, and specify the augmentation strategies.</li>
+<li>Create a generator from this instance by specifying the image file paths and labels. Pass this generator to the model for training.</li>
+</ol>
+<p>In pytorch there’s <code>torch.utils.data.Dataset</code> and<code>torch.utils.data.DataLoader</code>. Sometimes you may need to define a custom dataloader, but the default is good enough for most use cases.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:11.626785Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:11.626434Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:11.632274Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:11.631254Z&quot;}" data-papermill="{&quot;duration&quot;:0.022781,&quot;end_time&quot;:&quot;2023-01-07T11:38:11.634597&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:11.611816&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">train_datagen <span class="op" style="color: #5E5E5E;">=</span> ImageDataGenerator(</span>
+<span id="cb10-2">    rotation_range<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">5</span>,</span>
+<span id="cb10-3">    rescale<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">1.</span><span class="op" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">255</span>,</span>
+<span id="cb10-4">    horizontal_flip<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>,</span>
+<span id="cb10-5">    shear_range<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.2</span>,</span>
+<span id="cb10-6">    zoom_range<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.2</span>,</span>
+<span id="cb10-7">    validation_split<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.2</span>)</span>
+<span id="cb10-8"></span>
+<span id="cb10-9"><span class="co" style="color: #5E5E5E;"># create a image data generator object. </span></span>
+<span id="cb10-10"><span class="co" style="color: #5E5E5E;"># all these are data augmentation parameters.</span></span>
+<span id="cb10-11"></span>
+<span id="cb10-12"><span class="co" style="color: #5E5E5E;"># now let's specify the image size to which each image will be resized to</span></span>
+<span id="cb10-13">img_height, img_width <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">224</span>, <span class="dv" style="color: #AD0000;">224</span></span>
+<span id="cb10-14">batch_size <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">64</span></span></code></pre></div>
+</div>
+<p>There are two ways to create data generators/loaders from above instance. I recommend going through the <a href="https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image/ImageDataGenerator">ImageDataGenerator API page</a>, but the two methods are:</p>
+<ol type="1">
+<li>Flow from Dataframe (here, you can contain the filenames and labels in a pandas dataframe, and pass the dataframe), we are using this, remember the dataframe we created earlier?</li>
+<li>Flow from Directory (here, you can pass the path of a directory. This directory should contain subfolders corresponding to each class. You will have to rearrange your directory so that it looks like this.</li>
+</ol>
+<pre><code>Train/
+---| Dog/
+   ---| Dog1.jpg
+   ---| Dog1.jpg
+---| Cat/
+   ---| Cat1.jpg
+   ---| Cat2.jpg
+Val/
+---| Dog/
+   ---| Dog5.jpg
+   ---| Dog6.jpg
+---| Cat/
+   ---| Cat7.jpg
+   ---| Cat8.jpg</code></pre>
+<p>Since we are using method1, we will not be rearranging the folders.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:11.689506Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:11.689194Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:12.066046Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:12.064842Z&quot;}" data-papermill="{&quot;duration&quot;:0.393957,&quot;end_time&quot;:&quot;2023-01-07T11:38:12.068358&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:11.674401&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">train_generator <span class="op" style="color: #5E5E5E;">=</span> train_datagen.flow_from_dataframe(</span>
+<span id="cb12-2">    train_df,</span>
+<span id="cb12-3">    target_size<span class="op" style="color: #5E5E5E;">=</span>(img_height, img_width),</span>
+<span id="cb12-4">    batch_size<span class="op" style="color: #5E5E5E;">=</span>batch_size,</span>
+<span id="cb12-5">    class_mode<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'categorical'</span>,</span>
+<span id="cb12-6">    subset<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'training'</span>) <span class="co" style="color: #5E5E5E;"># set as training data</span></span>
+<span id="cb12-7"></span>
+<span id="cb12-8"><span class="co" style="color: #5E5E5E;"># remember we put 0.2 validation split while defining ImageDataGenerator?</span></span>
+<span id="cb12-9">validation_generator <span class="op" style="color: #5E5E5E;">=</span> train_datagen.flow_from_dataframe(</span>
+<span id="cb12-10">    train_df, <span class="co" style="color: #5E5E5E;"># same directory as training data</span></span>
+<span id="cb12-11">    target_size<span class="op" style="color: #5E5E5E;">=</span>(img_height, img_width),</span>
+<span id="cb12-12">    batch_size<span class="op" style="color: #5E5E5E;">=</span>batch_size,</span>
+<span id="cb12-13">    class_mode<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'categorical'</span>,</span>
+<span id="cb12-14">    subset<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'validation'</span>) <span class="co" style="color: #5E5E5E;"># set as validation data</span></span>
+<span id="cb12-15"></span>
+<span id="cb12-16"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"Class Indices:"</span>, train_generator.class_indices)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Found 20000 validated image filenames belonging to 2 classes.
+Found 5000 validated image filenames belonging to 2 classes.
+Class Indices: {'cat': 0, 'dog': 1}</code></pre>
+</div>
+</div>
+</section>
+<section id="define-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="define-a-model">4. Define A Model</h2>
+<p>Now we come to the meaty part- defining the CNN network, the engine of our application. As we discussed earlier, we are going to define a series of Convolution Layers, and each convolution layer consists of a convolution operation followed by a max pool layer.</p>
+<p>This order is not mandatory- you can have two Convolution operations followed by one max pool, or three, or an average pool- that’s the neat part of neural networks, they’re so adaptable and malleable, and the best configurations are often found out by trial and error. In this case, we are going with the wisdom of our elders, and go by this order.</p>
+<section id="head-of-a-cnn" class="level3">
+<h3 class="anchored" data-anchor-id="head-of-a-cnn">Head of A CNN</h3>
+<p>As we apply more Conv Layers, you will get a transformed matrix of somesize x somesize. But what good is a matrix to us? We need a simple answer- 0 or 1! In order to get this answer, we “flatten” the final matrix to a single vector of size somesize-times-2 x 1. Then we pass it through more neural network neurons to get a single neuron at the end. This neuron’s output is constrained between 0 and 1. This is our final probability! If it’s greater than 0.5, the prediction is 1, if not, it’s 0.</p>
+<p>If you have more than 2 classes, like predicting a digit. In this case, there would be ten neurons at the end. Each of their output would be the probability of that class.</p>
+</section>
+<section id="model-hyperparameters" class="level3">
+<h3 class="anchored" data-anchor-id="model-hyperparameters">Model Hyperparameters</h3>
+<p>Apart from number of Conv layers, there are other design choices while designing a CNN- they include selecting the optimizer, the learning rate, the loss function, the number of filters. For an introductory notebook, discussion on those is not necessary.</p>
+<p>What’s important to note: passing the input shape to the first layer. Ensuring that the last layer corresponds to the number of classes.</p>
+<p>Try tinkering with this configuration to see how the results change. Try using only one Conv Layer, reducing number of filters, increasing number of filters, etc.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:12.123985Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:12.123655Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:15.006157Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:15.004003Z&quot;}" data-papermill="{&quot;duration&quot;:2.899066,&quot;end_time&quot;:&quot;2023-01-07T11:38:15.008260&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:12.109194&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><span class="im" style="color: #00769E;">from</span> keras.models <span class="im" style="color: #00769E;">import</span> Sequential</span>
+<span id="cb14-2"><span class="im" style="color: #00769E;">from</span> keras.layers <span class="im" style="color: #00769E;">import</span> Conv2D, MaxPooling2D, Dropout, Flatten, Dense, Activation, BatchNormalization</span>
+<span id="cb14-3"></span>
+<span id="cb14-4">model <span class="op" style="color: #5E5E5E;">=</span> Sequential()</span>
+<span id="cb14-5"></span>
+<span id="cb14-6">model.add(Conv2D(<span class="dv" style="color: #AD0000;">32</span>, (<span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">3</span>), activation<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'relu'</span>, </span>
+<span id="cb14-7">                 input_shape<span class="op" style="color: #5E5E5E;">=</span>(img_width, img_height, <span class="dv" style="color: #AD0000;">3</span>)))</span>
+<span id="cb14-8"><span class="co" style="color: #5E5E5E;"># 32 here means this layer will contain 32 filters of size 3x3 being learnt</span></span>
+<span id="cb14-9">model.add(BatchNormalization())</span>
+<span id="cb14-10"><span class="co" style="color: #5E5E5E;"># batchnorm is a useful layer that helps in convergence</span></span>
+<span id="cb14-11">model.add(MaxPooling2D(pool_size<span class="op" style="color: #5E5E5E;">=</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">2</span>)))</span>
+<span id="cb14-12"><span class="co" style="color: #5E5E5E;"># maxpooling will reduce the size of the image</span></span>
+<span id="cb14-13">model.add(Dropout(<span class="fl" style="color: #AD0000;">0.25</span>))</span>
+<span id="cb14-14"><span class="co" style="color: #5E5E5E;"># dropout is used for regularization, ensuring that model doesn't overfit</span></span>
+<span id="cb14-15"></span>
+<span id="cb14-16">model.add(Conv2D(<span class="dv" style="color: #AD0000;">64</span>, (<span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">3</span>), activation<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'relu'</span>))</span>
+<span id="cb14-17">model.add(BatchNormalization())</span>
+<span id="cb14-18">model.add(MaxPooling2D(pool_size<span class="op" style="color: #5E5E5E;">=</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">2</span>)))</span>
+<span id="cb14-19">model.add(Dropout(<span class="fl" style="color: #AD0000;">0.25</span>))</span>
+<span id="cb14-20"></span>
+<span id="cb14-21">model.add(Conv2D(<span class="dv" style="color: #AD0000;">128</span>, (<span class="dv" style="color: #AD0000;">3</span>, <span class="dv" style="color: #AD0000;">3</span>), activation<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'relu'</span>))</span>
+<span id="cb14-22">model.add(BatchNormalization())</span>
+<span id="cb14-23">model.add(MaxPooling2D(pool_size<span class="op" style="color: #5E5E5E;">=</span>(<span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">2</span>)))</span>
+<span id="cb14-24">model.add(Dropout(<span class="fl" style="color: #AD0000;">0.25</span>))</span>
+<span id="cb14-25"></span>
+<span id="cb14-26"><span class="co" style="color: #5E5E5E;"># convolutional block is complete. now on to defining the "head"</span></span>
+<span id="cb14-27"></span>
+<span id="cb14-28"><span class="co" style="color: #5E5E5E;"># first flatten the matrix to get a single array</span></span>
+<span id="cb14-29">model.add(Flatten())</span>
+<span id="cb14-30"><span class="co" style="color: #5E5E5E;"># adding a dense hidden layer of neurons</span></span>
+<span id="cb14-31">model.add(Dense(<span class="dv" style="color: #AD0000;">512</span>, activation<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'relu'</span>))</span>
+<span id="cb14-32">model.add(BatchNormalization())</span>
+<span id="cb14-33">model.add(Dropout(<span class="fl" style="color: #AD0000;">0.5</span>))</span>
+<span id="cb14-34"><span class="co" style="color: #5E5E5E;"># finally the output layer with neurons=number of classes and softmax activation</span></span>
+<span id="cb14-35">model.add(Dense(<span class="dv" style="color: #AD0000;">2</span>, activation<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'softmax'</span>)) <span class="co" style="color: #5E5E5E;"># 2 because we have cat and dog classes</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-01-07 11:38:12.212718: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:12.342711: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:12.343593: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:12.345511: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-01-07 11:38:12.345912: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:12.346654: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:12.347302: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:14.495879: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:14.496731: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:14.497497: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 11:38:14.498130: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 15401 MB memory:  -&gt; device: 0, name: Tesla P100-PCIE-16GB, pci bus id: 0000:00:04.0, compute capability: 6.0</code></pre>
+</div>
+</div>
+<p>Let’s visualize how our network looks like, and what the shapes of input and output at each layer.</p>
+<p>The shapes of input and output can be useful for debugging. If there’s a mismatch between output of one layer and input of next, model will throw up error.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:15.065000Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:15.064096Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:15.999864Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:15.998734Z&quot;}" data-papermill="{&quot;duration&quot;:0.952978,&quot;end_time&quot;:&quot;2023-01-07T11:38:16.002149&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:15.049171&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">plot_model(model, show_shapes<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, show_layer_names<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>, dpi<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">60</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<p><img src="https://shindeshu.github.io/posts/tutorials/keras_cnns_intro_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:16.036028Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:16.034444Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T11:38:16.050816Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T11:38:16.049980Z&quot;}" data-papermill="{&quot;duration&quot;:0.034609,&quot;end_time&quot;:&quot;2023-01-07T11:38:16.052796&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:16.018187&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><span class="co" style="color: #5E5E5E;"># compile the model while defining a loss, optimizer, and metrics to track, </span></span>
+<span id="cb17-2"><span class="co" style="color: #5E5E5E;"># and add callbacks if necessary</span></span>
+<span id="cb17-3">model.<span class="bu" style="color: null;">compile</span>(loss<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'categorical_crossentropy'</span>, </span>
+<span id="cb17-4">              optimizer<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'adam'</span>, </span>
+<span id="cb17-5">              metrics<span class="op" style="color: #5E5E5E;">=</span>[<span class="st" style="color: #20794D;">'accuracy'</span>])</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="train-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="train-the-model">5. Train the Model</h2>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T11:38:16.085075Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T11:38:16.083469Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:10.273935Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:10.272894Z&quot;}" data-papermill="{&quot;duration&quot;:3474.20881,&quot;end_time&quot;:&quot;2023-01-07T12:36:10.276450&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T11:38:16.067640&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">epochs<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">10</span></span>
+<span id="cb18-2">history <span class="op" style="color: #5E5E5E;">=</span> model.fit(</span>
+<span id="cb18-3">    train_generator, </span>
+<span id="cb18-4">    epochs<span class="op" style="color: #5E5E5E;">=</span>epochs,</span>
+<span id="cb18-5">    validation_data<span class="op" style="color: #5E5E5E;">=</span>validation_generator,</span>
+<span id="cb18-6">)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-01-07 11:38:16.953970: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/10</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2023-01-07 11:38:20.190526: I tensorflow/stream_executor/cuda/cuda_dnn.cc:369] Loaded cuDNN version 8005</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>313/313 [==============================] - 334s 1s/step - loss: 0.7747 - accuracy: 0.6353 - val_loss: 1.8673 - val_accuracy: 0.4876
+Epoch 2/10
+313/313 [==============================] - 324s 1s/step - loss: 0.5450 - accuracy: 0.7254 - val_loss: 0.5757 - val_accuracy: 0.7110
+Epoch 3/10
+313/313 [==============================] - 325s 1s/step - loss: 0.4821 - accuracy: 0.7671 - val_loss: 0.4726 - val_accuracy: 0.7732
+Epoch 4/10
+313/313 [==============================] - 326s 1s/step - loss: 0.4332 - accuracy: 0.7987 - val_loss: 0.4627 - val_accuracy: 0.7800
+Epoch 5/10
+313/313 [==============================] - 323s 1s/step - loss: 0.3989 - accuracy: 0.8184 - val_loss: 0.4141 - val_accuracy: 0.8128
+Epoch 6/10
+313/313 [==============================] - 322s 1s/step - loss: 0.3702 - accuracy: 0.8349 - val_loss: 0.4598 - val_accuracy: 0.7822
+Epoch 7/10
+313/313 [==============================] - 323s 1s/step - loss: 0.3409 - accuracy: 0.8484 - val_loss: 0.3489 - val_accuracy: 0.8442
+Epoch 8/10
+313/313 [==============================] - 324s 1s/step - loss: 0.3169 - accuracy: 0.8641 - val_loss: 0.3765 - val_accuracy: 0.8478
+Epoch 9/10
+313/313 [==============================] - 323s 1s/step - loss: 0.3124 - accuracy: 0.8629 - val_loss: 0.4741 - val_accuracy: 0.7906
+Epoch 10/10
+313/313 [==============================] - 324s 1s/step - loss: 0.2925 - accuracy: 0.8721 - val_loss: 0.6446 - val_accuracy: 0.7484</code></pre>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:10.625999Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:10.625243Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:11.152627Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:11.151742Z&quot;}" data-papermill="{&quot;duration&quot;:0.703214,&quot;end_time&quot;:&quot;2023-01-07T12:36:11.154843&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:10.451629&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><span class="kw" style="color: #003B4F;">def</span> plot_loss(history):</span>
+<span id="cb23-2">    fig, (ax1, ax2) <span class="op" style="color: #5E5E5E;">=</span> plt.subplots(<span class="dv" style="color: #AD0000;">2</span>, <span class="dv" style="color: #AD0000;">1</span>, figsize<span class="op" style="color: #5E5E5E;">=</span>(<span class="dv" style="color: #AD0000;">6</span>, <span class="dv" style="color: #AD0000;">6</span>))</span>
+<span id="cb23-3">    ax1.plot(history.history[<span class="st" style="color: #20794D;">'loss'</span>], color<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'b'</span>, label<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"Training loss"</span>)</span>
+<span id="cb23-4">    ax1.plot(history.history[<span class="st" style="color: #20794D;">'val_loss'</span>], color<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'r'</span>, label<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"validation loss"</span>)</span>
+<span id="cb23-5">    ax1.set_xticks(np.arange(<span class="dv" style="color: #AD0000;">1</span>, epochs, <span class="dv" style="color: #AD0000;">1</span>))</span>
+<span id="cb23-6"></span>
+<span id="cb23-7">    ax2.plot(history.history[<span class="st" style="color: #20794D;">'accuracy'</span>], color<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'b'</span>, label<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"Training accuracy"</span>)</span>
+<span id="cb23-8">    ax2.plot(history.history[<span class="st" style="color: #20794D;">'val_accuracy'</span>], color<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'r'</span>,label<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"Validation accuracy"</span>)</span>
+<span id="cb23-9">    ax2.set_xticks(np.arange(<span class="dv" style="color: #AD0000;">1</span>, epochs, <span class="dv" style="color: #AD0000;">1</span>))</span>
+<span id="cb23-10"></span>
+<span id="cb23-11">    legend <span class="op" style="color: #5E5E5E;">=</span> plt.legend(loc<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'best'</span>, shadow<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb23-12">    plt.tight_layout()</span>
+<span id="cb23-13">    plt.show()</span>
+<span id="cb23-14">plot_loss(history)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://shindeshu.github.io/posts/tutorials/keras_cnns_intro_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="get-the-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="get-the-predictions">6. Get the Predictions</h2>
+<p>Now that the model is trained, let’s check if the model is giving us good predictions, by trying it out on the test data.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:11.897834Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:11.897458Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:12.023708Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:12.022626Z&quot;}" data-papermill="{&quot;duration&quot;:0.353908,&quot;end_time&quot;:&quot;2023-01-07T12:36:12.026546&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:11.672638&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1">test_files <span class="op" style="color: #5E5E5E;">=</span> glob.glob(<span class="st" style="color: #20794D;">'/kaggle/working/test1/*.jpg'</span>)</span>
+<span id="cb24-2">test_df <span class="op" style="color: #5E5E5E;">=</span> pd.DataFrame({<span class="st" style="color: #20794D;">'filename'</span>: test_files})</span>
+<span id="cb24-3">test_gen <span class="op" style="color: #5E5E5E;">=</span> ImageDataGenerator(rescale<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">1.</span><span class="op" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">255</span>)</span>
+<span id="cb24-4">test_generator <span class="op" style="color: #5E5E5E;">=</span> test_gen.flow_from_dataframe(</span>
+<span id="cb24-5">    test_df, </span>
+<span id="cb24-6">    x_col<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'filename'</span>,</span>
+<span id="cb24-7">    y_col<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">None</span>,</span>
+<span id="cb24-8">    class_mode<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">None</span>,</span>
+<span id="cb24-9">    target_size<span class="op" style="color: #5E5E5E;">=</span>(img_height, img_width),</span>
+<span id="cb24-10">    batch_size<span class="op" style="color: #5E5E5E;">=</span>batch_size,</span>
+<span id="cb24-11">    shuffle<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Found 12500 validated image filenames.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:12.374320Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:12.373921Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:19.003695Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:19.002898Z&quot;}" data-papermill="{&quot;duration&quot;:6.812598,&quot;end_time&quot;:&quot;2023-01-07T12:36:19.011415&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:12.198817&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><span class="kw" style="color: #003B4F;">def</span> visualize_predictions(test_generator, model):</span>
+<span id="cb26-2">    plt.figure(figsize<span class="op" style="color: #5E5E5E;">=</span>(<span class="dv" style="color: #AD0000;">12</span>, <span class="dv" style="color: #AD0000;">12</span>))</span>
+<span id="cb26-3">    <span class="cf" style="color: #003B4F;">for</span> i <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">range</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="dv" style="color: #AD0000;">15</span>):</span>
+<span id="cb26-4">        plt.subplot(<span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">3</span>, i<span class="op" style="color: #5E5E5E;">+</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb26-5">        <span class="cf" style="color: #003B4F;">for</span> X_batch <span class="kw" style="color: #003B4F;">in</span> test_generator:</span>
+<span id="cb26-6">            prediction <span class="op" style="color: #5E5E5E;">=</span> model.predict(X_batch)[<span class="dv" style="color: #AD0000;">0</span>]</span>
+<span id="cb26-7">            image <span class="op" style="color: #5E5E5E;">=</span> X_batch[<span class="dv" style="color: #AD0000;">0</span>]</span>
+<span id="cb26-8">            plt.imshow(image)</span>
+<span id="cb26-9">            plt.title(<span class="st" style="color: #20794D;">'cat'</span> <span class="cf" style="color: #003B4F;">if</span> np.argmax(prediction)<span class="op" style="color: #5E5E5E;">==</span><span class="dv" style="color: #AD0000;">0</span> <span class="cf" style="color: #003B4F;">else</span> <span class="st" style="color: #20794D;">"dog"</span>)</span>
+<span id="cb26-10">            <span class="cf" style="color: #003B4F;">break</span></span>
+<span id="cb26-11">    plt.tight_layout()</span>
+<span id="cb26-12">    plt.show()</span>
+<span id="cb26-13">visualize_predictions(test_generator, model)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://shindeshu.github.io/posts/tutorials/keras_cnns_intro_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="transfer-learning-1" class="level2">
+<h2 class="anchored" data-anchor-id="transfer-learning-1">Transfer Learning</h2>
+<p>If you made it here, we’ll talk about deep learning’s most important tricks- transfer learning!</p>
+<p>Neural networks are notoriously data hungry- they can eat millions of images and digest them to be able to generalize upon their features. In this case, what if you don’t have millions of images?</p>
+<p>In this case, you use a model that has been trained on millions of images. And take it as your starting point. And train your model from them. Those massive datasets don’t necessarily have to be related to your image classes.</p>
+<p>There are many publicly available models like resnet, xception, convnext (particular architectures of CNNs) trained on ImageNet dataset (a very large image dataset with 100+ different classes). You can simply download them, and use it for your task (classifying dogs), and it will work much better than defining a model from new.</p>
+<p>We’ll implement a model using transfer learning below.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:19.734242Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:19.733878Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:21.707074Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:21.706057Z&quot;}" data-papermill="{&quot;duration&quot;:2.157794,&quot;end_time&quot;:&quot;2023-01-07T12:36:21.710237&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:19.552443&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><span class="im" style="color: #00769E;">from</span> tensorflow.keras.applications <span class="im" style="color: #00769E;">import</span> ResNet50, Xception</span>
+<span id="cb27-2"><span class="im" style="color: #00769E;">from</span> tensorflow.keras <span class="im" style="color: #00769E;">import</span> Input</span>
+<span id="cb27-3"><span class="im" style="color: #00769E;">from</span> tensorflow.keras.models <span class="im" style="color: #00769E;">import</span> Model</span>
+<span id="cb27-4"></span>
+<span id="cb27-5"><span class="co" style="color: #5E5E5E;"># ResNet50 is our "backbone" of sorts, a CNN architecture </span></span>
+<span id="cb27-6"><span class="co" style="color: #5E5E5E;"># pretrained on the imagenet dataset</span></span>
+<span id="cb27-7"><span class="co" style="color: #5E5E5E;"># we are only taking the CNN portion of it (include_top = False)</span></span>
+<span id="cb27-8"><span class="co" style="color: #5E5E5E;"># and dropping the dense layer, we'll initialize a dense network of our own</span></span>
+<span id="cb27-9"></span>
+<span id="cb27-10">basemodel <span class="op" style="color: #5E5E5E;">=</span> Xception(include_top <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">False</span>, </span>
+<span id="cb27-11">                   weights <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">'imagenet'</span>,</span>
+<span id="cb27-12">                  input_shape<span class="op" style="color: #5E5E5E;">=</span>(img_height, img_width, <span class="dv" style="color: #AD0000;">3</span>))</span>
+<span id="cb27-13"></span>
+<span id="cb27-14">basemodel.trainable <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">False</span></span>
+<span id="cb27-15"></span>
+<span id="cb27-16"><span class="co" style="color: #5E5E5E;"># use the output of the baseModel to create a "head"</span></span>
+<span id="cb27-17">headModel <span class="op" style="color: #5E5E5E;">=</span> basemodel.output</span>
+<span id="cb27-18">headModel <span class="op" style="color: #5E5E5E;">=</span> MaxPooling2D(pool_size<span class="op" style="color: #5E5E5E;">=</span>(<span class="dv" style="color: #AD0000;">5</span>, <span class="dv" style="color: #AD0000;">5</span>))(headModel)</span>
+<span id="cb27-19">headModel <span class="op" style="color: #5E5E5E;">=</span> Flatten(name<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"flatten"</span>)(headModel)</span>
+<span id="cb27-20">headModel <span class="op" style="color: #5E5E5E;">=</span> Dense(<span class="dv" style="color: #AD0000;">128</span>, activation<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"relu"</span>)(headModel)</span>
+<span id="cb27-21">headModel <span class="op" style="color: #5E5E5E;">=</span> Dropout(<span class="fl" style="color: #AD0000;">0.8</span>)(headModel)</span>
+<span id="cb27-22"><span class="co" style="color: #5E5E5E;"># headModel = Dense(32, activation="relu")(headModel)</span></span>
+<span id="cb27-23"><span class="co" style="color: #5E5E5E;"># headModel = Dropout(0.5)(headModel)</span></span>
+<span id="cb27-24">headModel <span class="op" style="color: #5E5E5E;">=</span> Dense(<span class="dv" style="color: #AD0000;">2</span>, activation<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"softmax"</span>)(headModel)</span>
+<span id="cb27-25"><span class="co" style="color: #5E5E5E;"># at the end, we'll have two neurons, for two of the classes</span></span>
+<span id="cb27-26"></span>
+<span id="cb27-27"><span class="co" style="color: #5E5E5E;"># we're "disabling" the backbone, and only training the head for this task</span></span>
+<span id="cb27-28"><span class="co" style="color: #5E5E5E;"># we're assuming that the backbone is already sufficiently trained to generate</span></span>
+<span id="cb27-29"><span class="co" style="color: #5E5E5E;"># features from images like ours.</span></span>
+<span id="cb27-30"><span class="co" style="color: #5E5E5E;"># we can also "disable" all CNN layers except last 4</span></span>
+<span id="cb27-31"></span>
+<span id="cb27-32"><span class="co" style="color: #5E5E5E;"># create a model object</span></span>
+<span id="cb27-33">model <span class="op" style="color: #5E5E5E;">=</span> Model(inputs<span class="op" style="color: #5E5E5E;">=</span>basemodel.<span class="bu" style="color: null;">input</span>, outputs<span class="op" style="color: #5E5E5E;">=</span>headModel)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/xception/xception_weights_tf_dim_ordering_tf_kernels_notop.h5
+83689472/83683744 [==============================] - 1s 0us/step
+83697664/83683744 [==============================] - 1s 0us/step</code></pre>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:22.271148Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:22.270579Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:22.275448Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:22.274642Z&quot;}" data-papermill="{&quot;duration&quot;:0.294383,&quot;end_time&quot;:&quot;2023-01-07T12:36:22.279392&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:21.985009&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><span class="co" style="color: #5E5E5E;"># plot_model(model, show_shapes=True, show_layer_names=False, dpi=60)</span></span></code></pre></div>
+</div>
+</section>
+<section id="experiment-tracking" class="level2">
+<h2 class="anchored" data-anchor-id="experiment-tracking">Experiment Tracking</h2>
+<p>In earlier case, we plotted our losses and metrics after the training was done, manually using matplotlib. But there are tools available using which we can observe real-time how our training is progressing. They also log system metrics like GPU usage, and can keep track of multiple experiments, hyperparameters etc. One such tool is wandb.ai, using which you can track your model even on phone as it’s running in background.</p>
+<p>Using it is very simple, signup on <a href="wandb.ai">wandb.ai</a>, and add only few lines of code. Get the API token, and go through <a href="https://www.kaggle.com/general/209530">this discussion</a> on how to add it as a kaggle secret.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:23.178436Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:23.178088Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:25.450810Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:25.449820Z&quot;}" data-papermill="{&quot;duration&quot;:2.457549,&quot;end_time&quot;:&quot;2023-01-07T12:36:25.453033&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:22.995484&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1">use_wandb <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">True</span> <span class="co" style="color: #5E5E5E;"># set to false if you don't want to use wandb for tracking</span></span>
+<span id="cb30-2"><span class="cf" style="color: #003B4F;">if</span> use_wandb:</span>
+<span id="cb30-3">    <span class="im" style="color: #00769E;">from</span> kaggle_secrets <span class="im" style="color: #00769E;">import</span> UserSecretsClient</span>
+<span id="cb30-4">    <span class="im" style="color: #00769E;">import</span> wandb</span>
+<span id="cb30-5">    <span class="im" style="color: #00769E;">from</span> wandb.keras <span class="im" style="color: #00769E;">import</span> WandbCallback</span>
+<span id="cb30-6">    user_secrets <span class="op" style="color: #5E5E5E;">=</span> UserSecretsClient()</span>
+<span id="cb30-7">    wandb_api <span class="op" style="color: #5E5E5E;">=</span> user_secrets.get_secret(<span class="st" style="color: #20794D;">"wandb_api"</span>)</span>
+<span id="cb30-8">    wandb.login(key<span class="op" style="color: #5E5E5E;">=</span>wandb_api)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>wandb: W&amp;B API key is configured. Use `wandb login --relogin` to force relogin
+wandb: WARNING If you're specifying your api key in code, ensure this code is not shared publicly.
+wandb: WARNING Consider setting the WANDB_API_KEY environment variable, or running `wandb login` from the command line.
+wandb: Appending key for api.wandb.ai to your netrc file: /root/.netrc</code></pre>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:25.823097Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:25.822725Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:32.713179Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:32.712167Z&quot;}" data-papermill="{&quot;duration&quot;:7.080441,&quot;end_time&quot;:&quot;2023-01-07T12:36:32.715909&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:25.635468&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><span class="cf" style="color: #003B4F;">if</span> use_wandb:</span>
+<span id="cb32-2">    wandb.init(project<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"keras_cats_and_dogs"</span>, config<span class="op" style="color: #5E5E5E;">=</span>{<span class="st" style="color: #20794D;">"batch_size"</span>: batch_size})</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>wandb: Currently logged in as: shindeshu. Use `wandb login --relogin` to force relogin</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+wandb version 0.13.7 is available!  To upgrade, please run:
+ $ pip install wandb --upgrade
+</div>
+<div class="cell-output cell-output-display">
+Tracking run with wandb version 0.12.21
+</div>
+<div class="cell-output cell-output-display">
+Run data is saved locally in <code>/kaggle/working/wandb/run-20230107_123626-2bw5qpbs</code>
+</div>
+<div class="cell-output cell-output-display">
+Syncing run <strong><a href="https://wandb.ai/shindeshu/keras_cats_and_dogs/runs/2bw5qpbs" target="_blank">fancy-plant-6</a></strong> to <a href="https://wandb.ai/shindeshu/keras_cats_and_dogs" target="_blank">Weights &amp; Biases</a> (<a href="https://wandb.me/run" target="_blank">docs</a>)<br>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:33.344004Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:33.343415Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T12:36:33.365175Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T12:36:33.364327Z&quot;}" data-papermill="{&quot;duration&quot;:0.366902,&quot;end_time&quot;:&quot;2023-01-07T12:36:33.367902&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:33.001000&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><span class="im" style="color: #00769E;">from</span> tensorflow.keras.optimizers <span class="im" style="color: #00769E;">import</span> Adam</span>
+<span id="cb34-2"><span class="im" style="color: #00769E;">from</span> tensorflow.keras.callbacks <span class="im" style="color: #00769E;">import</span> EarlyStopping</span>
+<span id="cb34-3">opt <span class="op" style="color: #5E5E5E;">=</span> Adam(learning_rate<span class="op" style="color: #5E5E5E;">=</span><span class="fl" style="color: #AD0000;">0.001</span>)</span>
+<span id="cb34-4">model.<span class="bu" style="color: null;">compile</span>(loss<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'categorical_crossentropy'</span>, </span>
+<span id="cb34-5">              optimizer<span class="op" style="color: #5E5E5E;">=</span>opt, </span>
+<span id="cb34-6">              metrics<span class="op" style="color: #5E5E5E;">=</span>[<span class="st" style="color: #20794D;">'accuracy'</span>])</span></code></pre></div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T12:36:33.938057Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T12:36:33.937490Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T13:06:34.195009Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T13:06:34.194053Z&quot;}" data-papermill="{&quot;duration&quot;:1800.546907,&quot;end_time&quot;:&quot;2023-01-07T13:06:34.197419&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T12:36:33.650512&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1">epochs<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">5</span></span>
+<span id="cb35-2">callbacks<span class="op" style="color: #5E5E5E;">=</span>[EarlyStopping(monitor<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'loss'</span>, patience<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">2</span>), ]</span>
+<span id="cb35-3"><span class="cf" style="color: #003B4F;">if</span> use_wandb: callbacks.append(WandbCallback())</span>
+<span id="cb35-4"></span>
+<span id="cb35-5">history <span class="op" style="color: #5E5E5E;">=</span> model.fit_generator(</span>
+<span id="cb35-6">    train_generator,</span>
+<span id="cb35-7">    epochs<span class="op" style="color: #5E5E5E;">=</span>epochs,</span>
+<span id="cb35-8">    validation_data<span class="op" style="color: #5E5E5E;">=</span>validation_generator,</span>
+<span id="cb35-9">    callbacks<span class="op" style="color: #5E5E5E;">=</span>callbacks,</span>
+<span id="cb35-10">)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>wandb: WARNING The save_model argument by default saves the model in the HDF5 format that cannot save custom objects like subclassed models and custom layers. This behavior will be deprecated in a future release in favor of the SavedModel format. Meanwhile, the HDF5 model is saved as W&amp;B files and the SavedModel as W&amp;B Artifacts.
+/opt/conda/lib/python3.7/site-packages/keras/engine/training.py:1972: UserWarning: `Model.fit_generator` is deprecated and will be removed in a future version. Please use `Model.fit`, which supports generators.
+  warnings.warn('`Model.fit_generator` is deprecated and '
+2023-01-07 12:36:46.761375: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 12:36:46.761921: I tensorflow/core/grappler/devices.cc:66] Number of eligible GPUs (core count &gt;= 8, compute capability &gt;= 0.0): 1
+2023-01-07 12:36:46.762185: I tensorflow/core/grappler/clusters/single_machine.cc:357] Starting new session
+2023-01-07 12:36:46.765305: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 12:36:46.765841: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 12:36:46.766331: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 12:36:46.766954: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 12:36:46.767464: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:937] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2023-01-07 12:36:46.767852: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 15401 MB memory:  -&gt; device: 0, name: Tesla P100-PCIE-16GB, pci bus id: 0000:00:04.0, compute capability: 6.0
+2023-01-07 12:36:46.787714: I tensorflow/core/grappler/optimizers/meta_optimizer.cc:1137] Optimization results for grappler item: graph_to_optimize
+  function_optimizer: function_optimizer did nothing. time = 0.01ms.
+  function_optimizer: function_optimizer did nothing. time = 0.002ms.
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/5
+313/313 [==============================] - 350s 1s/step - loss: 0.1106 - accuracy: 0.9637 - val_loss: 0.0460 - val_accuracy: 0.9844</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/opt/conda/lib/python3.7/site-packages/keras/utils/generic_utils.py:497: CustomMaskWarning: Custom mask layers require a config and must override get_config. When loading, the custom mask layer must be passed to the custom_objects argument.
+  category=CustomMaskWarning)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 2/5
+313/313 [==============================] - 335s 1s/step - loss: 0.0764 - accuracy: 0.9768 - val_loss: 0.0479 - val_accuracy: 0.9828
+Epoch 3/5
+313/313 [==============================] - 334s 1s/step - loss: 0.0690 - accuracy: 0.9771 - val_loss: 0.0380 - val_accuracy: 0.9844
+Epoch 4/5
+313/313 [==============================] - 331s 1s/step - loss: 0.0626 - accuracy: 0.9792 - val_loss: 0.0399 - val_accuracy: 0.9854
+Epoch 5/5
+313/313 [==============================] - 337s 1s/step - loss: 0.0629 - accuracy: 0.9777 - val_loss: 0.0380 - val_accuracy: 0.9836</code></pre>
+</div>
+</div>
+</section>
+<section id="massive-improvement-using-transfer-learning" class="level2">
+<h2 class="anchored" data-anchor-id="massive-improvement-using-transfer-learning">Massive Improvement Using Transfer Learning</h2>
+<p>When we defined a custom model earlier, the best validation accuracy we got after 10 epochs was <strong>85%</strong>.</p>
+<p>Here, by using a pre-trained model, our validation accuracy after 1 epoch is as high as <strong>98%</strong>!</p>
+<p>As we can see, using a pre-trained model can really boost our performance with minimal training efforts.</p>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T13:06:35.271404Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T13:06:35.271028Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T13:06:35.565654Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T13:06:35.564802Z&quot;}" data-papermill="{&quot;duration&quot;:0.561439,&quot;end_time&quot;:&quot;2023-01-07T13:06:35.567660&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T13:06:35.006221&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1">plot_loss(history)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://shindeshu.github.io/posts/tutorials/keras_cnns_intro_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution="{&quot;iopub.execute_input&quot;:&quot;2023-01-07T13:06:36.099744Z&quot;,&quot;iopub.status.busy&quot;:&quot;2023-01-07T13:06:36.099399Z&quot;,&quot;iopub.status.idle&quot;:&quot;2023-01-07T13:06:46.136502Z&quot;,&quot;shell.execute_reply&quot;:&quot;2023-01-07T13:06:46.135704Z&quot;}" data-papermill="{&quot;duration&quot;:10.306872,&quot;end_time&quot;:&quot;2023-01-07T13:06:46.141786&quot;,&quot;exception&quot;:false,&quot;start_time&quot;:&quot;2023-01-07T13:06:35.834914&quot;,&quot;status&quot;:&quot;completed&quot;}" data-tags="[]" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1">visualize_predictions(test_generator, model)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://shindeshu.github.io/posts/tutorials/keras_cnns_intro_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>getting-started</category>
+  <category>deep-learning</category>
+  <guid>https://shindeshu.github.io/posts/tutorials/keras_cnns_intro.html</guid>
+  <pubDate>Tue, 14 Feb 2023 18:30:00 GMT</pubDate>
+  <media:content url="https://shindeshu.github.io/posts/tutorials/assets/computer_vision.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Creating AI Art of Myself With Stable Diffusion + Dreambooth</title>
   <dc:creator>Shubham Shinde</dc:creator>
@@ -185,8 +1039,8 @@
 
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://shindeshu.github.io/posts/gnns/graph_img.jpeg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">graph-img</figcaption><p></p>
+<p><img src="https://shindeshu.github.io/posts/gnns/graph_cat.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Let’s Build a GNN</figcaption><p></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -540,7 +1394,7 @@
   <category>gnn</category>
   <guid>https://shindeshu.github.io/posts/gnns/gnn_from_scratch.html</guid>
   <pubDate>Mon, 24 Jan 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://shindeshu.github.io/posts/gnns/graph_img.jpeg" medium="image" type="image/jpeg"/>
+  <media:content url="https://shindeshu.github.io/posts/gnns/graph_cat.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>A Brief Intro To Graph Neural Networks</title>

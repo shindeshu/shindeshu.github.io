@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Shubham Shinde">
+<meta name="dcterms.date" content="2023-02-15">
+<meta name="description" content="How should newcomers into data science and ML should navigate the waters">
+
+<title>Shubham Shinde - A Roadmap for Getting into Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-E3Z2GSDBB7"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Shubham Shinde - A Roadmap for Getting into Data Science">
+<meta property="og:description" content="How should newcomers into data science and ML should navigate the waters">
+<meta property="og:site-name" content="Shubham Shinde">
+<meta name="twitter:title" content="Shubham Shinde - A Roadmap for Getting into Data Science">
+<meta name="twitter:description" content="How should newcomers into data science and ML should navigate the waters">
+<meta name="twitter:creator" content="@ShindeShubham85">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Shubham Shinde</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#everyone-wants-to-be-in" id="toc-everyone-wants-to-be-in" class="nav-link active" data-scroll-target="#everyone-wants-to-be-in">Everyone Wants to Be In</a></li>
+  <li><a href="#what-is-dsmlai" id="toc-what-is-dsmlai" class="nav-link" data-scroll-target="#what-is-dsmlai">What is DS/ML/AI?</a>
+  <ul class="collapse">
+  <li><a href="#some-real-use-cases-of-data-science" id="toc-some-real-use-cases-of-data-science" class="nav-link" data-scroll-target="#some-real-use-cases-of-data-science">Some Real Use Cases of Data Science</a></li>
+  <li><a href="#types-of-data---tabular-image-and-text" id="toc-types-of-data---tabular-image-and-text" class="nav-link" data-scroll-target="#types-of-data---tabular-image-and-text">Types of Data - Tabular, Image and Text</a></li>
+  </ul></li>
+  <li><a href="#an-overview-of-requirements" id="toc-an-overview-of-requirements" class="nav-link" data-scroll-target="#an-overview-of-requirements">An Overview of Requirements</a>
+  <ul class="collapse">
+  <li><a href="#technical-skills" id="toc-technical-skills" class="nav-link" data-scroll-target="#technical-skills">Technical Skills</a></li>
+  <li><a href="#theoretical-knowledge" id="toc-theoretical-knowledge" class="nav-link" data-scroll-target="#theoretical-knowledge">Theoretical Knowledge</a></li>
+  </ul></li>
+  <li><a href="#structure-your-machine-learning-journey" id="toc-structure-your-machine-learning-journey" class="nav-link" data-scroll-target="#structure-your-machine-learning-journey">Structure Your Machine Learning Journey</a>
+  <ul class="collapse">
+  <li><a href="#the-problem-of-plenty" id="toc-the-problem-of-plenty" class="nav-link" data-scroll-target="#the-problem-of-plenty">The Problem Of Plenty</a></li>
+  </ul></li>
+  <li><a href="#blind-men-and-the-elephant" id="toc-blind-men-and-the-elephant" class="nav-link" data-scroll-target="#blind-men-and-the-elephant">Blind Men and the Elephant</a>
+  <ul class="collapse">
+  <li><a href="#it-can-get-overwhelming" id="toc-it-can-get-overwhelming" class="nav-link" data-scroll-target="#it-can-get-overwhelming">It Can Get Overwhelming</a></li>
+  </ul></li>
+  <li><a href="#list-of-topics" id="toc-list-of-topics" class="nav-link" data-scroll-target="#list-of-topics">List of Topics</a></li>
+  <li><a href="#a-practice-first-discipline" id="toc-a-practice-first-discipline" class="nav-link" data-scroll-target="#a-practice-first-discipline">A Practice-First Discipline</a>
+  <ul class="collapse">
+  <li><a href="#dont-heed-the-kaggle-haters" id="toc-dont-heed-the-kaggle-haters" class="nav-link" data-scroll-target="#dont-heed-the-kaggle-haters">Don’t Heed the Kaggle Haters</a></li>
+  </ul></li>
+  <li><a href="#projects" id="toc-projects" class="nav-link" data-scroll-target="#projects">Projects</a></li>
+  <li><a href="#domain-knowledge" id="toc-domain-knowledge" class="nav-link" data-scroll-target="#domain-knowledge">Domain Knowledge</a></li>
+  <li><a href="#deep-learning" id="toc-deep-learning" class="nav-link" data-scroll-target="#deep-learning">Deep Learning</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A Roadmap for Getting into Data Science</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">getting-started</div>
+    <div class="quarto-category">data-science</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    How should newcomers into data science and ML should navigate the waters
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Shubham Shinde </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 15, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="everyone-wants-to-be-in" class="level2">
+<h2 class="anchored" data-anchor-id="everyone-wants-to-be-in">Everyone Wants to Be In</h2>
+<p>It’s no news nowadays that folks are flocking towards data science- there are quite many aspiring data scientists around who want to do AI things. I wrote this post as a starter for those beginner data scientists who want to break in. This post does not discuss whether you <em>should</em>, or about the quantum of opportunity in this space, that’s a different topic.</p>
+<p>This post also does not give you a big list of links. We try to create a structure of our learning process, and in the end give a few resources.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/robot_learning.jpg" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption"><em>Images generated using Stable Diffusion</em></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="what-is-dsmlai" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-dsmlai">What is DS/ML/AI?</h2>
+<p>Definitions are of no help here. There aren’t well-defined boundaries around these terms, no self-evident ground truths that distinguish ML from AI or DS.</p>
+<p>Broadly, the field is about learning patterns from data to solve various business problems. Take for instance, price of a house. Traditionally, you could make up basic if-else rules that incorporate business logic to get a value for a house price. With data science you could utilize algorithms to learn these rules and predict these values given the attributes of a house. Similarly, you could</p>
+<ul>
+<li>Predict when a given machine part could fail</li>
+<li>Flag a Credit Card Fraud</li>
+<li>Assess Credit-Worthiness given financial attributes of an individual</li>
+</ul>
+<p>Ability to identify complex patterns in a data is useful in almost every domain that has any significant data, and underlying structure in it.</p>
+<section id="some-real-use-cases-of-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="some-real-use-cases-of-data-science">Some Real Use Cases of Data Science</h3>
+<ul>
+<li><a href="https://www.analyticsvidhya.com/blog/2021/04/how-aviation-industry-uses-data-science/">Read how Aviation Industry Uses DS for Optimizing their Business Activities</a></li>
+<li><a href="https://newsroom.prattwhitney.com/2016-02-16-Pratt-Whitney-Applies-Big-Data-to-Predict-Engine-Maintenance-Frequency-and-Planning">Read how Pratt and Whitney Uses DS for Predictive Maintenance of Engines</a></li>
+</ul>
+</section>
+<section id="types-of-data---tabular-image-and-text" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-data---tabular-image-and-text">Types of Data - Tabular, Image and Text</h3>
+<p>The examples cited above are of tabular data. As the name explains, it is data that’s stored in a tabular format. This is the most common data format, and easier to work on as well. But there’s also image data and text data, both are also increasingly forming the proportion of useful industrial models.</p>
+<ul>
+<li>On Pinterest, the images that get recommended to you are based on ML models.</li>
+<li>Facebook, Twitter recommending feeds to you are recommended using ML models as well.</li>
+<li>Face Recognition softwares are used worldwide.</li>
+<li>Chatbots, Translation all use text-based ML models underneath them.</li>
+</ul>
+</section>
+</section>
+<section id="an-overview-of-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="an-overview-of-requirements">An Overview of Requirements</h2>
+<p>What do you need to become a data scientist, and what do you do on a day-to-day basis on your job?</p>
+<p>I’d divide this into four topics - Technical Skills, Theoretical Knowledge, Domain and Business Knowledge, and Project Management. For a beginner, we’d be only interested in the first two.</p>
+<section id="technical-skills" class="level3">
+<h3 class="anchored" data-anchor-id="technical-skills">Technical Skills</h3>
+<p>These are divided into parts.</p>
+<ul>
+<li><strong>Software Engineering</strong>: You should know how to code.</li>
+<li><strong>Tools Specific to Data Science</strong>: Know thy tools!</li>
+</ul>
+</section>
+<section id="theoretical-knowledge" class="level3">
+<h3 class="anchored" data-anchor-id="theoretical-knowledge">Theoretical Knowledge</h3>
+<ul>
+<li><strong>Theory of Data Science</strong>: Learn from the wisdom of ancients!</li>
+<li><strong>Mathematics</strong>: Basics will do fine.</li>
+</ul>
+</section>
+</section>
+<section id="structure-your-machine-learning-journey" class="level2">
+<h2 class="anchored" data-anchor-id="structure-your-machine-learning-journey">Structure Your Machine Learning Journey</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/structure.jpg" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">.</figcaption><p></p>
+</figure>
+</div>
+<p>Here, we’ll expand on what are these skills, and how do you go about acquiring them, and in what order.</p>
+<p><strong>Python</strong>: For a beginner, the first step should be to learn how to code. Python is the most used language in this space, and it is great language for a first-time coder to learn. In fact, the ease of coding is exactly the reason why python came to dominate the machine learning landscape. <a href="https://www.youtube.com/watch?v=rfscVS0vtbw&amp;t=5717s">This</a> is a good free resource to start learning.</p>
+<p>Basics of the language are enough to get started- you don’t need to leetcode yourself. You do need to get a hang of jupyter notebooks, an IDE like VS-Code, and be able to install packages.</p>
+<p><strong>Tabular vs Deep Learning</strong>: As a newcomer, you should aim to get proficient in tabular data before you move to tackling image or text datasets.</p>
+<p><strong>Tools</strong>: Knowing pandas (library that handles tabular data) and matplotlib/seaborn (data visualization library) is another starting step. Knowing basic methods is enough at this stage.</p>
+<p>Now that we have warmed up, we’ll step into the main process and discuss the sources to learn from.</p>
+<section id="the-problem-of-plenty" class="level3">
+<h3 class="anchored" data-anchor-id="the-problem-of-plenty">The Problem Of Plenty</h3>
+<p>Where to learn from? There is just so much to choose, so many courses, books, websites, twitter influencers, linkedin influencers, an overflowing bookmarks folder, pdfs of unread papers. The progress is overwhelming too- What’s a standard practice a year ago may not be the same today.</p>
+<p>This can be overwhelming for a veteran, let alone a beginner. Separating the noise from the signal can be daunting, as well as finding the best possible source to learn from.</p>
+<p>Speaking from experience, what works best for me is learning on the job. Whatever projects I’ve worked on, that knowledge stays with me forever. Courses and Books are tougher to retain. So if you’re employed, give your best in your own project, it’s the best way to upskill.</p>
+<p>However, if you’re not employed, or your job is narrow in its scope and you want to upskill, the problem persists. There should be a process to identify and follow the materials. (My personal recommendations are at the end of this post.)</p>
+<p><strong>Courses</strong>: Instead of sampling and browsing dozens of courses, it is better to simply pick one and get started. The time you waste in finding the perfect course can be better utilized in completing an okay course. Most important thing is to get moving and not be stagnant.</p>
+<p><strong>Books</strong>: There are some books that are structured as tutorials. Don’t delve deep into theory at this stage, if a book contains code snippets, is a latest copy, and is easy to read - that’s the one.</p>
+<p><strong>Websites and Blogs</strong>: Keeping browsing medium, towardsdatascience, kdnuggets, etc. Keep it light.</p>
+</section>
+</section>
+<section id="blind-men-and-the-elephant" class="level2">
+<h2 class="anchored" data-anchor-id="blind-men-and-the-elephant">Blind Men and the Elephant</h2>
+<p>Due to the problem of plenty, it is important to keep things simple. Don’t follow too many threads, pick a few sources and stick with it. Course- pick any one and complete it without distraction, but remember that this is not everything, and it has only shown you a part of the elephant. Much like the parable of the blind men and the elephant, where each of the men describe the elephant differently since they’re feeling a different part of the elephant.</p>
+<p>Doing an online course could show you one part of this elephant- the theory behind the many algorithms like linear regression, random forest. There are many helpful books too that can do this. To cover other topics you’ll need other things.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/elephant.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Understanding the Elephant</figcaption><p></p>
+</figure>
+</div>
+<section id="it-can-get-overwhelming" class="level3">
+<h3 class="anchored" data-anchor-id="it-can-get-overwhelming">It Can Get Overwhelming</h3>
+<p>I know that’s a lot of stuff, right? Data science can be overwhelming for a veteran, let alone one who’s just starting their journey. There is so much to learn, from the theory to the latest tools, the latest research, etc. Which is why it is important to remember that it is not necessary to learn <em>everything</em>.</p>
+</section>
+</section>
+<section id="list-of-topics" class="level2">
+<h2 class="anchored" data-anchor-id="list-of-topics">List of Topics</h2>
+<p>This is a rough outline of how your learning journey could look like. Not exhaustive.</p>
+<ul>
+<li>Python, SQL (Basics)</li>
+<li>Pandas and Matplotlib (Basics)
+<ul>
+<li>Reading and basic operations on dataframes</li>
+<li>Basic plotting</li>
+</ul></li>
+<li>Data Science Theory
+<ul>
+<li>Supervised vs Unsupervised Learning</li>
+<li>Different ways of representing data (encoding, binning)</li>
+<li>supervised learning algorithms (linear regression, trees)</li>
+<li>unsupervised learning algorithms (clustering, PCA)</li>
+<li>model evaluation and metrics</li>
+<li>overfitting, underfitting</li>
+<li>ensembles, correlation, feature engineering, outliers, regularization</li>
+</ul></li>
+<li>Practice
+<ul>
+<li>use datasets to create models</li>
+<li>data visualization and EDA</li>
+</ul></li>
+<li>Full-Fledged Projects</li>
+</ul>
+<p>This is a rough outline of the process. My recommended resource to start with is the book <strong>Introduction to Machine Learning using Python</strong> by Andreas Muller. It is a very easy-to-read book that contains code snippets and gradually introduces all topics. You can also complete the <strong>Kaggle Courses</strong> at <a href="https://www.kaggle.com/learn">here</a>, they’re quite friendly and brief tutorials, plus you can run them in your browser itself.</p>
+<p>This outline doesn’t include deep learning (computer vision or natural language processing), or model deployment.</p>
+</section>
+<section id="a-practice-first-discipline" class="level2">
+<h2 class="anchored" data-anchor-id="a-practice-first-discipline">A Practice-First Discipline</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/blacksmith.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Learn by Doing! <em>Image by mastervector on freepik</em></figcaption><p></p>
+</figure>
+</div>
+<p>The first two blocks are in place, the coding environment and the theory of data science. DS is a very practice-oriented discipline. Theoretical knowledge constitutes a small proportion of the data scientist mindspace. It is in the dirty trenches of the notebooks where the real are proven.</p>
+<p>If your resume contains just a bunch of courses, it does not give an interviewer any idea of your prowess. But having a project, notebooks, repos is a sign that you have been there and done those things that matter the most. What things, you ask?</p>
+<p>Reading data, understanding, cleaning, processing, preparing is the single most important aspect of data science that is often not given the necessary important even by those long in the game. These skills cannot be taught in any course or book, but be learned by doing.</p>
+<p>Exploratory Data Analysis (EDA) is a term you’ll come across quite often, and it is an art more than a science, another skill that you’ll learn through practice. Understanding the contents of your data, asking it the right questions and making it answer, this is our bread and butter.</p>
+<p>Then there are feature engineering, dealing with imbalanced data, model training, model evaluation, all skills which are practical in nature. Fortunately for us, there is a single place to learn all of the above- <strong>Kaggle</strong>.</p>
+<p>Kaggle is a website where you can train machine learning models for free using many datasets available there. (It also hosts competitions, but at this point we are focussed on learning). Simply copy-and-editing someone else’s publicly available notebooks can be incredibly helpful to understand various work flows. Spend your time creating a chimaera of a dozen code blocks from dozen notebooks in a single task, and it will be exponentially helpful from a learning perspective.</p>
+<section id="dont-heed-the-kaggle-haters" class="level3">
+<h3 class="anchored" data-anchor-id="dont-heed-the-kaggle-haters">Don’t Heed the Kaggle Haters</h3>
+<p>There has been criticism about Kaggle that it is not helpful for a data science job, since you always get a clean dataset in hand which is never the case in real life. While it is true that real life data is much messier than Kaggle, practicing in Kaggle has much more returns than handicap. You learn to max out your feature engineering skills, data visualization and EDA skills, and are also able to learn how to rapid iterations. Kaggle is helpful without a doubt.</p>
+<p>You also get to learn about the latest techniques, libraries, models, you observe empirical evidence on what methods work and what don’t.</p>
+</section>
+</section>
+<section id="projects" class="level2">
+<h2 class="anchored" data-anchor-id="projects">Projects</h2>
+<p>Once you are able to write a kaggle notebook from start to end, you have pretty much achieved the baseline of what you set out to do. So if you’re at this stage, you should sit back and congratulate yourself.</p>
+<p>If you want to graduate to the next level, you should start doing full fledged projects that solve a meaningful problem. Here, you can use data that’s not from kaggle for a challenge.</p>
+<p>This includes some advanced topics that can be skipped by a beginner, but if you are employed as a data scientist, these would be quite important.</p>
+<p>How would this differ from a kaggle project</p>
+<ul>
+<li>work with .py files instead of a notebook</li>
+<li>write comments, docstrings in order to be helpful to the reader</li>
+<li>use sklearn pipelines in order to save the pre-processing steps, making it easier for inference.</li>
+<li>write modular, readable code.</li>
+<li>learn about code-writing guidelines. PEP8. Use black, isort, etc. tools.</li>
+<li>write tests.</li>
+</ul>
+</section>
+<section id="domain-knowledge" class="level2">
+<h2 class="anchored" data-anchor-id="domain-knowledge">Domain Knowledge</h2>
+<p>This section is not applicable for a complete beginner.</p>
+<p>Nobody pays you to fit a model to a csv. The purpose of data scientists, at the end of the day, is to use their skills to add value to the business. This purpose, and that of understanding the data, formulating problems to solve, and evaluating solutions, all require you to have knowledge of the business systems that you work in. This includes industry knowledge, how processes flow inside your own firm, the meaning behind the data, and more. Acquiring this knowledge needs communication skills, and ability to ask the right questions.</p>
+<p>Unlike specialists, data scientists also need to rotate over different businesses. If today you are building a recommender system for ecommerce, tomorrow you could be building a failure prediction model for aircraft engines. The variety of domains we operate in is vast, so the ability to quickly onboard is important too.</p>
+</section>
+<section id="deep-learning" class="level2">
+<h2 class="anchored" data-anchor-id="deep-learning">Deep Learning</h2>
+<p>Well, we only learned about tabular data! Where’s the cool stuff about neural networks, chat-GPT? This post was supposed to include deep learning topics as well, however the length has gotten too long hence they’ll be covered in a separate post.</p>
+<p>However if you need a quick tutorial on them, you can follow <a href="https://www.kaggle.com/learn">the kaggle courses</a>.</p>
+<p>Second place to grokk deep learning is reading and running public kernels on kaggle. Third place is the <a href="https://keras.io/examples/">official documentation</a> of libraries like keras.</p>
+<p>Deep learning is a very empirical field where practice and theory go hand-in-hand. The traditional serial approach of reading up theory and then taking up examples will not work for deep learning, they have to go together. It is best if, as a beginner, you don’t go too deep into theoretical aspects of deep learning before getting hands-on experience with their applications.</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>In order to avoid the problem of plenty, I will keep this list as short as possible.</p>
+<ol type="1">
+<li><p>Book - Introduction to Machine Learning by Andreas Muller. This covers theory and practice at the same time while being beginner friendly.</p></li>
+<li><p>Course - Most courses like that of Andrew Ng are quite heavy on mathematics and the “backend” of ML algorithms. I personally think this is not a good place to start for a newcomer. However if you have a background in STEM, you might like this approach of thinking from first principles.</p></li>
+<li><p>Kaggle Learn - Most people know kaggle for building models and competitions. But kaggle also has a courses section where there are easy-to-follow and brief tutorials on various topics like pandas, data visualization, etc. They are fantastic for a beginner.</p></li>
+<li><p>Kaggle Notebooks - Spending time here will teach you about almost everything about model building.</p></li>
+</ol>
+<p>This is all for this beginner’s notebook. Good luck to your machine learning journey!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

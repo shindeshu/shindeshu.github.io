@@ -2,6 +2,15 @@
 title: Shubham Shinde
 image: shubham.jpg
 
+listing:
+- id: landing-posts
+  contents: posts/
+  type: table
+  max-items: 3
+  sort: 
+    - "date desc"
+    - "title asc"
+
 about:
   template: trestles
   image-shape: round
@@ -28,3 +37,9 @@ I am a data scientist who has been around for a while. I've built 🛠️ soluti
 I am passionate about AI, and the way it is changing our world. This is why I love to keep on top of the latest advances - Stable Diffusion, Transformers, RecSys, MLOps, etc. Some of it I try to share back through my blog, where I write everything about AI that is churning in my brain.
 
 When I'm not doing tech, I love to sing 🎤, and read 📙, and scribble ✏️ once in a while. I love history and the classics as well. 
+
+## My Blog
+Click [here](blog.qmd) to check out my blog.
+
+:::{#landing-posts}
+:::

@@ -31,6 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -58,6 +60,35 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-landing-posts .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-landing-posts'] = new List('listing-landing-posts', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-E3Z2GSDBB7"></script>
 
 <script type="text/javascript">
@@ -68,6 +99,7 @@ gtag('js', new Date());
 gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Shubham Shinde">
@@ -151,8 +183,92 @@ gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
 <p>I am a data scientist who has been around for a while. I’ve built 🛠️ solutions for sectors ranging from ✈️ aerospace to 🏥 insurance. I’ve worked in areas like insurance fraud detection, satellite image segmentation, engine failure prediction, among others. Checkout my resume for more!</p>
 <p>I am passionate about AI, and the way it is changing our world. This is why I love to keep on top of the latest advances - Stable Diffusion, Transformers, RecSys, MLOps, etc. Some of it I try to share back through my blog, where I write everything about AI that is churning in my brain.</p>
 <p>When I’m not doing tech, I love to sing 🎤, and read 📙, and scribble ✏️ once in a while. I love history and the classics as well.</p>
+<section id="my-blog" class="level2">
+<h2 data-anchor-id="my-blog">My Blog</h2>
+<p>Click <a href="./blog.html">here</a> to check out my blog.</p>
+<div id="listing-landing-posts" class="quarto-listing quarto-listing-container-table">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-landing-posts-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-landing-posts'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+<a class="sort" data-sort="listing-date-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Date</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-author" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Author</a>
+</th>
+</tr>
+</thead>
+<tbody class="list">
+<tr data-index="0" data-categories="getting-started,deep-learning" data-listing-date-sort="1676399400000" data-listing-file-modified-sort="1673852196487" data-listing-reading-time-sort="10.555" data-listing-title-sort="A Friendly ☺️ Introduction to CNNs with Keras" data-listing-filename-sort="keras_cnns_intro.ipynb">
+<td class="listing-date">
+Feb 15, 2023
+</td>
+<td class="listing-title">
+<a href="./posts/tutorials/keras_cnns_intro.html" class="title">A Friendly ☺️ Introduction to CNNs with Keras</a>
+</td>
+<td class="listing-author">
+Shubham Shinde
+</td>
+</tr>
+<tr data-index="1" data-categories="getting-started,data-science" data-listing-date-sort="1676399400000" data-listing-file-modified-sort="1673852556313" data-listing-reading-time-sort="11.58" data-listing-title-sort="A Roadmap for Getting into Data Science" data-listing-filename-sort="start.ipynb">
+<td class="listing-date">
+Feb 15, 2023
+</td>
+<td class="listing-title">
+<a href="./posts/roadmap/start.html" class="title">A Roadmap for Getting into Data Science</a>
+</td>
+<td class="listing-author">
+Shubham Shinde
+</td>
+</tr>
+<tr data-index="2" data-categories="ai-art" data-listing-date-sort="1669746600000" data-listing-file-modified-sort="1673797973464" data-listing-reading-time-sort="3.335" data-listing-title-sort="Creating AI Art of Myself With Stable Diffusion + Dreambooth" data-listing-filename-sort="getting_started_sd.ipynb">
+<td class="listing-date">
+Nov 30, 2022
+</td>
+<td class="listing-title">
+<a href="./posts/stable_diff/getting_started_sd.html" class="title">Creating AI Art of Myself With Stable Diffusion + Dreambooth</a>
+</td>
+<td class="listing-author">
+Shubham Shinde
+</td>
+</tr>
+</tbody>
+</table>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
 
 
+</section>
 </section>
 </main></div>
 </div>

@@ -2,9 +2,21 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/roadmap/start.html",
+      "/posts/tutorials/keras_cnns_intro.html",
       "/posts/stable_diff/getting_started_sd.html",
       "/posts/gnns/gnn_from_scratch.html",
       "/posts/gnns/intro_to_gnn.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/tutorials/keras_cnns_intro.html",
+      "/posts/roadmap/start.html",
+      "/posts/stable_diff/getting_started_sd.html",
+      "/posts/gnns/intro_to_gnn.html",
+      "/posts/gnns/gnn_from_scratch.html"
     ]
   }
 ]
