@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://shindeshu.github.io/blog.html</loc>
-    <lastmod>2023-01-16T07:02:41.716Z</lastmod>
+    <lastmod>2023-01-16T07:28:33.597Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/index.html</loc>
-    <lastmod>2023-01-16T07:02:42.457Z</lastmod>
+    <lastmod>2023-01-16T07:28:34.529Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/gnns/gnn_from_scratch.html</loc>
-    <lastmod>2023-01-16T06:55:56.467Z</lastmod>
+    <lastmod>2023-01-16T07:28:35.455Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/gnns/intro_to_gnn.html</loc>
-    <lastmod>2023-01-15T07:44:05.182Z</lastmod>
-  </url>
-  <url>
-    <loc>https://shindeshu.github.io/posts/stable_diff/getting_started_sd.html</loc>
-    <lastmod>2023-01-15T15:53:00.616Z</lastmod>
+    <lastmod>2023-01-16T07:28:36.069Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/roadmap/start.html</loc>
-    <lastmod>2023-01-16T07:02:44.346Z</lastmod>
+    <lastmod>2023-01-16T07:28:36.891Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shindeshu.github.io/posts/stable_diff/getting_started_sd.html</loc>
+    <lastmod>2023-01-16T07:28:37.549Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/tutorials/keras_cnns_intro.html</loc>
-    <lastmod>2023-01-16T06:56:45.853Z</lastmod>
+    <lastmod>2023-01-16T07:28:39.331Z</lastmod>
   </url>
 </urlset>

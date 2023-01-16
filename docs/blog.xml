@@ -10,7 +10,7 @@
 <atom:link href="https://shindeshu.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Blog for data science related topics</description>
 <generator>quarto-1.1.251</generator>
-<lastBuildDate>Tue, 14 Feb 2023 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 14 Jan 2023 18:30:00 GMT</lastBuildDate>
 <item>
   <title>A Roadmap for Getting into Data Science</title>
   <dc:creator>Shubham Shinde</dc:creator>
@@ -214,7 +214,7 @@
   <category>getting-started</category>
   <category>data-science</category>
   <guid>https://shindeshu.github.io/posts/roadmap/start.html</guid>
-  <pubDate>Tue, 14 Feb 2023 18:30:00 GMT</pubDate>
+  <pubDate>Sat, 14 Jan 2023 18:30:00 GMT</pubDate>
   <media:content url="https://shindeshu.github.io/posts/roadmap/assets/robot_learning.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
@@ -862,7 +862,7 @@ Epoch 5/5
   <category>getting-started</category>
   <category>deep-learning</category>
   <guid>https://shindeshu.github.io/posts/tutorials/keras_cnns_intro.html</guid>
-  <pubDate>Tue, 14 Feb 2023 18:30:00 GMT</pubDate>
+  <pubDate>Sat, 14 Jan 2023 18:30:00 GMT</pubDate>
   <media:content url="https://shindeshu.github.io/posts/tutorials/assets/computer_vision.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
