@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Shubham Shinde">
+<meta name="dcterms.date" content="2023-01-22">
+<meta name="description" content="Importance of this oft-forgotten tool that is too powerful.">
+
+<title>Shubham Shinde - Why Data Scientists Should Write Tests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-E3Z2GSDBB7"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Shubham Shinde - Why Data Scientists Should Write Tests">
+<meta property="og:description" content="Importance of this oft-forgotten tool that is too powerful.">
+<meta property="og:site-name" content="Shubham Shinde">
+<meta name="twitter:title" content="Shubham Shinde - Why Data Scientists Should Write Tests">
+<meta name="twitter:description" content="Importance of this oft-forgotten tool that is too powerful.">
+<meta name="twitter:creator" content="@ShindeShubham85">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Shubham Shinde</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-jupyter-habitat" id="toc-the-jupyter-habitat" class="nav-link active" data-scroll-target="#the-jupyter-habitat">The Jupyter Habitat</a></li>
+  <li><a href="#jupyter-no-longer" id="toc-jupyter-no-longer" class="nav-link" data-scroll-target="#jupyter-no-longer">Jupyter No Longer</a>
+  <ul class="collapse">
+  <li><a href="#project-grows-in-scope." id="toc-project-grows-in-scope." class="nav-link" data-scroll-target="#project-grows-in-scope.">Project Grows in Scope.</a></li>
+  <li><a href="#collaboration" id="toc-collaboration" class="nav-link" data-scroll-target="#collaboration">Collaboration</a></li>
+  <li><a href="#deployment" id="toc-deployment" class="nav-link" data-scroll-target="#deployment">Deployment</a></li>
+  </ul></li>
+  <li><a href="#the-crisis-of-rapid-iteration" id="toc-the-crisis-of-rapid-iteration" class="nav-link" data-scroll-target="#the-crisis-of-rapid-iteration">The Crisis of Rapid Iteration</a>
+  <ul class="collapse">
+  <li><a href="#slowing-down" id="toc-slowing-down" class="nav-link" data-scroll-target="#slowing-down">Slowing Down</a></li>
+  <li><a href="#its-a-mess" id="toc-its-a-mess" class="nav-link" data-scroll-target="#its-a-mess">It’s a Mess</a></li>
+  </ul></li>
+  <li><a href="#what-are-tests" id="toc-what-are-tests" class="nav-link" data-scroll-target="#what-are-tests">What are Tests?</a></li>
+  <li><a href="#why-are-tests" id="toc-why-are-tests" class="nav-link" data-scroll-target="#why-are-tests">Why Are Tests?</a>
+  <ul class="collapse">
+  <li><a href="#write-tests-to-improve-speed" id="toc-write-tests-to-improve-speed" class="nav-link" data-scroll-target="#write-tests-to-improve-speed">Write Tests to Improve Speed</a></li>
+  <li><a href="#write-tests-for-better-code" id="toc-write-tests-for-better-code" class="nav-link" data-scroll-target="#write-tests-for-better-code">Write Tests for Better Code</a></li>
+  <li><a href="#write-tests-for-collaboration" id="toc-write-tests-for-collaboration" class="nav-link" data-scroll-target="#write-tests-for-collaboration">Write Tests for Collaboration</a></li>
+  <li><a href="#write-tests-because-theyre-easy-and-cool" id="toc-write-tests-because-theyre-easy-and-cool" class="nav-link" data-scroll-target="#write-tests-because-theyre-easy-and-cool">Write Tests Because they’re Easy and Cool</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Why Data Scientists Should Write Tests</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">data-science</div>
+    <div class="quarto-category">coding</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Importance of this oft-forgotten tool that is too powerful.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Shubham Shinde </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 22, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="the-jupyter-habitat" class="level2">
+<h2 class="anchored" data-anchor-id="the-jupyter-habitat">The Jupyter Habitat</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/habitat.JPG" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption"><em>It is natural to use Jupyter</em></figcaption><p></p>
+</figure>
+</div>
+<p>For a data scientist, jupyter notebooks are a natural habitat. They’re usually the first step in any project, and it’s the arena where thousands of lines of code are written, erased and forgotten forever in dumpgrounds. Data science is very exploratory in nature, because of which rapid iteration is necessary to build projects, which is exactly why notebooks are so popular. Constant experimentation and changes are a part of the job.</p>
+<p>Yet as time passes and the project increases in scope, you find yourself moving away from a notebooks appraoch. There are many reasons why you’d switch to a traditional repo over a notebook.</p>
+</section>
+<section id="jupyter-no-longer" class="level2">
+<h2 class="anchored" data-anchor-id="jupyter-no-longer">Jupyter No Longer</h2>
+<section id="project-grows-in-scope." class="level3">
+<h3 class="anchored" data-anchor-id="project-grows-in-scope.">Project Grows in Scope.</h3>
+<p>There is simply more stuff to do, more knobs and more switches. At first, you think a utils.py file will take care of it all. But quickly the utils.py swells in size, resembling a Lovecraftian horror of a thousand functions each doing some distinct operation.</p>
+<p>It is then you create modules for better delegating things and separation of operations. And the crisis is averted. For now.</p>
+</section>
+<section id="collaboration" class="level3">
+<h3 class="anchored" data-anchor-id="collaboration">Collaboration</h3>
+<p>Notebooks are great for one contributor to keep tinkering, but it is not the best approach when working with a team. Having a distributed system can be beneficial since people focus on their part of the repo. Another reason to move away from notebooks.</p>
+</section>
+<section id="deployment" class="level3">
+<h3 class="anchored" data-anchor-id="deployment">Deployment</h3>
+<p>While there have been newer tools to facilitate notebooks in production (<code>nbdev</code> etc), deployment to production generally needs you to have all of your code in <code>.py</code> files. This is another reason to move to modules.</p>
+</section>
+</section>
+<section id="the-crisis-of-rapid-iteration" class="level2">
+<h2 class="anchored" data-anchor-id="the-crisis-of-rapid-iteration">The Crisis of Rapid Iteration</h2>
+<section id="slowing-down" class="level3">
+<h3 class="anchored" data-anchor-id="slowing-down">Slowing Down</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/tuning.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption"><em>Things become less fun</em></figcaption><p></p>
+</figure>
+</div>
+<p>Except, now that the pivot is complete, you find yourself more frustrated than before. When writing a notebook, we usually ignore what are called “best practices” since they slow us down. We keep ignoring such practices even as the work grows in scope, and problems start rising.</p>
+<p>Notebooks are a high velocity medium, which is their biggest strengths. You can quickly put together a bunch of code and get it running. You can quickly erase lines and add to make changes. It is a nimble, flexible craft.</p>
+<p>When you are not working on a single notebook, and you have a forest of modules feeding into your cursor, the velocity often takes a hit. You find out that making a single change is a lot more expensive now than it was before. Many things end up breaking, when earlier making changes was easy. To add some functionality, you end up thinking about all the potential modules that could break.</p>
+<p>This slows down the pace of development, and you end up captured in the web of your own local imports, scratching your heads through all the scripts present.</p>
+</section>
+<section id="its-a-mess" class="level3">
+<h3 class="anchored" data-anchor-id="its-a-mess">It’s a Mess</h3>
+<p>And there’s another important reason why the pace is down- because your code is too convoluted. The classes you defined have low cohesion, i.e.&nbsp;they do all sorts of different things. The modules you’ve defined are extremely dependent on each other, i.e.&nbsp;high coupling. So when you make changes in one module, because of high dependencies, some other module ends up breaking as well.</p>
+<p>Managing the project architecture efficiently like this is an art that is learned through experience. If only there were simple disciplines, following which you could write better code. Turns out, writing tests can do that.</p>
+</section>
+</section>
+<section id="what-are-tests" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-tests">What are Tests?</h2>
+<p><img src="assets/test.jpg" class="img-fluid" style="width:60.0%"></p>
+<p>A few months ago, despite being 4 years into my professional journey, I had little idea about tests. It seemed like a software engineering concept that has no obvious application in a data science project. So if you’re like me, here’s a little primer about tests.</p>
+<p>If, after making a change to the codebase, you run the entire workflow to make sure it worked (or broke), you are already testing. Except less efficiently. Running the entire workflow can be time-consuming, and you don’t want to run everything when you’ve made changes to only one section of the codebase. Plus, debugging can be tough. Tests are basically functions that you set up to check whether other modules are doing their job correctly.</p>
+<p>Here’s an example of a function in the <code>transforms.py</code> file that does something.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> transform_data(df: pd.DataFrame) <span class="op">-&gt;</span> pd.DataFrame:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run some transformation</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To create a test for this function (and others) create a file called <code>test_transforms.py</code>. Convention is to put all your tests inside a <code>tests/</code> folder at the top of the repo. Inside this file you can write</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> src.transforms <span class="im">import</span> transform_data</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_mock_data():</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># create mock data</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.DataFrame({}) </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_transform_data():</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the testing function should start with 'test_'</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> get_mock_data()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    transformed_df <span class="op">=</span> transform_data(df)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># assert that the transform has correctly been completed</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># you can check any aspects that have been transformed</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># assume that the number of columns are doubled in transformation.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(transformed_df.columns) <span class="op">==</span> <span class="dv">2</span><span class="op">*</span><span class="bu">len</span>(df.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This test is completely isolated from the rest of the repo, so it’s failure has only one reason, the function itself.</p>
+<p>Now you can run test this by three methods:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> tests/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Runs all the tests in the folder.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> tests/test_transforms.py</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Runs only the tests on transforms</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> tests.test_transforms.test_transform_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Runs only this particular function.</p>
+</section>
+<section id="why-are-tests" class="level2">
+<h2 class="anchored" data-anchor-id="why-are-tests">Why Are Tests?</h2>
+<section id="write-tests-to-improve-speed" class="level3">
+<h3 class="anchored" data-anchor-id="write-tests-to-improve-speed">Write Tests to Improve Speed</h3>
+<p>The single biggest reason why as data scientists need to write tests is that they are monumentally helpful in increasing the speed of experiments. Fast iteration is very important for a data scientist because we generally are constantly running experiments trying different ways to improve our models, trying a different architecture, tinkering with the pre-processing, etc.</p>
+<p>When you write unit tests, making changes becomes easier because now you have an easy way of validating whether your changes are breaking the code or not. Moreover, because you are writing tests for each unit, you can identify exactly which part of the codebase is being affected by your change. Now that certain parts of the codebase are anchored in your mind as unbreakable, you are free of the anxiety to go tinker on other units.</p>
+</section>
+<section id="write-tests-for-better-code" class="level3">
+<h3 class="anchored" data-anchor-id="write-tests-for-better-code">Write Tests for Better Code</h3>
+<p>Second greatest reason is that writing tests help you write efficient code. Generally you shouldn’t write a function that does more than one thing. But while developing, in the flow you could write such cronenberg functions. When you write unit tests, you find that you need to write distinct tests for the same function, which is an indicator that it can be decomposed.</p>
+<p>Similarly, writing tests help your code become orthogonal. You learn to write your code in such a manner that each unit is less dependent on other units. Which leads to modular, understandable code that is also very iteration-friendly.</p>
+</section>
+<section id="write-tests-for-collaboration" class="level3">
+<h3 class="anchored" data-anchor-id="write-tests-for-collaboration">Write Tests for Collaboration</h3>
+<p>Working in a team needs some vigilance. How to know if a change someone else made isn’t breaking down a routine specific to my task? Or vice versa? You simply write a test for your task, so your teammates can easily verify it themselves, reducing the feedback loop. Or you will waste time in to-and-fro clarifications.</p>
+<p>If you hand over your repo to someone else, like a new team or the deployment team, the tests are helpful to them too for quick onboarding.</p>
+</section>
+<section id="write-tests-because-theyre-easy-and-cool" class="level3">
+<h3 class="anchored" data-anchor-id="write-tests-because-theyre-easy-and-cool">Write Tests Because they’re Easy and Cool</h3>
+<p>In python, it’s terribly easy to write tests thanks to the <code>pytest</code> library. Requires no syntax to learn, it’s as easy as writing a function. Writing tests is cool, that’s a fact. It also feels great when you run <code>pytest</code> on your code base and all of your cases pass in a flurry of green dots.</p>
+<p>This, in a nutshell, why data scientists should not ignore the power of tests.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

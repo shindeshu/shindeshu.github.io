@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/datascience/whytests.html",
       "/posts/roadmap/start.html",
       "/posts/tutorials/keras_cnns_intro.html",
       "/posts/stable_diff/getting_started_sd.html",
@@ -12,6 +13,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/datascience/whytests.html",
       "/posts/tutorials/keras_cnns_intro.html",
       "/posts/roadmap/start.html",
       "/posts/stable_diff/getting_started_sd.html",

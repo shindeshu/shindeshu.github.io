@@ -1,4 +1,5 @@
 _site/*
+_extensions/*
 .quarto
 
 # Byte-compiled / optimized / DLL files

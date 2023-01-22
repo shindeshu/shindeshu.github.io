@@ -10,7 +10,133 @@
 <atom:link href="https://shindeshu.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Blog for data science related topics</description>
 <generator>quarto-1.1.251</generator>
-<lastBuildDate>Sat, 14 Jan 2023 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 21 Jan 2023 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>Why Data Scientists Should Write Tests</title>
+  <dc:creator>Shubham Shinde</dc:creator>
+  <link>https://shindeshu.github.io/posts/datascience/whytests.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="the-jupyter-habitat" class="level2">
+<h2 class="anchored" data-anchor-id="the-jupyter-habitat">The Jupyter Habitat</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/datascience/assets/habitat.JPG" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption"><em>It is natural to use Jupyter</em></figcaption><p></p>
+</figure>
+</div>
+<p>For a data scientist, jupyter notebooks are a natural habitat. They’re usually the first step in any project, and it’s the arena where thousands of lines of code are written, erased and forgotten forever in dumpgrounds. Data science is very exploratory in nature, because of which rapid iteration is necessary to build projects, which is exactly why notebooks are so popular. Constant experimentation and changes are a part of the job.</p>
+<p>Yet as time passes and the project increases in scope, you find yourself moving away from a notebooks appraoch. There are many reasons why you’d switch to a traditional repo over a notebook.</p>
+</section>
+<section id="jupyter-no-longer" class="level2">
+<h2 class="anchored" data-anchor-id="jupyter-no-longer">Jupyter No Longer</h2>
+<section id="project-grows-in-scope." class="level3">
+<h3 class="anchored" data-anchor-id="project-grows-in-scope.">Project Grows in Scope.</h3>
+<p>There is simply more stuff to do, more knobs and more switches. At first, you think a utils.py file will take care of it all. But quickly the utils.py swells in size, resembling a Lovecraftian horror of a thousand functions each doing some distinct operation.</p>
+<p>It is then you create modules for better delegating things and separation of operations. And the crisis is averted. For now.</p>
+</section>
+<section id="collaboration" class="level3">
+<h3 class="anchored" data-anchor-id="collaboration">Collaboration</h3>
+<p>Notebooks are great for one contributor to keep tinkering, but it is not the best approach when working with a team. Having a distributed system can be beneficial since people focus on their part of the repo. Another reason to move away from notebooks.</p>
+</section>
+<section id="deployment" class="level3">
+<h3 class="anchored" data-anchor-id="deployment">Deployment</h3>
+<p>While there have been newer tools to facilitate notebooks in production (<code>nbdev</code> etc), deployment to production generally needs you to have all of your code in <code>.py</code> files. This is another reason to move to modules.</p>
+</section>
+</section>
+<section id="the-crisis-of-rapid-iteration" class="level2">
+<h2 class="anchored" data-anchor-id="the-crisis-of-rapid-iteration">The Crisis of Rapid Iteration</h2>
+<section id="slowing-down" class="level3">
+<h3 class="anchored" data-anchor-id="slowing-down">Slowing Down</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/datascience/assets/tuning.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption"><em>Things become less fun</em></figcaption><p></p>
+</figure>
+</div>
+<p>Except, now that the pivot is complete, you find yourself more frustrated than before. When writing a notebook, we usually ignore what are called “best practices” since they slow us down. We keep ignoring such practices even as the work grows in scope, and problems start rising.</p>
+<p>Notebooks are a high velocity medium, which is their biggest strengths. You can quickly put together a bunch of code and get it running. You can quickly erase lines and add to make changes. It is a nimble, flexible craft.</p>
+<p>When you are not working on a single notebook, and you have a forest of modules feeding into your cursor, the velocity often takes a hit. You find out that making a single change is a lot more expensive now than it was before. Many things end up breaking, when earlier making changes was easy. To add some functionality, you end up thinking about all the potential modules that could break.</p>
+<p>This slows down the pace of development, and you end up captured in the web of your own local imports, scratching your heads through all the scripts present.</p>
+</section>
+<section id="its-a-mess" class="level3">
+<h3 class="anchored" data-anchor-id="its-a-mess">It’s a Mess</h3>
+<p>And there’s another important reason why the pace is down- because your code is too convoluted. The classes you defined have low cohesion, i.e.&nbsp;they do all sorts of different things. The modules you’ve defined are extremely dependent on each other, i.e.&nbsp;high coupling. So when you make changes in one module, because of high dependencies, some other module ends up breaking as well.</p>
+<p>Managing the project architecture efficiently like this is an art that is learned through experience. If only there were simple disciplines, following which you could write better code. Turns out, writing tests can do that.</p>
+</section>
+</section>
+<section id="what-are-tests" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-tests">What are Tests?</h2>
+<p><img src="https://shindeshu.github.io/posts/datascience/assets/test.jpg" class="img-fluid" style="width:60.0%"></p>
+<p>A few months ago, despite being 4 years into my professional journey, I had little idea about tests. It seemed like a software engineering concept that has no obvious application in a data science project. So if you’re like me, here’s a little primer about tests.</p>
+<p>If, after making a change to the codebase, you run the entire workflow to make sure it worked (or broke), you are already testing. Except less efficiently. Running the entire workflow can be time-consuming, and you don’t want to run everything when you’ve made changes to only one section of the codebase. Plus, debugging can be tough. Tests are basically functions that you set up to check whether other modules are doing their job correctly.</p>
+<p>Here’s an example of a function in the <code>transforms.py</code> file that does something.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;">def</span> transform_data(df: pd.DataFrame) <span class="op" style="color: #5E5E5E;">-&gt;</span> pd.DataFrame:</span>
+<span id="cb1-2">    <span class="co" style="color: #5E5E5E;"># run some transformation</span></span>
+<span id="cb1-3">    <span class="cf" style="color: #003B4F;">return</span> df</span></code></pre></div>
+</div>
+<p>To create a test for this function (and others) create a file called <code>test_transforms.py</code>. Convention is to put all your tests inside a <code>tests/</code> folder at the top of the repo. Inside this file you can write</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">from</span> src.transforms <span class="im" style="color: #00769E;">import</span> transform_data</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="kw" style="color: #003B4F;">def</span> get_mock_data():</span>
+<span id="cb2-4">    <span class="co" style="color: #5E5E5E;"># create mock data</span></span>
+<span id="cb2-5">    df <span class="op" style="color: #5E5E5E;">=</span> pd.DataFrame({}) </span>
+<span id="cb2-6"></span>
+<span id="cb2-7"><span class="kw" style="color: #003B4F;">def</span> test_transform_data():</span>
+<span id="cb2-8">    <span class="co" style="color: #5E5E5E;"># the testing function should start with 'test_'</span></span>
+<span id="cb2-9">    df <span class="op" style="color: #5E5E5E;">=</span> get_mock_data()</span>
+<span id="cb2-10">    transformed_df <span class="op" style="color: #5E5E5E;">=</span> transform_data(df)</span>
+<span id="cb2-11">    <span class="co" style="color: #5E5E5E;"># assert that the transform has correctly been completed</span></span>
+<span id="cb2-12">    <span class="co" style="color: #5E5E5E;"># you can check any aspects that have been transformed</span></span>
+<span id="cb2-13">    <span class="co" style="color: #5E5E5E;"># assume that the number of columns are doubled in transformation.</span></span>
+<span id="cb2-14">    <span class="cf" style="color: #003B4F;">assert</span> <span class="bu" style="color: null;">len</span>(transformed_df.columns) <span class="op" style="color: #5E5E5E;">==</span> <span class="dv" style="color: #AD0000;">2</span><span class="op" style="color: #5E5E5E;">*</span><span class="bu" style="color: null;">len</span>(df.columns)</span></code></pre></div>
+</div>
+<p>This test is completely isolated from the rest of the repo, so it’s failure has only one reason, the function itself.</p>
+<p>Now you can run test this by three methods:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;">pytest</span> tests/</span></code></pre></div>
+<p>Runs all the tests in the folder.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;">pytest</span> tests/test_transforms.py</span></code></pre></div>
+<p>Runs only the tests on transforms</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;">pytest</span> tests.test_transforms.test_transform_data</span></code></pre></div>
+<p>Runs only this particular function.</p>
+</section>
+<section id="why-are-tests" class="level2">
+<h2 class="anchored" data-anchor-id="why-are-tests">Why Are Tests?</h2>
+<section id="write-tests-to-improve-speed" class="level3">
+<h3 class="anchored" data-anchor-id="write-tests-to-improve-speed">Write Tests to Improve Speed</h3>
+<p>The single biggest reason why as data scientists need to write tests is that they are monumentally helpful in increasing the speed of experiments. Fast iteration is very important for a data scientist because we generally are constantly running experiments trying different ways to improve our models, trying a different architecture, tinkering with the pre-processing, etc.</p>
+<p>When you write unit tests, making changes becomes easier because now you have an easy way of validating whether your changes are breaking the code or not. Moreover, because you are writing tests for each unit, you can identify exactly which part of the codebase is being affected by your change. Now that certain parts of the codebase are anchored in your mind as unbreakable, you are free of the anxiety to go tinker on other units.</p>
+</section>
+<section id="write-tests-for-better-code" class="level3">
+<h3 class="anchored" data-anchor-id="write-tests-for-better-code">Write Tests for Better Code</h3>
+<p>Second greatest reason is that writing tests help you write efficient code. Generally you shouldn’t write a function that does more than one thing. But while developing, in the flow you could write such cronenberg functions. When you write unit tests, you find that you need to write distinct tests for the same function, which is an indicator that it can be decomposed.</p>
+<p>Similarly, writing tests help your code become orthogonal. You learn to write your code in such a manner that each unit is less dependent on other units. Which leads to modular, understandable code that is also very iteration-friendly.</p>
+</section>
+<section id="write-tests-for-collaboration" class="level3">
+<h3 class="anchored" data-anchor-id="write-tests-for-collaboration">Write Tests for Collaboration</h3>
+<p>Working in a team needs some vigilance. How to know if a change someone else made isn’t breaking down a routine specific to my task? Or vice versa? You simply write a test for your task, so your teammates can easily verify it themselves, reducing the feedback loop. Or you will waste time in to-and-fro clarifications.</p>
+<p>If you hand over your repo to someone else, like a new team or the deployment team, the tests are helpful to them too for quick onboarding.</p>
+</section>
+<section id="write-tests-because-theyre-easy-and-cool" class="level3">
+<h3 class="anchored" data-anchor-id="write-tests-because-theyre-easy-and-cool">Write Tests Because they’re Easy and Cool</h3>
+<p>In python, it’s terribly easy to write tests thanks to the <code>pytest</code> library. Requires no syntax to learn, it’s as easy as writing a function. Writing tests is cool, that’s a fact. It also feels great when you run <code>pytest</code> on your code base and all of your cases pass in a flurry of green dots.</p>
+<p>This, in a nutshell, why data scientists should not ignore the power of tests.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>data-science</category>
+  <category>coding</category>
+  <guid>https://shindeshu.github.io/posts/datascience/whytests.html</guid>
+  <pubDate>Sat, 21 Jan 2023 18:30:00 GMT</pubDate>
+  <media:content url="https://shindeshu.github.io/posts/datascience/assets/habitat.JPG" medium="image"/>
+</item>
 <item>
   <title>A Roadmap for Getting into Data Science</title>
   <dc:creator>Shubham Shinde</dc:creator>
@@ -1391,7 +1517,7 @@ Epoch 5/5
 </section>
 
  ]]></description>
-  <category>gnn</category>
+  <category>deep-learning</category>
   <guid>https://shindeshu.github.io/posts/gnns/gnn_from_scratch.html</guid>
   <pubDate>Mon, 24 Jan 2022 18:30:00 GMT</pubDate>
   <media:content url="https://shindeshu.github.io/posts/gnns/graph_cat.jpg" medium="image" type="image/jpeg"/>
@@ -1423,7 +1549,7 @@ Epoch 5/5
 
 
  ]]></description>
-  <category>gnn</category>
+  <category>deep-learning</category>
   <guid>https://shindeshu.github.io/posts/gnns/intro_to_gnn.html</guid>
   <pubDate>Mon, 24 Jan 2022 18:30:00 GMT</pubDate>
   <media:content url="https://shindeshu.github.io/posts/gnns/graph_img.jpeg" medium="image" type="image/jpeg"/>
