@@ -10,7 +10,302 @@
 <atom:link href="https://shindeshu.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Blog for data science related topics</description>
 <generator>quarto-1.1.251</generator>
-<lastBuildDate>Sat, 21 Jan 2023 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 28 Jan 2023 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>A Comprehensive Guide to Question-Answering in NLP</title>
+  <dc:creator>Shubham Shinde</dc:creator>
+  <link>https://shindeshu.github.io/posts/nlp/qa_guide.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="the-unlocking-of-knowledge" class="level2">
+<h2 class="anchored" data-anchor-id="the-unlocking-of-knowledge">The Unlocking Of Knowledge</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/sphinx_robot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">A Greek Sphinx</figcaption><p></p>
+</figure>
+</div>
+<p>The phenomenon of knowledge being locked is common to almost every organization. Knowledge- institutional, technical, introductory etc. is locked in several documents in several places, and needs active search with much efforts going through tomes in order to understand some piece of lore. What if you had an artificial brain who could digest all of this knowledge, and you simply converse with this brain to understand pieces of your lore-verse?</p>
+<p>This is no longer science-fiction. Massive language models like ChatGPT have quickly become the norm, and the capabilities of large language models are still being found out. Turns out, you don’t always need a service like ChatGPT, and you can service a lot of your needs using open-source models that can run on a single GPU.</p>
+<p>Using NLP models, not only can you unlock your organizational information by enabling intelligent search over large corpora, but can build question-answering apps on top of them, so information retrieval can be automated to an astonishing degree. Q&amp;A apps are one of the best ways to make sense of text data. In this post, we’ll go over this particular application of question-answering, alongwith some basic code to show how to implement them.</p>
+<p><strong>Contents</strong>: This post gives an overview of the types of question-answering tasks. It covers the different components in a question answering pipeline, alongwith some basic code implementations, reference libraries and examples.</p>
+</section>
+<section id="types-of-question-answering-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-question-answering-tasks">Types of Question-Answering Tasks</h2>
+<p>There are two ways to divide Question-Answering applications</p>
+<ol type="1">
+<li>Open-Book vs Closed-Book</li>
+<li>Extractive vs Generative</li>
+</ol>
+<section id="open-book-and-closed-book" class="level3">
+<h3 class="anchored" data-anchor-id="open-book-and-closed-book">🕮 Open-Book and Closed-Book</h3>
+<p>The most common type of Q&amp;A task is where you give a context/document to the model, as well as the question. The model then gives you an answer to the question. Since you are giving a context alongwith the question to the model, this is called an open-book QA task. The model answers the question only using the information given. This is analogous to open-book exams, where you are allowed to bring a book to the exam. Then there’s closed-book task where you are not given any context, the model is supposed to answer based on the information is has stored in itself. Because we are passing a ground truth in open-book tasks, they usually perform better, and hence are the preferred setting.</p>
+<p><strong>The Problem</strong>: Giving the context is extra trouble- what if I have thousands of documents? How can the model find answer through thousands of documents? Let’s answer this question in the next section.</p>
+</section>
+<section id="extractive-vs-generative" class="level3">
+<h3 class="anchored" data-anchor-id="extractive-vs-generative">🖋️ Extractive vs Generative</h3>
+<p>Then we come to the second classification- Extractive vs Generative. In Extractive QA, the answer will be a sentence/phrase from the given document. It will not create new words/sentences, but simply find the most relevant text in the context and return it. Hence it is sort of an advanced search algorithm that retrieves the section you need from the document. Because the returned phrase exists in the ground truth, this method is useful when you need accurate, small answers.</p>
+<p>In generative QA, the model will craft an answer based on it’s understanding of the context, instead of simply returning an existing phrase. Because the model is generating text, it is more prone to making errors.</p>
+<p>In both of above applications, the returned answers tend to be small, one-liners. Long-form QA is a variant of generative QA, where the answers are supposed to be long.</p>
+</section>
+</section>
+<section id="a-small-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-small-example">A Small Example</h2>
+<p>This is a small example of an extractive QA. Note that the pipeline requires both a context and the question.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> pipeline</span>
+<span id="cb1-2">question_answerer <span class="op" style="color: #5E5E5E;">=</span> pipeline(<span class="st" style="color: #20794D;">"question-answering"</span>, </span>
+<span id="cb1-3">                             model<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'distilbert-base-cased-distilled-squad'</span>)</span>
+<span id="cb1-4"></span>
+<span id="cb1-5">context <span class="op" style="color: #5E5E5E;">=</span> <span class="vs" style="color: #20794D;">r"""</span></span>
+<span id="cb1-6"><span class="vs" style="color: #20794D;">Extractive Question Answering is the task of extracting an answer from a text </span></span>
+<span id="cb1-7"><span class="vs" style="color: #20794D;">given a question. An example of a question answering dataset is the SQuAD dataset, </span></span>
+<span id="cb1-8"><span class="vs" style="color: #20794D;">which is entirely based on that task. If you would like to fine-tune a model </span></span>
+<span id="cb1-9"><span class="vs" style="color: #20794D;">on a SQuAD task, you may leverage the </span></span>
+<span id="cb1-10"><span class="vs" style="color: #20794D;">examples/pytorch/question-answering/run_squad.py script.</span></span>
+<span id="cb1-11"><span class="vs" style="color: #20794D;">"""</span></span>
+<span id="cb1-12"></span>
+<span id="cb1-13">question <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"What is a good example of a question answering dataset?"</span></span>
+<span id="cb1-14"></span>
+<span id="cb1-15">result <span class="op" style="color: #5E5E5E;">=</span> question_answerer(question<span class="op" style="color: #5E5E5E;">=</span>question, context<span class="op" style="color: #5E5E5E;">=</span>context)</span>
+<span id="cb1-16"></span>
+<span id="cb1-17"><span class="bu" style="color: null;">print</span>(<span class="ss" style="color: #20794D;">f"Answer: '</span><span class="sc" style="color: #5E5E5E;">{</span>result[<span class="st" style="color: #20794D;">'answer'</span>]<span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">', "</span></span>
+<span id="cb1-18">      <span class="ss" style="color: #20794D;">f"score: </span><span class="sc" style="color: #5E5E5E;">{</span><span class="bu" style="color: null;">round</span>(result[<span class="st" style="color: #20794D;">'score'</span>], <span class="dv" style="color: #AD0000;">4</span>)<span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">, "</span></span>
+<span id="cb1-19">      <span class="ss" style="color: #20794D;">f"start: </span><span class="sc" style="color: #5E5E5E;">{</span>result[<span class="st" style="color: #20794D;">'start'</span>]<span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">, end: </span><span class="sc" style="color: #5E5E5E;">{</span>result[<span class="st" style="color: #20794D;">'end'</span>]<span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">"</span></span>
+<span id="cb1-20"></span>
+<span id="cb1-21"><span class="co" style="color: #5E5E5E;"># Answer: 'SQuAD dataset', score: 0.5152, start: 147, end: 160</span></span></code></pre></div>
+</div>
+</section>
+<section id="components-of-qa-systems" class="level2">
+<h2 class="anchored" data-anchor-id="components-of-qa-systems">Components of QA Systems</h2>
+<p>Let’s go back to the problem with open-book answering- each question needs a reference document, which cannot be provided manually. The solution is to use another model to retrieve the most relevant document to the question, which then another model can use to do the answering. Hence this becomes a two-stage system, a retriever followed by a reader.</p>
+<p>QA systems will hence have these components-</p>
+<ul>
+<li>a database of documents (your knowledge base)</li>
+<li>a retriever component (to retrieve relevant documents)</li>
+<li>an optional reranker component (to re-order the relevant documents)</li>
+<li>a reader component (to extract the answer) or a generator component (to generate an answer)</li>
+</ul>
+<p>If you’re using a large language model like GPT-3, this could as simple as a single generator.</p>
+<p>Here’s a diagram that summarizes these components as well as how they’re put together:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/qa3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Overview of QA Systems</figcaption><p></p>
+</figure>
+</div>
+<section id="retriever---how-find-the-relevant-documents" class="level3">
+<h3 class="anchored" data-anchor-id="retriever---how-find-the-relevant-documents">🕵🏻‍ Retriever - How Find the Relevant Documents</h3>
+<p>Let’s say you want to build a question-answering system on a bunch of internal documentation. The documentation is a pile of thousands of documents. To get an answer, you need to pass a question, and alongwith a passage that is relevant to that question. Since finding the passage is a huge task in itself, how is the QA app helpful at all?</p>
+<p>The solution is to let a model handle this task as well. This will be a different model than the QA model, and will be called “retriever”. All the documents will be passed to this model to get embeddings for each of them.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+What Are Embeddings? (Click to Expand)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Embedding is a numerical/vector representation of an entity, in this case a document. Embeddings of two similar documents will be closer to each other numerically.</p>
+</div>
+</div>
+</div>
+<p>Now, when we pass a question, we’ll compute the embeddings of the question as well. We’ll find the closest documents to the given question by comparing their embeddings. This is how finding relevant documents is automated using a model.</p>
+<p>Finding the relevant document is in itself an application. Sometimes you don’t need a QA on top, finding a needle in the haystack is beneficial in itself. This is called “Semantic Search”, and is extremely easy to implement with a significant improvement in productivity.</p>
+</section>
+<section id="reranking" class="level3">
+<h3 class="anchored" data-anchor-id="reranking">⚖ Reranking</h3>
+<p>For thousands and millions of documents, the performance of a retriever alone can be insufficient. It could return documents that may be related to some keywords in the query, but not related to the query at all. In order to enhance the results of our search, we could do reranking of the results.</p>
+<p>The retriever returns us a list of 100 documents, and reranker will again evaluate which of these 100 are most relevant to the query. Reranking has been proven to significantly improve the results for tasks like QA. However an extra model will be compute-intensive too. If the number of documents is not too high, re-ranking may not be necessary.</p>
+</section>
+<section id="get-answer-using-reader-generator" class="level3">
+<h3 class="anchored" data-anchor-id="get-answer-using-reader-generator">✍🏻 Get Answer Using Reader / Generator</h3>
+<p>Now that you have a context for the given question, you can pass both to a QA model that can (extract or generate) answer. But first, let us define this “Reader” model.</p>
+<p>If this is an extractive QA, i.e.&nbsp;highlighting the relevant phrase, you can use models like BERT fine-tuned on open-source QA datasets like SQuAD. If this is a generative QA, we use a model like BART/T5/GPT-2</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+The Types of Transformers (Click to Expand)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are three types of transformer models: Encoder, Decoder, and encoder-decoder. Encoders, like BERT, are suited to understand given text, Decoders like GPTs are suited to generate new text, Encoder-Decoders like BART/T5 are suited to generate text based on given texts.</p>
+</div>
+</div>
+</div>
+<p>Here are examples for all the three types of components- a retriever, an answer reader and an answer generator</p>
+<p>The retriever example uses small sentences as corpus, but it also performs remarkably well if the corpus is large paragraphs and documents.</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" aria-controls="tabset-1-1" aria-selected="true">Retriever</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" aria-controls="tabset-1-2" aria-selected="false">Extractive QA</a></li><li class="nav-item"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" aria-controls="tabset-1-3" aria-selected="false">Generative QA</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">from</span> sentence_transformers <span class="im" style="color: #00769E;">import</span> SentenceTransformer, util</span>
+<span id="cb2-2"><span class="im" style="color: #00769E;">import</span> torch</span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;"># get the embedding model</span></span>
+<span id="cb2-5">embedder <span class="op" style="color: #5E5E5E;">=</span> SentenceTransformer(<span class="st" style="color: #20794D;">'all-MiniLM-L6-v2'</span>)</span>
+<span id="cb2-6"></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;"># Corpus with example sentences</span></span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;"># works well with large paragraphs too</span></span>
+<span id="cb2-9">corpus <span class="op" style="color: #5E5E5E;">=</span> [<span class="st" style="color: #20794D;">'A man is eating food.'</span>,</span>
+<span id="cb2-10">          <span class="st" style="color: #20794D;">'A man is eating a piece of bread.'</span>,</span>
+<span id="cb2-11">          <span class="st" style="color: #20794D;">'The girl is carrying a baby.'</span>,</span>
+<span id="cb2-12">          <span class="st" style="color: #20794D;">'A man is riding a horse.'</span>,</span>
+<span id="cb2-13">          <span class="st" style="color: #20794D;">'A woman is playing violin.'</span>,</span>
+<span id="cb2-14">          <span class="st" style="color: #20794D;">'Two men pushed carts through the woods.'</span>,</span>
+<span id="cb2-15">          <span class="st" style="color: #20794D;">'A man is riding a white horse on an enclosed ground.'</span>,</span>
+<span id="cb2-16">          <span class="st" style="color: #20794D;">'A monkey is playing drums.'</span>,</span>
+<span id="cb2-17">          <span class="st" style="color: #20794D;">'A cheetah is running behind its prey.'</span></span>
+<span id="cb2-18">          ]</span>
+<span id="cb2-19"><span class="co" style="color: #5E5E5E;"># compute embeddings for the entire corpus- one-time step.</span></span>
+<span id="cb2-20">corpus_embeddings <span class="op" style="color: #5E5E5E;">=</span> embedder.encode(corpus, convert_to_tensor<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb2-21"></span>
+<span id="cb2-22"><span class="co" style="color: #5E5E5E;"># give the query for which most similar document is to be retrieved.</span></span>
+<span id="cb2-23">query <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">'A man is eating pasta.'</span></span>
+<span id="cb2-24"></span>
+<span id="cb2-25"><span class="co" style="color: #5E5E5E;"># get the embedding for the query</span></span>
+<span id="cb2-26">query_embedding <span class="op" style="color: #5E5E5E;">=</span> embedder.encode(query, convert_to_tensor<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb2-27"></span>
+<span id="cb2-28"><span class="co" style="color: #5E5E5E;"># get the closest 5 documents to the query in embedding space.</span></span>
+<span id="cb2-29">cos_scores <span class="op" style="color: #5E5E5E;">=</span> util.cos_sim(query_embedding, corpus_embeddings)[<span class="dv" style="color: #AD0000;">0</span>]</span>
+<span id="cb2-30">top_results <span class="op" style="color: #5E5E5E;">=</span> torch.topk(cos_scores, k<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">5</span>)</span>
+<span id="cb2-31"></span>
+<span id="cb2-32"><span class="bu" style="color: null;">print</span>(<span class="st" style="color: #20794D;">"Query:"</span>, query, <span class="st" style="color: #20794D;">"</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">Similar Documents:"</span>)</span>
+<span id="cb2-33"><span class="cf" style="color: #003B4F;">for</span> score, idx <span class="kw" style="color: #003B4F;">in</span> <span class="bu" style="color: null;">zip</span>(top_results[<span class="dv" style="color: #AD0000;">0</span>], top_results[<span class="dv" style="color: #AD0000;">1</span>]):</span>
+<span id="cb2-34">    <span class="bu" style="color: null;">print</span>(corpus[idx], <span class="st" style="color: #20794D;">"(Score: </span><span class="sc" style="color: #5E5E5E;">{:.4f}</span><span class="st" style="color: #20794D;">)"</span>.<span class="bu" style="color: null;">format</span>(score))</span></code></pre></div>
+<p>Output:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;">Query:</span> A man is eating pasta. </span>
+<span id="cb3-2"><span class="ex" style="color: null;">Similar</span> Documents:</span>
+<span id="cb3-3"><span class="ex" style="color: null;">A</span> man is eating food. <span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">Score:</span> 0.7035<span class="kw" style="color: #003B4F;">)</span></span>
+<span id="cb3-4"><span class="ex" style="color: null;">A</span> man is eating a piece of bread. <span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">Score:</span> 0.5272<span class="kw" style="color: #003B4F;">)</span></span>
+<span id="cb3-5"><span class="ex" style="color: null;">A</span> man is riding a horse. <span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">Score:</span> 0.1889<span class="kw" style="color: #003B4F;">)</span></span>
+<span id="cb3-6"><span class="ex" style="color: null;">A</span> man is riding a white horse on an enclosed ground. <span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">Score:</span> 0.1047<span class="kw" style="color: #003B4F;">)</span></span>
+<span id="cb3-7"><span class="ex" style="color: null;">A</span> cheetah is running behind its prey. <span class="er" style="color: #AD0000;">(</span><span class="ex" style="color: null;">Score:</span> 0.0980<span class="kw" style="color: #003B4F;">)</span></span></code></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> pipeline</span>
+<span id="cb4-2">question_answerer <span class="op" style="color: #5E5E5E;">=</span> pipeline(<span class="st" style="color: #20794D;">"question-answering"</span>, model<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'distilbert-base-cased-distilled-squad'</span>)</span>
+<span id="cb4-3"></span>
+<span id="cb4-4">context <span class="op" style="color: #5E5E5E;">=</span> <span class="vs" style="color: #20794D;">r"""</span></span>
+<span id="cb4-5"><span class="vs" style="color: #20794D;">Extractive Question Answering is the task of extracting an answer from a text given a question. An example     of a</span></span>
+<span id="cb4-6"><span class="vs" style="color: #20794D;">question answering dataset is the SQuAD dataset, which is entirely based on that task. If you would like to fine-tune</span></span>
+<span id="cb4-7"><span class="vs" style="color: #20794D;">a model on a SQuAD task, you may leverage the examples/pytorch/question-answering/run_squad.py script.</span></span>
+<span id="cb4-8"><span class="vs" style="color: #20794D;">"""</span></span>
+<span id="cb4-9"></span>
+<span id="cb4-10">result <span class="op" style="color: #5E5E5E;">=</span> question_answerer(question<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"What is a good example of a question answering dataset?"</span>,     context<span class="op" style="color: #5E5E5E;">=</span>context)</span>
+<span id="cb4-11"><span class="bu" style="color: null;">print</span>(</span>
+<span id="cb4-12"><span class="ss" style="color: #20794D;">f"Answer: '</span><span class="sc" style="color: #5E5E5E;">{</span>result[<span class="st" style="color: #20794D;">'answer'</span>]<span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">', score: </span><span class="sc" style="color: #5E5E5E;">{</span><span class="bu" style="color: null;">round</span>(result[<span class="st" style="color: #20794D;">'score'</span>], <span class="dv" style="color: #AD0000;">4</span>)<span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">, start: </span><span class="sc" style="color: #5E5E5E;">{</span>result[<span class="st" style="color: #20794D;">'start'</span>]<span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">, end: </span><span class="sc" style="color: #5E5E5E;">{</span>result[<span class="st" style="color: #20794D;">'end'</span>]<span class="sc" style="color: #5E5E5E;">}</span><span class="ss" style="color: #20794D;">"</span></span>
+<span id="cb4-13"></span>
+<span id="cb4-14"><span class="co" style="color: #5E5E5E;"># Answer: 'SQuAD dataset', score: 0.5152, start: 147, end: 160</span></span></code></pre></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" aria-labelledby="tabset-1-3-tab">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="im" style="color: #00769E;">import</span> torch</span>
+<span id="cb5-2"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> AutoTokenizer, AutoModel, AutoModelForSeq2SeqLM</span>
+<span id="cb5-3"></span>
+<span id="cb5-4">model_name <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"vblagoje/bart_lfqa"</span></span>
+<span id="cb5-5">device <span class="op" style="color: #5E5E5E;">=</span> torch.device(<span class="st" style="color: #20794D;">'cuda'</span> <span class="cf" style="color: #003B4F;">if</span> torch.cuda.is_available() <span class="cf" style="color: #003B4F;">else</span> <span class="st" style="color: #20794D;">'cpu'</span>)</span>
+<span id="cb5-6"></span>
+<span id="cb5-7">tokenizer <span class="op" style="color: #5E5E5E;">=</span> AutoTokenizer.from_pretrained(model_name)</span>
+<span id="cb5-8">model <span class="op" style="color: #5E5E5E;">=</span> AutoModelForSeq2SeqLM.from_pretrained(model_name)</span>
+<span id="cb5-9">model <span class="op" style="color: #5E5E5E;">=</span> model.to(device)</span>
+<span id="cb5-10"></span>
+<span id="cb5-11"><span class="co" style="color: #5E5E5E;"># it all starts with a question/query</span></span>
+<span id="cb5-12">query <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"Why does water heated to room temperature feel colder than the air around it?"</span></span>
+<span id="cb5-13"></span>
+<span id="cb5-14"><span class="co" style="color: #5E5E5E;"># given the question above suppose these documents below were found in some document store </span></span>
+<span id="cb5-15">documents <span class="op" style="color: #5E5E5E;">=</span> [<span class="st" style="color: #20794D;">"when the skin is completely wet. The body continuously loses water by..."</span>,</span>
+<span id="cb5-16">             <span class="st" style="color: #20794D;">"at greater pressures. There is an ambiguity, however, as to the meaning of the terms 'heating' and 'cooling'..."</span>,</span>
+<span id="cb5-17">             <span class="st" style="color: #20794D;">"are not in a relation of thermal equilibrium, heat will flow from the hotter to the colder, by whatever pathway..."</span>,</span>
+<span id="cb5-18">             <span class="st" style="color: #20794D;">"air condition and moving along a line of constant enthalpy toward a state of higher humidity. A simple example ..."</span>,            </span>
+<span id="cb5-19">             <span class="st" style="color: #20794D;">"Thermal contact conductance In physics, thermal contact conductance is the study of heat conduction between solid ..."</span>]</span>
+<span id="cb5-20"></span>
+<span id="cb5-21"><span class="co" style="color: #5E5E5E;"># concatenate question and support documents into BART input</span></span>
+<span id="cb5-22">conditioned_doc <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"&lt;P&gt; "</span> <span class="op" style="color: #5E5E5E;">+</span> <span class="st" style="color: #20794D;">" &lt;P&gt; "</span>.join([d <span class="cf" style="color: #003B4F;">for</span> d <span class="kw" style="color: #003B4F;">in</span> documents])</span>
+<span id="cb5-23">query_and_docs <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"question: </span><span class="sc" style="color: #5E5E5E;">{}</span><span class="st" style="color: #20794D;"> context: </span><span class="sc" style="color: #5E5E5E;">{}</span><span class="st" style="color: #20794D;">"</span>.<span class="bu" style="color: null;">format</span>(query, conditioned_doc)</span>
+<span id="cb5-24"></span>
+<span id="cb5-25">model_input <span class="op" style="color: #5E5E5E;">=</span> tokenizer(query_and_docs, truncation<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, padding<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>, return_tensors<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"pt"</span>)</span>
+<span id="cb5-26"></span>
+<span id="cb5-27">generated_answers_encoded <span class="op" style="color: #5E5E5E;">=</span> model.generate(input_ids<span class="op" style="color: #5E5E5E;">=</span>model_input[<span class="st" style="color: #20794D;">"input_ids"</span>].to(device),</span>
+<span id="cb5-28">                                           attention_mask<span class="op" style="color: #5E5E5E;">=</span>model_input[<span class="st" style="color: #20794D;">"attention_mask"</span>].to(device))</span>
+<span id="cb5-29">tokenizer.batch_decode(generated_answers_encoded, skip_special_tokens<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>,clean_up_tokenization_spaces<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb5-30"></span>
+<span id="cb5-31"><span class="co" style="color: #5E5E5E;"># below is the abstractive answer generated by the model</span></span>
+<span id="cb5-32"><span class="co" style="color: #5E5E5E;">"""</span></span>
+<span id="cb5-33"><span class="co" style="color: #5E5E5E;">When you heat water to room temperature, it loses heat to the air around it. </span></span>
+<span id="cb5-34"><span class="co" style="color: #5E5E5E;">When you cool it down, it gains heat back from the air, which is why it feels colder</span></span>
+<span id="cb5-35"><span class="co" style="color: #5E5E5E;">than the air surrounding it. It's the same reason why you feel cold when you turn</span></span>
+<span id="cb5-36"><span class="co" style="color: #5E5E5E;">on a fan. The air around you is losing heat, and the water is gaining heat.</span></span>
+<span id="cb5-37"><span class="co" style="color: #5E5E5E;">"""</span> </span></code></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="retrieval-augmented-generator" class="level3">
+<h3 class="anchored" data-anchor-id="retrieval-augmented-generator">🌌 Retrieval-Augmented Generator</h3>
+<p>Then there’s another approach where you combine both retriever and generator and train them on the same corpus. Earlier, the retriever and generator were distinct models trained on two different datasets. Here, you have two models trained on the same task, same dataset. This is an active area of research, still not matured- with Deepmind publishing architectures like RETRO, Meta releasing DPR, etc.</p>
+</section>
+</section>
+<section id="question-answering-vs-chatbots" class="level2">
+<h2 class="anchored" data-anchor-id="question-answering-vs-chatbots">Question-Answering vs Chatbots</h2>
+<p>It’s a natural question- how is question-answering different from a chatbot? A chatbot is a lot of things - it could be a very simple lookup tool, or a massive ChatGPT. A chatbot may not always need a sophisticated transformer-based approach. You could build a simple chatbot that identifies the query and maps it to internal FAQs, and reply with options instead of a natural language reply. Conversational AI also needs to have some session memory, i.e.&nbsp;being able to remember the history of the conversation.</p>
+<p>The use of QA and Conversational AI is hence different, although combining both chatbot and Q&amp;A pipeline can be helpful in many cases. This post only covered QA, and not Chatbot.</p>
+</section>
+<section id="a-real-project-using-generative-qa" class="level2">
+<h2 class="anchored" data-anchor-id="a-real-project-using-generative-qa">A Real Project Using Generative QA</h2>
+<p>This post only covers some overview of the techniques and terms, but the examples provided are very basic. If you want to apply this to a real world task, it will take some more engineering. Currently I’m working on a project, a generative QA task on a corpus of documents, and that will require a new post entirely.</p>
+<p>However there are some interesting huggingface spaces on QA which are worth looking into.</p>
+<ul>
+<li><a href="https://huggingface.co/spaces/Rschmaelzle/wikipedia-assistant">Wikipedia Assistant</a> - Uses BART model for generative question answering on wikipedia corpus.</li>
+<li><a href="https://huggingface.co/spaces/Abhilashvj/haystack_QA">Haystack QA</a> - Uses roBERTa for extractive question answering.</li>
+</ul>
+</section>
+<section id="domain-adaptation" class="level2">
+<h2 class="anchored" data-anchor-id="domain-adaptation">Domain Adaptation</h2>
+<p>Most of the models available online have been fine-tuned on datasets like SQuAD, NQ etc. which might be from a completely different domain compared to yours. In this case, will they work? Generally, those abilities should transfer to any domain, but fine-tuning can give you massive boosts in performance. What is the best approach to do this fine-tuning- this is an area of active research, so too early to write. But fine-tuning on a Question-Answer dataset is relatively easy.</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>Deep Learning, unlike other parts of computing, requires you to shell out $ for the most meaningful applications. This is even more true for NLP than computer vision or tabular ML. So there are three tiers of developers- the GPT-3 havers, the GPU havers, the Colab-ers.</p>
+<ul>
+<li><p><strong>Paid GPT-3 API</strong> - Want to build your own QA application? A lot depends on the budget- if it’s an enterprise application where a paid GPT-3 API is available, there are libraries like LangChain or GPT-Index that abstract away a lot of boilerplate code and let you easily build a question-answering chain in a few lines of code. LangChain also supports some other open-source huggingface models.</p></li>
+<li><p><strong>Lot of Cloud Compute</strong> - If using a paid GPT-3 API is not possible, but there’s budget enough for several GPUs- you can use open-source large language models like Flan-T5, OPT-IML, GPT-J/Neo etc. Huggingface hosts all of these, and is really easy to use and fine-tune.</p></li>
+<li><p><strong>Free-tier Google Colab</strong> - If you want to build a simple prototype on the free-tier of Google Colab, you’d be off to using the smaller models. Models like Flan-T5 do quite well even at small sizes. Generative QA don’t do that well at these sizes, but if fine-tuning could do the trick.</p></li>
+</ul>
+<section id="libraries" class="level3">
+<h3 class="anchored" data-anchor-id="libraries">Libraries</h3>
+<p>The best place for NLP on the internet is, without doubt, <strong>Huggingface</strong>. It has very good documentation for all NLP tasks, a lot of models that can be easily downloaded and used. <a href="https://huggingface.co/tasks/question-answering">This is a good starting page for QA</a>.</p>
+<p><strong>Haystack</strong> is library that is built specifically for Question-Answering systems, has easy implementation for retriever/reader/generator etc, and you can use huggingface transformer models with it.</p>
+<p>If you’re using GPT-3 API, <strong>LangChain</strong> can very helpful in building a QA app. <strong>GPT-Index</strong> is another library that has useful utilities to build QA pipelines on top of existing document base.</p>
+</section>
+<section id="links" class="level3">
+<h3 class="anchored" data-anchor-id="links">Links</h3>
+<ul>
+<li><p><a href="https://lilianweng.github.io/posts/2020-10-29-odqa/">How to Build an Open-Domain Question Answering System?</a></p></li>
+<li><p><a href="https://yjernite.github.io/lfqa.html">A Model for Open Domain Long Form Question Answering</a></p></li>
+</ul>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>deep-learning</category>
+  <category>nlp</category>
+  <guid>https://shindeshu.github.io/posts/nlp/qa_guide.html</guid>
+  <pubDate>Sat, 28 Jan 2023 18:30:00 GMT</pubDate>
+  <media:content url="https://shindeshu.github.io/posts/nlp/assets/sphinx_robot.png" medium="image" type="image/png" height="108" width="144"/>
+</item>
 <item>
   <title>Why Data Scientists Should Write Tests</title>
   <dc:creator>Shubham Shinde</dc:creator>

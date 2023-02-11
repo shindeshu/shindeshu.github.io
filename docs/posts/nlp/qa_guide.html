@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Shubham Shinde">
+<meta name="dcterms.date" content="2023-01-29">
+<meta name="description" content="Using the power of transformers to unlock hidden knowledge through question-answering apps.">
+
+<title>Shubham Shinde - A Comprehensive Guide to Question-Answering in NLP</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-E3Z2GSDBB7"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Shubham Shinde - A Comprehensive Guide to Question-Answering in NLP">
+<meta property="og:description" content="Using the power of transformers to unlock hidden knowledge through question-answering apps.">
+<meta property="og:site-name" content="Shubham Shinde">
+<meta name="twitter:title" content="Shubham Shinde - A Comprehensive Guide to Question-Answering in NLP">
+<meta name="twitter:description" content="Using the power of transformers to unlock hidden knowledge through question-answering apps.">
+<meta name="twitter:creator" content="@ShindeShubham85">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Shubham Shinde</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-unlocking-of-knowledge" id="toc-the-unlocking-of-knowledge" class="nav-link active" data-scroll-target="#the-unlocking-of-knowledge">The Unlocking Of Knowledge</a></li>
+  <li><a href="#types-of-question-answering-tasks" id="toc-types-of-question-answering-tasks" class="nav-link" data-scroll-target="#types-of-question-answering-tasks">Types of Question-Answering Tasks</a>
+  <ul class="collapse">
+  <li><a href="#open-book-and-closed-book" id="toc-open-book-and-closed-book" class="nav-link" data-scroll-target="#open-book-and-closed-book">🕮 Open-Book and Closed-Book</a></li>
+  <li><a href="#extractive-vs-generative" id="toc-extractive-vs-generative" class="nav-link" data-scroll-target="#extractive-vs-generative">🖋️ Extractive vs Generative</a></li>
+  </ul></li>
+  <li><a href="#a-small-example" id="toc-a-small-example" class="nav-link" data-scroll-target="#a-small-example">A Small Example</a></li>
+  <li><a href="#components-of-qa-systems" id="toc-components-of-qa-systems" class="nav-link" data-scroll-target="#components-of-qa-systems">Components of QA Systems</a>
+  <ul class="collapse">
+  <li><a href="#retriever---how-find-the-relevant-documents" id="toc-retriever---how-find-the-relevant-documents" class="nav-link" data-scroll-target="#retriever---how-find-the-relevant-documents">🕵🏻‍ Retriever - How Find the Relevant Documents</a></li>
+  <li><a href="#reranking" id="toc-reranking" class="nav-link" data-scroll-target="#reranking">⚖ Reranking</a></li>
+  <li><a href="#get-answer-using-reader-generator" id="toc-get-answer-using-reader-generator" class="nav-link" data-scroll-target="#get-answer-using-reader-generator">✍🏻 Get Answer Using Reader / Generator</a></li>
+  <li><a href="#retrieval-augmented-generator" id="toc-retrieval-augmented-generator" class="nav-link" data-scroll-target="#retrieval-augmented-generator">🌌 Retrieval-Augmented Generator</a></li>
+  </ul></li>
+  <li><a href="#question-answering-vs-chatbots" id="toc-question-answering-vs-chatbots" class="nav-link" data-scroll-target="#question-answering-vs-chatbots">Question-Answering vs Chatbots</a></li>
+  <li><a href="#a-real-project-using-generative-qa" id="toc-a-real-project-using-generative-qa" class="nav-link" data-scroll-target="#a-real-project-using-generative-qa">A Real Project Using Generative QA</a></li>
+  <li><a href="#domain-adaptation" id="toc-domain-adaptation" class="nav-link" data-scroll-target="#domain-adaptation">Domain Adaptation</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">Resources</a>
+  <ul class="collapse">
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
+  <li><a href="#links" id="toc-links" class="nav-link" data-scroll-target="#links">Links</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">A Comprehensive Guide to Question-Answering in NLP</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">deep-learning</div>
+    <div class="quarto-category">nlp</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    Using the power of transformers to unlock hidden knowledge through question-answering apps.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Shubham Shinde </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 29, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="the-unlocking-of-knowledge" class="level2">
+<h2 class="anchored" data-anchor-id="the-unlocking-of-knowledge">The Unlocking Of Knowledge</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/sphinx_robot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">A Greek Sphinx</figcaption><p></p>
+</figure>
+</div>
+<p>The phenomenon of knowledge being locked is common to almost every organization. Knowledge- institutional, technical, introductory etc. is locked in several documents in several places, and needs active search with much efforts going through tomes in order to understand some piece of lore. What if you had an artificial brain who could digest all of this knowledge, and you simply converse with this brain to understand pieces of your lore-verse?</p>
+<p>This is no longer science-fiction. Massive language models like ChatGPT have quickly become the norm, and the capabilities of large language models are still being found out. Turns out, you don’t always need a service like ChatGPT, and you can service a lot of your needs using open-source models that can run on a single GPU.</p>
+<p>Using NLP models, not only can you unlock your organizational information by enabling intelligent search over large corpora, but can build question-answering apps on top of them, so information retrieval can be automated to an astonishing degree. Q&amp;A apps are one of the best ways to make sense of text data. In this post, we’ll go over this particular application of question-answering, alongwith some basic code to show how to implement them.</p>
+<p><strong>Contents</strong>: This post gives an overview of the types of question-answering tasks. It covers the different components in a question answering pipeline, alongwith some basic code implementations, reference libraries and examples.</p>
+</section>
+<section id="types-of-question-answering-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="types-of-question-answering-tasks">Types of Question-Answering Tasks</h2>
+<p>There are two ways to divide Question-Answering applications</p>
+<ol type="1">
+<li>Open-Book vs Closed-Book</li>
+<li>Extractive vs Generative</li>
+</ol>
+<section id="open-book-and-closed-book" class="level3">
+<h3 class="anchored" data-anchor-id="open-book-and-closed-book">🕮 Open-Book and Closed-Book</h3>
+<p>The most common type of Q&amp;A task is where you give a context/document to the model, as well as the question. The model then gives you an answer to the question. Since you are giving a context alongwith the question to the model, this is called an open-book QA task. The model answers the question only using the information given. This is analogous to open-book exams, where you are allowed to bring a book to the exam. Then there’s closed-book task where you are not given any context, the model is supposed to answer based on the information is has stored in itself. Because we are passing a ground truth in open-book tasks, they usually perform better, and hence are the preferred setting.</p>
+<p><strong>The Problem</strong>: Giving the context is extra trouble- what if I have thousands of documents? How can the model find answer through thousands of documents? Let’s answer this question in the next section.</p>
+</section>
+<section id="extractive-vs-generative" class="level3">
+<h3 class="anchored" data-anchor-id="extractive-vs-generative">🖋️ Extractive vs Generative</h3>
+<p>Then we come to the second classification- Extractive vs Generative. In Extractive QA, the answer will be a sentence/phrase from the given document. It will not create new words/sentences, but simply find the most relevant text in the context and return it. Hence it is sort of an advanced search algorithm that retrieves the section you need from the document. Because the returned phrase exists in the ground truth, this method is useful when you need accurate, small answers.</p>
+<p>In generative QA, the model will craft an answer based on it’s understanding of the context, instead of simply returning an existing phrase. Because the model is generating text, it is more prone to making errors.</p>
+<p>In both of above applications, the returned answers tend to be small, one-liners. Long-form QA is a variant of generative QA, where the answers are supposed to be long.</p>
+</section>
+</section>
+<section id="a-small-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-small-example">A Small Example</h2>
+<p>This is a small example of an extractive QA. Note that the pipeline requires both a context and the question.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>question_answerer <span class="op">=</span> pipeline(<span class="st">"question-answering"</span>, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                             model<span class="op">=</span><span class="st">'distilbert-base-cased-distilled-squad'</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>context <span class="op">=</span> <span class="vs">r"""</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="vs">Extractive Question Answering is the task of extracting an answer from a text </span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="vs">given a question. An example of a question answering dataset is the SQuAD dataset, </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="vs">which is entirely based on that task. If you would like to fine-tune a model </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="vs">on a SQuAD task, you may leverage the </span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="vs">examples/pytorch/question-answering/run_squad.py script.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="vs">"""</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>question <span class="op">=</span> <span class="st">"What is a good example of a question answering dataset?"</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> question_answerer(question<span class="op">=</span>question, context<span class="op">=</span>context)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Answer: '</span><span class="sc">{</span>result[<span class="st">'answer'</span>]<span class="sc">}</span><span class="ss">', "</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"score: </span><span class="sc">{</span><span class="bu">round</span>(result[<span class="st">'score'</span>], <span class="dv">4</span>)<span class="sc">}</span><span class="ss">, "</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"start: </span><span class="sc">{</span>result[<span class="st">'start'</span>]<span class="sc">}</span><span class="ss">, end: </span><span class="sc">{</span>result[<span class="st">'end'</span>]<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Answer: 'SQuAD dataset', score: 0.5152, start: 147, end: 160</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="components-of-qa-systems" class="level2">
+<h2 class="anchored" data-anchor-id="components-of-qa-systems">Components of QA Systems</h2>
+<p>Let’s go back to the problem with open-book answering- each question needs a reference document, which cannot be provided manually. The solution is to use another model to retrieve the most relevant document to the question, which then another model can use to do the answering. Hence this becomes a two-stage system, a retriever followed by a reader.</p>
+<p>QA systems will hence have these components-</p>
+<ul>
+<li>a database of documents (your knowledge base)</li>
+<li>a retriever component (to retrieve relevant documents)</li>
+<li>an optional reranker component (to re-order the relevant documents)</li>
+<li>a reader component (to extract the answer) or a generator component (to generate an answer)</li>
+</ul>
+<p>If you’re using a large language model like GPT-3, this could as simple as a single generator.</p>
+<p>Here’s a diagram that summarizes these components as well as how they’re put together:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="assets/qa3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Overview of QA Systems</figcaption><p></p>
+</figure>
+</div>
+<section id="retriever---how-find-the-relevant-documents" class="level3">
+<h3 class="anchored" data-anchor-id="retriever---how-find-the-relevant-documents">🕵🏻‍ Retriever - How Find the Relevant Documents</h3>
+<p>Let’s say you want to build a question-answering system on a bunch of internal documentation. The documentation is a pile of thousands of documents. To get an answer, you need to pass a question, and alongwith a passage that is relevant to that question. Since finding the passage is a huge task in itself, how is the QA app helpful at all?</p>
+<p>The solution is to let a model handle this task as well. This will be a different model than the QA model, and will be called “retriever”. All the documents will be passed to this model to get embeddings for each of them.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+What Are Embeddings? (Click to Expand)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Embedding is a numerical/vector representation of an entity, in this case a document. Embeddings of two similar documents will be closer to each other numerically.</p>
+</div>
+</div>
+</div>
+<p>Now, when we pass a question, we’ll compute the embeddings of the question as well. We’ll find the closest documents to the given question by comparing their embeddings. This is how finding relevant documents is automated using a model.</p>
+<p>Finding the relevant document is in itself an application. Sometimes you don’t need a QA on top, finding a needle in the haystack is beneficial in itself. This is called “Semantic Search”, and is extremely easy to implement with a significant improvement in productivity.</p>
+</section>
+<section id="reranking" class="level3">
+<h3 class="anchored" data-anchor-id="reranking">⚖ Reranking</h3>
+<p>For thousands and millions of documents, the performance of a retriever alone can be insufficient. It could return documents that may be related to some keywords in the query, but not related to the query at all. In order to enhance the results of our search, we could do reranking of the results.</p>
+<p>The retriever returns us a list of 100 documents, and reranker will again evaluate which of these 100 are most relevant to the query. Reranking has been proven to significantly improve the results for tasks like QA. However an extra model will be compute-intensive too. If the number of documents is not too high, re-ranking may not be necessary.</p>
+</section>
+<section id="get-answer-using-reader-generator" class="level3">
+<h3 class="anchored" data-anchor-id="get-answer-using-reader-generator">✍🏻 Get Answer Using Reader / Generator</h3>
+<p>Now that you have a context for the given question, you can pass both to a QA model that can (extract or generate) answer. But first, let us define this “Reader” model.</p>
+<p>If this is an extractive QA, i.e.&nbsp;highlighting the relevant phrase, you can use models like BERT fine-tuned on open-source QA datasets like SQuAD. If this is a generative QA, we use a model like BART/T5/GPT-2</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+The Types of Transformers (Click to Expand)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are three types of transformer models: Encoder, Decoder, and encoder-decoder. Encoders, like BERT, are suited to understand given text, Decoders like GPTs are suited to generate new text, Encoder-Decoders like BART/T5 are suited to generate text based on given texts.</p>
+</div>
+</div>
+</div>
+<p>Here are examples for all the three types of components- a retriever, an answer reader and an answer generator</p>
+<p>The retriever example uses small sentences as corpus, but it also performs remarkably well if the corpus is large paragraphs and documents.</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Retriever</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Extractive QA</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Generative QA</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer, util</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># get the embedding model</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>embedder <span class="op">=</span> SentenceTransformer(<span class="st">'all-MiniLM-L6-v2'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Corpus with example sentences</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># works well with large paragraphs too</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>corpus <span class="op">=</span> [<span class="st">'A man is eating food.'</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>          <span class="st">'A man is eating a piece of bread.'</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>          <span class="st">'The girl is carrying a baby.'</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>          <span class="st">'A man is riding a horse.'</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>          <span class="st">'A woman is playing violin.'</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>          <span class="st">'Two men pushed carts through the woods.'</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>          <span class="st">'A man is riding a white horse on an enclosed ground.'</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>          <span class="st">'A monkey is playing drums.'</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>          <span class="st">'A cheetah is running behind its prey.'</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>          ]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># compute embeddings for the entire corpus- one-time step.</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>corpus_embeddings <span class="op">=</span> embedder.encode(corpus, convert_to_tensor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># give the query for which most similar document is to be retrieved.</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">'A man is eating pasta.'</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># get the embedding for the query</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>query_embedding <span class="op">=</span> embedder.encode(query, convert_to_tensor<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># get the closest 5 documents to the query in embedding space.</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>cos_scores <span class="op">=</span> util.cos_sim(query_embedding, corpus_embeddings)[<span class="dv">0</span>]</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>top_results <span class="op">=</span> torch.topk(cos_scores, k<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Query:"</span>, query, <span class="st">"</span><span class="ch">\n</span><span class="st">Similar Documents:"</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> score, idx <span class="kw">in</span> <span class="bu">zip</span>(top_results[<span class="dv">0</span>], top_results[<span class="dv">1</span>]):</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(corpus[idx], <span class="st">"(Score: </span><span class="sc">{:.4f}</span><span class="st">)"</span>.<span class="bu">format</span>(score))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Output:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Query:</span> A man is eating pasta. </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Similar</span> Documents:</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> man is eating food. <span class="er">(</span><span class="ex">Score:</span> 0.7035<span class="kw">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> man is eating a piece of bread. <span class="er">(</span><span class="ex">Score:</span> 0.5272<span class="kw">)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> man is riding a horse. <span class="er">(</span><span class="ex">Score:</span> 0.1889<span class="kw">)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> man is riding a white horse on an enclosed ground. <span class="er">(</span><span class="ex">Score:</span> 0.1047<span class="kw">)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> cheetah is running behind its prey. <span class="er">(</span><span class="ex">Score:</span> 0.0980<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>question_answerer <span class="op">=</span> pipeline(<span class="st">"question-answering"</span>, model<span class="op">=</span><span class="st">'distilbert-base-cased-distilled-squad'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>context <span class="op">=</span> <span class="vs">r"""</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="vs">Extractive Question Answering is the task of extracting an answer from a text given a question. An example     of a</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="vs">question answering dataset is the SQuAD dataset, which is entirely based on that task. If you would like to fine-tune</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="vs">a model on a SQuAD task, you may leverage the examples/pytorch/question-answering/run_squad.py script.</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="vs">"""</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> question_answerer(question<span class="op">=</span><span class="st">"What is a good example of a question answering dataset?"</span>,     context<span class="op">=</span>context)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="ss">f"Answer: '</span><span class="sc">{</span>result[<span class="st">'answer'</span>]<span class="sc">}</span><span class="ss">', score: </span><span class="sc">{</span><span class="bu">round</span>(result[<span class="st">'score'</span>], <span class="dv">4</span>)<span class="sc">}</span><span class="ss">, start: </span><span class="sc">{</span>result[<span class="st">'start'</span>]<span class="sc">}</span><span class="ss">, end: </span><span class="sc">{</span>result[<span class="st">'end'</span>]<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Answer: 'SQuAD dataset', score: 0.5152, start: 147, end: 160</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer, AutoModel, AutoModelForSeq2SeqLM</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>model_name <span class="op">=</span> <span class="st">"vblagoje/bart_lfqa"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(<span class="st">'cuda'</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">'cpu'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_name)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> AutoModelForSeq2SeqLM.from_pretrained(model_name)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> model.to(device)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># it all starts with a question/query</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"Why does water heated to room temperature feel colder than the air around it?"</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># given the question above suppose these documents below were found in some document store </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>documents <span class="op">=</span> [<span class="st">"when the skin is completely wet. The body continuously loses water by..."</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>             <span class="st">"at greater pressures. There is an ambiguity, however, as to the meaning of the terms 'heating' and 'cooling'..."</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>             <span class="st">"are not in a relation of thermal equilibrium, heat will flow from the hotter to the colder, by whatever pathway..."</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>             <span class="st">"air condition and moving along a line of constant enthalpy toward a state of higher humidity. A simple example ..."</span>,            </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>             <span class="st">"Thermal contact conductance In physics, thermal contact conductance is the study of heat conduction between solid ..."</span>]</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># concatenate question and support documents into BART input</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>conditioned_doc <span class="op">=</span> <span class="st">"&lt;P&gt; "</span> <span class="op">+</span> <span class="st">" &lt;P&gt; "</span>.join([d <span class="cf">for</span> d <span class="kw">in</span> documents])</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>query_and_docs <span class="op">=</span> <span class="st">"question: </span><span class="sc">{}</span><span class="st"> context: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(query, conditioned_doc)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>model_input <span class="op">=</span> tokenizer(query_and_docs, truncation<span class="op">=</span><span class="va">True</span>, padding<span class="op">=</span><span class="va">True</span>, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>generated_answers_encoded <span class="op">=</span> model.generate(input_ids<span class="op">=</span>model_input[<span class="st">"input_ids"</span>].to(device),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>                                           attention_mask<span class="op">=</span>model_input[<span class="st">"attention_mask"</span>].to(device))</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>tokenizer.batch_decode(generated_answers_encoded, skip_special_tokens<span class="op">=</span><span class="va">True</span>,clean_up_tokenization_spaces<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># below is the abstractive answer generated by the model</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co">When you heat water to room temperature, it loses heat to the air around it. </span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">When you cool it down, it gains heat back from the air, which is why it feels colder</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co">than the air surrounding it. It's the same reason why you feel cold when you turn</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co">on a fan. The air around you is losing heat, and the water is gaining heat.</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="retrieval-augmented-generator" class="level3">
+<h3 class="anchored" data-anchor-id="retrieval-augmented-generator">🌌 Retrieval-Augmented Generator</h3>
+<p>Then there’s another approach where you combine both retriever and generator and train them on the same corpus. Earlier, the retriever and generator were distinct models trained on two different datasets. Here, you have two models trained on the same task, same dataset. This is an active area of research, still not matured- with Deepmind publishing architectures like RETRO, Meta releasing DPR, etc.</p>
+</section>
+</section>
+<section id="question-answering-vs-chatbots" class="level2">
+<h2 class="anchored" data-anchor-id="question-answering-vs-chatbots">Question-Answering vs Chatbots</h2>
+<p>It’s a natural question- how is question-answering different from a chatbot? A chatbot is a lot of things - it could be a very simple lookup tool, or a massive ChatGPT. A chatbot may not always need a sophisticated transformer-based approach. You could build a simple chatbot that identifies the query and maps it to internal FAQs, and reply with options instead of a natural language reply. Conversational AI also needs to have some session memory, i.e.&nbsp;being able to remember the history of the conversation.</p>
+<p>The use of QA and Conversational AI is hence different, although combining both chatbot and Q&amp;A pipeline can be helpful in many cases. This post only covered QA, and not Chatbot.</p>
+</section>
+<section id="a-real-project-using-generative-qa" class="level2">
+<h2 class="anchored" data-anchor-id="a-real-project-using-generative-qa">A Real Project Using Generative QA</h2>
+<p>This post only covers some overview of the techniques and terms, but the examples provided are very basic. If you want to apply this to a real world task, it will take some more engineering. Currently I’m working on a project, a generative QA task on a corpus of documents, and that will require a new post entirely.</p>
+<p>However there are some interesting huggingface spaces on QA which are worth looking into.</p>
+<ul>
+<li><a href="https://huggingface.co/spaces/Rschmaelzle/wikipedia-assistant">Wikipedia Assistant</a> - Uses BART model for generative question answering on wikipedia corpus.</li>
+<li><a href="https://huggingface.co/spaces/Abhilashvj/haystack_QA">Haystack QA</a> - Uses roBERTa for extractive question answering.</li>
+</ul>
+</section>
+<section id="domain-adaptation" class="level2">
+<h2 class="anchored" data-anchor-id="domain-adaptation">Domain Adaptation</h2>
+<p>Most of the models available online have been fine-tuned on datasets like SQuAD, NQ etc. which might be from a completely different domain compared to yours. In this case, will they work? Generally, those abilities should transfer to any domain, but fine-tuning can give you massive boosts in performance. What is the best approach to do this fine-tuning- this is an area of active research, so too early to write. But fine-tuning on a Question-Answer dataset is relatively easy.</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>Deep Learning, unlike other parts of computing, requires you to shell out $$ for the most meaningful applications. This is even more true for NLP than computer vision or tabular ML. So there are three tiers of developers- the GPT-3 havers, the GPU havers, the Colab-ers.</p>
+<ul>
+<li><p><strong>Paid GPT-3 API</strong> - Want to build your own QA application? A lot depends on the budget- if it’s an enterprise application where a paid GPT-3 API is available, there are libraries like LangChain or GPT-Index that abstract away a lot of boilerplate code and let you easily build a question-answering chain in a few lines of code. LangChain also supports some other open-source huggingface models.</p></li>
+<li><p><strong>Lot of Cloud Compute</strong> - If using a paid GPT-3 API is not possible, but there’s budget enough for several GPUs- you can use open-source large language models like Flan-T5, OPT-IML, GPT-J/Neo etc. Huggingface hosts all of these, and is really easy to use and fine-tune.</p></li>
+<li><p><strong>Free-tier Google Colab</strong> - If you want to build a simple prototype on the free-tier of Google Colab, you’d be off to using the smaller models. Models like Flan-T5 do quite well even at small sizes. Generative QA don’t do that well at these sizes, but if fine-tuning could do the trick.</p></li>
+</ul>
+<section id="libraries" class="level3">
+<h3 class="anchored" data-anchor-id="libraries">Libraries</h3>
+<p>The best place for NLP on the internet is, without doubt, <strong>Huggingface</strong>. It has very good documentation for all NLP tasks, a lot of models that can be easily downloaded and used. <a href="https://huggingface.co/tasks/question-answering">This is a good starting page for QA</a>.</p>
+<p><strong>Haystack</strong> is library that is built specifically for Question-Answering systems, has easy implementation for retriever/reader/generator etc, and you can use huggingface transformer models with it.</p>
+<p>If you’re using GPT-3 API, <strong>LangChain</strong> can very helpful in building a QA app. <strong>GPT-Index</strong> is another library that has useful utilities to build QA pipelines on top of existing document base.</p>
+</section>
+<section id="links" class="level3">
+<h3 class="anchored" data-anchor-id="links">Links</h3>
+<ul>
+<li><p><a href="https://lilianweng.github.io/posts/2020-10-29-odqa/">How to Build an Open-Domain Question Answering System?</a></p></li>
+<li><p><a href="https://yjernite.github.io/lfqa.html">A Model for Open Domain Long Form Question Answering</a></p></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
