@@ -144,7 +144,7 @@
     "href": "posts/nlp/qa_guide.html#a-real-project-using-generative-qa",
     "title": "A Comprehensive Guide to Question-Answering in NLP",
     "section": "A Real Project Using Generative QA",
-    "text": "A Real Project Using Generative QA\nThis post only covers some overview of the techniques and terms, but the examples provided are very basic. If you want to apply this to a real world task, it will take some more engineering. Currently I’m working on a project, a generative QA task on a corpus of documents, and that will require a new post entirely.\nHowever there are some interesting huggingface spaces on QA which are worth looking into.\n\nWikipedia Assistant - Uses BART model for generative question answering on wikipedia corpus.\nHaystack QA - Uses roBERTa for extractive question answering."
+    "text": "A Real Project Using Generative QA\nThis post only covers some overview of the techniques and terms, but the examples provided are very basic. If you want to apply this to a real world task, it will take some more engineering. Currently I’m working on a project, a generative QA task on a corpus of documents, and that will require a new post entirely.\nHowever there are some interesting huggingface spaces on QA which are worth looking into.\n\nWikipedia Assistant - Uses BART model for generative question answering on wikipedia corpus.\nHaystack QA - Uses roBERTa for extractive question answering.\n\nThere’s also some blogposts on creating support chatbots using GPT-3.\n\n[Build a GitHub support bot with GPT3, LangChain, and Python] https://dagster.io/blog/chatgpt-langchain"
   },
   {
     "objectID": "posts/nlp/qa_guide.html#domain-adaptation",
