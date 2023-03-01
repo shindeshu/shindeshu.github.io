@@ -10,7 +10,224 @@
 <atom:link href="https://shindeshu.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Blog for data science related topics</description>
 <generator>quarto-1.1.251</generator>
-<lastBuildDate>Sat, 28 Jan 2023 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 02 Feb 2023 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>Understanding the Transformer</title>
+  <dc:creator>Shubham Shinde</dc:creator>
+  <link>https://shindeshu.github.io/posts/nlp/understanding_transformer.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="transformers---the-phenomenon-of-our-age" class="level2">
+<h2 class="anchored" data-anchor-id="transformers---the-phenomenon-of-our-age">Transformers - the Phenomenon of Our Age</h2>
+<p>It is not hyperbolic to call transformers as the greatest invention in last 5 years or so. With ChatGPT and Bing AI, the quality of machine generated text has shattered everyone’s projections about artificial intelligence. However, what’s fascinating that the underlying architecture that has enabled all these advancements in NLP is relatively quite simple and easy to understand. In this post, we’ll try to understand it.</p>
+<p><strong>Contents of this Post:</strong> A brief comparison of transformers and sequential models, importance of attention, Q-K-V in simpler terms, and in detail, other components of transformers, decoder, beam-search.</p>
+</section>
+<section id="attention-vs-sequential-models" class="level2">
+<h2 class="anchored" data-anchor-id="attention-vs-sequential-models">Attention vs Sequential Models</h2>
+<p>Many people do have an understanding of RNNs / LSTMs, probably since they’ve been around for a long time, they’re a part of many a coursework, etc. And hence they try to understand transformers from that angle, as sort of a natural evolution. However transformers are extremely different from sequential models because they, well, are not sequential models.</p>
+<p>In sequential models, we have units one after another, in a chain. Each unit/word has direct access to information of only the preceding unit/word. This is limiting - dependencies between words at different positions is not modelled well. For sequence-to-sequence prediction, the entirety of input is encoded in a single vector, and the decoder is supposed to decode everything from that. This causes information loss because all of it is crushed into a single vector. Transformer solves both of these issues and more.</p>
+<p>For a silly comparison think of sequential models as the assassination chain meme, whereas an attention model as the mexican standoff meme. In attention, the mexican standoff has mutant people with dozens of arms pointing at everybody!</p>
+<div id="silly-com" class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/mexican_standoff.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Attention, a Mexican Standoff</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/assa_chain_meme.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Sequential Assassination Chain</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="self-attention-is-translation-invariant" class="level2">
+<h2 class="anchored" data-anchor-id="self-attention-is-translation-invariant">Self-Attention Is Translation Invariant</h2>
+<p>Self-Attention is translation invariant by nature, which means even if you exchange few words, the output will be same. To incorporate the position information, we have a separate embedding called position embedding that we’ll look at later. But in itself, self-attention does not have a “sequence” among the input words. This is really powerful since - it allows each word in a sentence to be considered for computing output - it allows us to parallelize operations on GPUs, enabling us to build larger powerful models.</p>
+</section>
+<section id="why-attention-is-important" class="level2">
+<h2 class="anchored" data-anchor-id="why-attention-is-important">Why Attention is Important</h2>
+<p>Attention is the underlying mechanism that powers transformers. Let us see <em>why</em> it is necessary. Take this sentence as example</p>
+<p><code>The animal didn't cross the street because it was too tired</code></p>
+<p>What does the word “it” refer to? We know that it refers to “animal”, but the model should also be able to connect to the relevant word and use that information while predicting. Self-Attention allows this. Here, the attention weights visualized indeed show us that.</p>
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/att_example.png" class="img-fluid" style="width:70.0%"></p>
+</section>
+<section id="a-single-dense-layer-vs-attention" class="level2">
+<h2 class="anchored" data-anchor-id="a-single-dense-layer-vs-attention">A Single Dense Layer vs Attention</h2>
+<p>Now let’s understand a simpler situation that’s kinda analogous to self-attention- you simply multiply the inputs with a matrix (in other words, pass through a linear layer).</p>
+<p>Let’s say the input sequence is of 8 words, and the vocabulary is of 1000. Then, we will first map each word to a embedding vector of 32, which is going to be our embedding dimension. This is like the word embedding of each word. Here, T = 8, and C = 32. Hence, our input is a matrix of [8 x 1000], which will be projected to [8 x 32].</p>
+<p>Assume that W is our weights matrix of size TxT. Each element of it is a weight that corresponds to every single word to every other word, including towards itself (the diagonal elements). We can simply multiply it with our embedding matrix like this → [T, T] x [T, 32] → [T, 32], this being our updated representation!</p>
+<p>Viola, we have an updated representation that considers every single word for computing output! BUT this is <strong>NOT</strong> attention, because in this case the weights are fixed. What we saw here is</p>
+<p><img src="https://latex.codecogs.com/png.latex?y%20=%20A%20%5Ccdot%20x"></p>
+<p>whereas attention is something like</p>
+<p><img src="https://latex.codecogs.com/png.latex?y%20=%20A(x)%20%5Ccdot%20x"></p>
+<p>where the weights matrix changes depending on what the input words are! In this example, the weights are fixed, attention is simply this example but with dynamic weights. How do we implement such dynamic weights? We use the Q-K-V method.</p>
+</section>
+<section id="q-k-v-in-simple-terms" class="level2">
+<h2 class="anchored" data-anchor-id="q-k-v-in-simple-terms">Q-K-V in Simple Terms</h2>
+<p>There are three matrices Q, K, V. By multiplying them with our word embeddings, for each word we get three vectors q, k, v. Each word’s q &amp; k are used to create the weights matrix, which is multiplied with v to get the attention output for that word. Finally, v is passed through a linear layer to get the output of the single transformer block.</p>
+<p>Think of an analogue where instead of words, we have six people - you, your grandma, your dog, your professor, your best friend, a random person. The first person, which is you, wants some advice (say, college admission). Here, query is a vector from you (what do I do?). All other people return keys to you (here’s what I say), and you compute a weights vector corresponding to your query and the keys. Finally you weigh the final decision (objectively, here’s the answer) based on these weights. Other people will similarly have their own questions. Not a perfect example, but good enough to get you started.</p>
+</section>
+<section id="q-k-v-matrices" class="level2">
+<h2 class="anchored" data-anchor-id="q-k-v-matrices">Q-K-V Matrices</h2>
+<p>Doing the q-k-v computation for each word will be extremely inefficient - we can use matrix multiplication to speedrun them.</p>
+<section id="start-with-an-embedding-for-each-word" class="level3">
+<h3 class="anchored" data-anchor-id="start-with-an-embedding-for-each-word">Start with an Embedding for Each Word</h3>
+<p>We have T words as input, since that’s our time dimension/context size. Our total vocabulary is of size V. Hence our input is [T, V], each vector as a one-hot vector for that word.</p>
+<p>Using a linear layer, we’ll project this vector [T, V] to [T, C]. Here, C is called our embedding dimension. This matrix <strong>[T, C]</strong> will go inside a transformer block.</p>
+</section>
+<section id="get-the-q-k-v-vectors-for-all-words" class="level3">
+<h3 class="anchored" data-anchor-id="get-the-q-k-v-vectors-for-all-words">Get the Q, K, V vectors for All Words</h3>
+<p>We define three matrices <img src="https://latex.codecogs.com/png.latex?W_q">, <img src="https://latex.codecogs.com/png.latex?W_k">, <img src="https://latex.codecogs.com/png.latex?W_v">, each of size [C, 16]. Here, 16 is called the head size denoted by <img src="https://latex.codecogs.com/png.latex?d">, and is smaller than embedding dimension by choice. Reminder - C is the embedding dimension, this size of vector is going to come in for each word, and be output for each word. In previous example, we had defined C=32. It can be 512 (USE) or 768 (BERT) or 12268 (in case of GPT)</p>
+<p>To get the query vectors for all words simply multiply the embedding matrix by <img src="https://latex.codecogs.com/png.latex?W_q">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?q%20=%20E%20%5Ccdot%20W_q"> which in matrix form → [T, C] x [C, 16] → [T, 16]. Likewise for key and value vectors.</p>
+<p><img src="https://latex.codecogs.com/png.latex?k%20=%20E%20%5Ccdot%20W_k"> which in matrix form → [T, C] x [C, 16] → [T, 16]</p>
+<p><img src="https://latex.codecogs.com/png.latex?v%20=%20E%20%5Ccdot%20W_v"> which in matrix form → [T, C] x [C, 16] → [T, 16]</p>
+</section>
+<section id="compute-the-weights-from-q-k-and-multiply-them-with-v" class="level3">
+<h3 class="anchored" data-anchor-id="compute-the-weights-from-q-k-and-multiply-them-with-v">Compute the ‘Weights’ from Q, K and Multiply Them with V</h3>
+<p>To compute the final representation after attention, First multiply q and k vectors to get the weights matrix, but you will have to transpose k first to multiply them.</p>
+<p><img src="https://latex.codecogs.com/png.latex?w%20=%20(q%20%5Ccdot%20k%5ET)">, In matrix shapes, that is: [T, 16] x [16, T] → [T, T]</p>
+<p>You apply softmax multiply these weights with the v vector to get your attention output</p>
+<p><img src="https://latex.codecogs.com/png.latex?output%20=%20softmax(w)%20%5Ccdot%20v"></p>
+<p>In matrix shapes that is [T, T] x [T, 16] → <strong>[T, 16]</strong></p>
+<p>Putting all together:</p>
+<p><img src="https://latex.codecogs.com/png.latex?attention(q,%20k,%20v)%20=%20(%5Cfrac%7B1%7D%7B%5Csqrt%7Bd_k%7D%7D)softmax(q%20%5Ccdot%20k%5ET)%20%5Ccdot%20v"></p>
+<p>The <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7Bd_k%7D"> division is to normalize the outputs.</p>
+</section>
+<section id="finally-send-this-to-a-dense-layer" class="level3">
+<h3 class="anchored" data-anchor-id="finally-send-this-to-a-dense-layer">Finally, Send This to a Dense Layer</h3>
+<p>After self-attention, the output is then again sent to one dense layer, which will allow the model to think deeper about the computed representations after the attention. Output of this layer is then given as input to the next transformer block- repeated n times till defined. This layer is called Feed-Forward Neural Network or FFNN.</p>
+<p>[T, 16] → <strong>[T, 32]</strong></p>
+<p>This output now becomes input to the next encoder block.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/qkv.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Q-K-V Computation</figcaption><p></p>
+</figure>
+</div>
+<p>In case the computation is easier to understand in code, here’s some pytorch code from Andrej Karpathy’s video:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">B,T,C <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">4</span>,<span class="dv" style="color: #AD0000;">8</span>,<span class="dv" style="color: #AD0000;">32</span> <span class="co" style="color: #5E5E5E;"># batch, time, channels</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;"># input </span></span>
+<span id="cb1-3">x <span class="op" style="color: #5E5E5E;">=</span> torch.randn(B,T,C)</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;"># let's see a single Head perform self-attention</span></span>
+<span id="cb1-6">head_size <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">16</span></span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;"># create Q, K, V layers</span></span>
+<span id="cb1-9">key <span class="op" style="color: #5E5E5E;">=</span> nn.Linear(C, head_size, bias<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>)</span>
+<span id="cb1-10">query <span class="op" style="color: #5E5E5E;">=</span> nn.Linear(C, head_size, bias<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>)</span>
+<span id="cb1-11">value <span class="op" style="color: #5E5E5E;">=</span> nn.Linear(C, head_size, bias<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">False</span>)</span>
+<span id="cb1-12"></span>
+<span id="cb1-13"><span class="co" style="color: #5E5E5E;"># compute the Q, K vectors for each word</span></span>
+<span id="cb1-14">k <span class="op" style="color: #5E5E5E;">=</span> key(x)   <span class="co" style="color: #5E5E5E;"># (B, T, 16)</span></span>
+<span id="cb1-15">q <span class="op" style="color: #5E5E5E;">=</span> query(x) <span class="co" style="color: #5E5E5E;"># (B, T, 16)</span></span>
+<span id="cb1-16"></span>
+<span id="cb1-17"><span class="co" style="color: #5E5E5E;"># compute the weights using Q &amp; K</span></span>
+<span id="cb1-18">wei <span class="op" style="color: #5E5E5E;">=</span>  q <span class="op" style="color: #5E5E5E;">@</span> k.transpose(<span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span>, <span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>) <span class="co" style="color: #5E5E5E;"># (B, T, 16) @ (B, 16, T) ---&gt; (B, T, T)</span></span>
+<span id="cb1-19"></span>
+<span id="cb1-20"><span class="co" style="color: #5E5E5E;"># softmax+normalize the weights matrix</span></span>
+<span id="cb1-21"><span class="co" style="color: #5E5E5E;"># tril = torch.tril(torch.ones(T, T))</span></span>
+<span id="cb1-22"><span class="co" style="color: #5E5E5E;"># wei = wei.masked_fill(tril == 0, float('-inf')) # this line is for a decoder block</span></span>
+<span id="cb1-23">wei <span class="op" style="color: #5E5E5E;">=</span> F.softmax(wei, dim<span class="op" style="color: #5E5E5E;">=-</span><span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb1-24"></span>
+<span id="cb1-25">v <span class="op" style="color: #5E5E5E;">=</span> value(x)</span>
+<span id="cb1-26">out <span class="op" style="color: #5E5E5E;">=</span> wei <span class="op" style="color: #5E5E5E;">@</span> v</span>
+<span id="cb1-27"><span class="co" style="color: #5E5E5E;">#out = wei @ x</span></span>
+<span id="cb1-28"></span>
+<span id="cb1-29">out.shape</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="transformer-components" class="level2">
+<h2 class="anchored" data-anchor-id="transformer-components">Transformer Components</h2>
+<p>With self-attention out of the way, let’s move on to the entire transformer tower.</p>
+<section id="types-of-transformers" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-transformers">Types of Transformers</h3>
+<p>There can two be components - Encoder, and a Decoder. This is a sequence-to-sequence model, used for tasks like machine translation (which was the topic of intereset of the original transformer paper). However, there can be encoder-only transformers geared towards text understanding and applications like sentiment analysis, named entity recognition, etc. BERT is an example of encoder-model. There can also be decoder-only models like GPT which are geared towards production of text given a small input.</p>
+</section>
+<section id="components" class="level3">
+<h3 class="anchored" data-anchor-id="components">Components</h3>
+<p>Encoding component is actually six encoders, stacked on top of each other. They have the same structure, but they do not share weights. Each encoder has two parts - Self-Attention and Feed-Forward Neural Network. The FFNN weights are same for all words, for a given encoder.</p>
+<p>Decoding Component too has these two components, but an extra one in the middle - Encoder-Decoder attention to focus on the encodings. For an encoder-decoder attention block, the K&amp;V matrices come from the last encoder block, while Q matrices come from itself.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/enc_dec.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p></p><figcaption class="figure-caption">Encoder-Decoder</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="multi-headed-attention" class="level3">
+<h3 class="anchored" data-anchor-id="multi-headed-attention">Multi-Headed Attention</h3>
+<p>We discussed self-attention, however skipped an important aspect of transformers that is multi-headed attention.</p>
+<p>Let’s go back to the same example. The word <code>it</code> is correctly identified by the attention outputs to be related to <code>animal</code>. But there can be multiple contact points of information and interaction in the same sentence! For example the word <code>tired</code> is also related to <code>animal</code> but this relationship is not capture in one self-attention.</p>
+<p>This can be remedied by having multiple attention heads! This means that for a single transformer block, we’ll have multiple sets of Q, K, V matrices instead of one. And before passing to the Feed Forward Neural Network, we’ll concatenate their outputs to aggregate their information.</p>
+<p>This helps us capture multi-tiered information, like shown in this example:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/att_example2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Attention With Two Heads</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="position-embeddings" class="level3">
+<h3 class="anchored" data-anchor-id="position-embeddings">Position Embeddings</h3>
+<p>So far in self-attention, we have not considered the <em>order</em> or the <em>arrangement</em> of the words in the sentence at all. The model simply looks around for attention irrespective of the query’s position. However positional information is important (obviously), so it needs to be incorporated somehow.</p>
+<p>We create one more embedding of size [T, C]. Here, T is the number of words in a sentence, and C is the embedding dimension of the words. We simply add this embedding to the word / token embedding before computing the attention.</p>
+</section>
+<section id="residual-connections-and-layernorm" class="level3">
+<h3 class="anchored" data-anchor-id="residual-connections-and-layernorm">Residual Connections and LayerNorm</h3>
+<p>Another component in the transformer architecture is the residual connections and Layer Norm.</p>
+<p>Layer Norm is different from Batch Normalization, in that latter normalizes using the properties of the entire batch, whereas former normalizes using the properties of the embedding dimension.</p>
+<p>After adding all these components, we are able to see the diagram from the paper</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/nlp/assets/arxiv.PNG" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Diagram from the Paper</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="decoder" class="level2">
+<h2 class="anchored" data-anchor-id="decoder">Decoder</h2>
+<p>The decoder components are exactly the same as encoders - except for one change. Between self-attention and FFN, there’s an additional component called cross-attention. In this attention stage, the K and V matrices come from the encoder, while the Q matrices come from the decoder itself. This helps to aggregate the encoded information while decoding the sequence.</p>
+<p>There’s one more difference with Decoder- while computing the attention, the <em>future</em> words are not attended to. That is, while decoding the first word, you cannot get any information from rest of the words. For first two words, no info from the third and onwards. This is implemented using by masking the weights matrix using a lower triangular matrix.</p>
+<p>Decoders, like Encoders, are also stacked one above the another, and the outputs keep bubbling up till the last decoder layer. After that, there’s a linear layer that transforms the embeddings into probabilities across the entire vocabulary. Assume the model’s vocabulary is 10,000. Then for each output word there will be 10,000 probabilities. You can pick the highest probability and call it as your result, and discard the rest. This is called greedy search.</p>
+</section>
+<section id="beam-search" class="level2">
+<h2 class="anchored" data-anchor-id="beam-search">Beam-Search</h2>
+<p>You can pick the highest probability and call it as your result, and discard the rest. This is called greedy search.</p>
+<p>Or, for the first word, you can keep the top two words, “I” and “He”. For the next word, you can run the model twice - one assuming the first word “I” was correct, and the second time assuming “He” was correct. Whichever produced less error considering the two words predicted, is kept. This is called beam search. In our case, beam size was 2- it can be bigger.</p>
+</section>
+<section id="links" class="level2">
+<h2 class="anchored" data-anchor-id="links">Links</h2>
+<p>This was an overview of the transformer architecture. A lot of the things here are from either Jay Alammar’s incredibly beautiful blogpost on transformers, or from Andrej Karpathy 2-hour video on implementing GPT from scratch. Both are fantastic resources, do check them out as well. And of course, the original “Attention” paper</p>
+<ul>
+<li><a href="https://arxiv.org/pdf/1706.03762.pdf">Attention Is All You Need</a></li>
+<li><a href="https://jalammar.github.io/illustrated-transformer/">Jay Alammar - The Illustrated Transformer</a></li>
+<li><a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Andrej Karpathy - Let’s build GPT: from scratch, in code, spelled out.</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>deep-learning</category>
+  <category>nlp</category>
+  <guid>https://shindeshu.github.io/posts/nlp/understanding_transformer.html</guid>
+  <pubDate>Thu, 02 Feb 2023 18:30:00 GMT</pubDate>
+  <media:content url="https://shindeshu.github.io/posts/nlp/assets/mexican_standoff.png" medium="image" type="image/png" height="81" width="144"/>
+</item>
 <item>
   <title>A Comprehensive Guide to Question-Answering in NLP</title>
   <dc:creator>Shubham Shinde</dc:creator>

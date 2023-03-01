@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/nlp/understanding_transformer.html",
       "/posts/nlp/qa_guide.html",
       "/posts/datascience/whytests.html",
       "/posts/roadmap/start.html",
@@ -14,6 +15,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/nlp/understanding_transformer.html",
       "/posts/nlp/qa_guide.html",
       "/posts/datascience/whytests.html",
       "/posts/tutorials/keras_cnns_intro.html",
