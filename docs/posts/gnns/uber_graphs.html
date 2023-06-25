@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Shubham Shinde">
+<meta name="dcterms.date" content="2023-03-10">
+<meta name="description" content="In this post, we’ll go over one of the industry’s experimentations on graph neural networks for fraud detection.">
+
+<title>Shubham Shinde - How Uber Used GNNs to Detect Fraud</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-E3Z2GSDBB7"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-E3Z2GSDBB7', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Shubham Shinde - How Uber Used GNNs to Detect Fraud">
+<meta property="og:description" content="In this post, we’ll go over one of the industry’s experimentations on graph neural networks for fraud detection.">
+<meta property="og:site-name" content="Shubham Shinde">
+<meta name="twitter:title" content="Shubham Shinde - How Uber Used GNNs to Detect Fraud">
+<meta name="twitter:description" content="In this post, we’ll go over one of the industry’s experimentations on graph neural networks for fraud detection.">
+<meta name="twitter:creator" content="@ShindeShubham85">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Shubham Shinde</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html">Blog</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#fraud-and-ml" id="toc-fraud-and-ml" class="nav-link active" data-scroll-target="#fraud-and-ml">Fraud and ML</a></li>
+  <li><a href="#fraud-at-uber" id="toc-fraud-at-uber" class="nav-link" data-scroll-target="#fraud-at-uber">Fraud at Uber</a></li>
+  <li><a href="#labeling-a-fraud" id="toc-labeling-a-fraud" class="nav-link" data-scroll-target="#labeling-a-fraud">Labeling a Fraud</a></li>
+  <li><a href="#what-are-graph-neural-networks" id="toc-what-are-graph-neural-networks" class="nav-link" data-scroll-target="#what-are-graph-neural-networks">What Are Graph Neural Networks</a></li>
+  <li><a href="#data-and-evaluation" id="toc-data-and-evaluation" class="nav-link" data-scroll-target="#data-and-evaluation">Data and Evaluation</a></li>
+  <li><a href="#data-pipeline" id="toc-data-pipeline" class="nav-link" data-scroll-target="#data-pipeline">Data Pipeline</a>
+  <ul class="collapse">
+  <li><a href="#graph-partitioning" id="toc-graph-partitioning" class="nav-link" data-scroll-target="#graph-partitioning">Graph Partitioning</a></li>
+  </ul></li>
+  <li><a href="#future-directions" id="toc-future-directions" class="nav-link" data-scroll-target="#future-directions">Future Directions</a></li>
+  <li><a href="#uber-risk-models" id="toc-uber-risk-models" class="nav-link" data-scroll-target="#uber-risk-models">Uber Risk Models</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">How Uber Used GNNs to Detect Fraud</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">deep-learning</div>
+    <div class="quarto-category">gnn</div>
+    <div class="quarto-category">applied-ml</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    In this post, we’ll go over one of the industry’s experimentations on graph neural networks for fraud detection.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Shubham Shinde </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 10, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="fraud-and-ml" class="level2">
+<h2 class="anchored" data-anchor-id="fraud-and-ml">Fraud and ML</h2>
+<p>Fraud remains a persistent concern in various industries within the digital realm. Because fraud can take the shape of many different types depending on the industry, it becomes one of the most complex use-cases of machine learning. Healthcare fraud, for instance, involves doctors colluding with testing centers to assign more tests that they should (among other types). Financial fraud is another quagmire that keeps constantly evolving.</p>
+<p>Uber, considering the volumes of financial transactions, attracts its fair share of fraudsters and hence they have built advanced fraud detection infrastructure. In this blog post, we’ll look at one of the experiments they did with Graph Neural Networks, outline in this Uber <a href="https://www.uber.com/en-IN/blog/fraud-detection/">blog</a>. Yes, this is a blog post about a blog post.</p>
+<p><img src="assets/uber_photo.jpg" width="600"></p>
+</section>
+<section id="fraud-at-uber" class="level2">
+<h2 class="anchored" data-anchor-id="fraud-at-uber">Fraud at Uber</h2>
+<p>What kind of fraud happens at Uber? There are roughly two types, according another <a href="https://www.uber.com/en-IN/blog/project-radar-intelligent-early-fraud-detection/">post</a> on Uber.</p>
+<p>Following are the 2 primary payment fraud types:</p>
+<ul>
+<li>DNS stands for “do not settle”, which occurs when the order has been fulfilled or a trip has been completed, but the payment could not be collected</li>
+<li>Chargeback happens when the payment has been collected, but the user disputes the transaction, and the bank refunds the money</li>
+</ul>
+<p>The blog post we are discussing primarily deals with chargebacks, however it does not provide details on its mechanisms. The authors claim that “collusion” among fraud users is what they are targeting, and also make the claim that fraudulent users are connected and clustered (although they offer no explanation or evidence of the same).</p>
+</section>
+<section id="labeling-a-fraud" class="level2">
+<h2 class="anchored" data-anchor-id="labeling-a-fraud">Labeling a Fraud</h2>
+<p>Data scientists often have ready-made labels for them to train data on, if not they are easily extractable using some rules. In fraud, however, using simple rules to flag fraud is not feasible. It almost always needs domain experts to distinguish fraudulent activity from normal. Finding fraudulent transactions to flag is a full-time job with judgement calls.</p>
+<p>Risk analysts, for this reason, are an integral part of the risk infrastructure even with all the fancy ML algorithms. While models can catch previously seen fraud patterns, they can struggle to catch new/improved fraud patterns. Hence, a combination of rules-based and model-based approach are usually used.</p>
+<p>However, the current blog post is only concerned about the model-based section, and for labelling, it uses the simple flag of a chargeback in a given time range. The authors train a graph neural network to output risk scores for each user, and this score itself is fed into another larger model as a feature for fraud detection (Uber has many models, rules, checkpoints to detect fraud).</p>
+</section>
+<section id="what-are-graph-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-graph-neural-networks">What Are Graph Neural Networks</h2>
+<p><img src="assets/uber_network.jpg" width="600"></p>
+<p>GNNs are a type of architecture that is able to model non-euclidean data, or networked data. Think of a social media graph- where each person has their own features (age, likes) and they also have links to other users (friends, following). Using a GNN, we can model user behavior using their own features as well the features of their linked users (network).</p>
+<p>We construct a graph made of nodes and edges. Each node is an entity of our interest, like a user. Each node will have their features (age, likes, etc.). For one node, we will use their own features plus the aggregated features of their neighbors to compute a new representation (embedding) using neural networks. This is one layer of a GNN. We can repeat the process for more layers.</p>
+<p>The final representation (embedding) of each node, now incorporates in itself the community information of that node as well as its own information. This embedding can hence be used for downstream tasks to classify the user (into fraud vs non-fraud, or friend suggestions)</p>
+<p>The blog post we discuss uses the RGCN architecture, which is a modification to allow different types of nodes in a single graph.</p>
+</section>
+<section id="data-and-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-evaluation">Data and Evaluation</h2>
+<p>A single graph is constructed in-memory using drivers and riders. The label of fraud is whether a user has chargeback in a time range. The model outputs two scores (why?): rider risk score, and driver risk score.</p>
+<p>The model was trained on 4 months of data upto a specific date, and tested on the following 6 weeks. Now, they added the two risk scores to the primary production model (which I’m assuming to be a tree-based one), which gave them a precision boost of 15% with “minimal increase in false positives”. In the feature importance list, the two fraud scores were ranked 4th and 39th among 2000 features.</p>
+</section>
+<section id="data-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="data-pipeline">Data Pipeline</h2>
+<p>When it comes to industrial applications of interesting algorithms, the most interesting part is not the algorithms per se but the data munging and the infrastructure build that is needed to put all the pieces in place. In the case of Graph Neural Networks, understanding the basic theory behind them is one thing, it is entirely different challenge to deploy them in production. Because GNNs work on networked data, and the data at companies is mostly stored in tabular format, it is a challenge to work them in this relational database paradigm. And this isn’t even the major infrastructural challenge.</p>
+<p>The current application involves building a massive single graph containing riders and drivers, and their features and edges. This graph will certainly grow too big to fit in a single computer. How do you do distributed computing on a graph? For massive data that is tabular in nature, there exists solutions like Spark which are standard everywhere. How do you work around on a networked data that is massive? Let’s look at what Uber did.</p>
+<p>First step that they have is to create user tables and relationship tables from their existing data. The user table contains the features for each user, and relationship tables would contain the edges between users.</p>
+<section id="graph-partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="graph-partitioning">Graph Partitioning</h3>
+<p>To deal with the issues arising from an extremely large graph, the team partitions the graph into n sub-graphs. They use Cypher query language for dealing with graphs, and the team augmented the language by adding a partition clause.</p>
+<p>Among the recent users of Uber, they’ll pick some random n users as seed. For each user, they’ll compute the x-hop subgraph of that user, and will assign that to that partition. Hence, they will have n sub-graphs that can fit on n machines.</p>
+<p>However, this also means that some users can be present on more than one sub-graph, and some users (especially the dormant ones) won’t be present in any sub-graph at all. It’s worth pondering if this scheme is losing important information from the users who are not active. The post does not mention what proportion of the original graph is completely untouched by training.</p>
+<p><img src="assets/uber_graph.png" width="600"></p>
+</section>
+</section>
+<section id="future-directions" class="level2">
+<h2 class="anchored" data-anchor-id="future-directions">Future Directions</h2>
+<p>As the team itself comments, using better architectures than RGCN would be a low hanging fruit. There are architectures and libraries like DGL who now support distributed training and inference on massive graphs. Leveraging them would be a no-brainer, if one is to continue working in this direction.</p>
+<p>Fraud is one of the more complex domains of data science, where there is no one-size-fits-all unlike say transformers in NLP. Hence, it may indeed yield dividends in sticking with GNNs. However the networked paradigm is somewhat different from your usual ML or Deep Learning training flows, hence it remains a steep learning curve.</p>
+</section>
+<section id="uber-risk-models" class="level2">
+<h2 class="anchored" data-anchor-id="uber-risk-models">Uber Risk Models</h2>
+<p>This model, according to the authors, was not deployed to production, despite yielding 15% better metrics. The reason was not mentioned. If one is to speculate, perhaps the data may not be comprehensive and the results not significant enough to warrant an addition of extra infrastructural complexity. Storing massive graphs and the distributed learning associated with them require more resources and a very distinct infrastructure that will cost to maintain.</p>
+<p>So what does tools does Uber actually use for risk? They have wrote about something interesting called <a href="https://www.uber.com/en-IN/blog/project-radar-intelligent-early-fraud-detection/">Project RADAR</a>, a human-in-the-loop system that combines machine learning models with actual risk experts to catch early fraud. This system is able to capture new and evolved fraud patterns as well.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>We have seen an example of using Graph Neural Networks for fraud detection in an actual industrial setting. Even though the particular model did not get deployed to production, there’s still lot that one could learn from this exercise, and who knows, it may work out better for some other domain.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

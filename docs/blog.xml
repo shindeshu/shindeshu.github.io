@@ -10,7 +10,87 @@
 <atom:link href="https://shindeshu.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Blog for data science related topics</description>
 <generator>quarto-1.1.251</generator>
-<lastBuildDate>Thu, 02 Feb 2023 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 09 Mar 2023 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>How Uber Used GNNs to Detect Fraud</title>
+  <dc:creator>Shubham Shinde</dc:creator>
+  <link>https://shindeshu.github.io/posts/gnns/uber_graphs.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="fraud-and-ml" class="level2">
+<h2 class="anchored" data-anchor-id="fraud-and-ml">Fraud and ML</h2>
+<p>Fraud remains a persistent concern in various industries within the digital realm. Because fraud can take the shape of many different types depending on the industry, it becomes one of the most complex use-cases of machine learning. Healthcare fraud, for instance, involves doctors colluding with testing centers to assign more tests that they should (among other types). Financial fraud is another quagmire that keeps constantly evolving.</p>
+<p>Uber, considering the volumes of financial transactions, attracts its fair share of fraudsters and hence they have built advanced fraud detection infrastructure. In this blog post, we’ll look at one of the experiments they did with Graph Neural Networks, outline in this Uber <a href="https://www.uber.com/en-IN/blog/fraud-detection/">blog</a>. Yes, this is a blog post about a blog post.</p>
+<p><img src="https://shindeshu.github.io/posts/gnns/assets/uber_photo.jpg" width="600"></p>
+</section>
+<section id="fraud-at-uber" class="level2">
+<h2 class="anchored" data-anchor-id="fraud-at-uber">Fraud at Uber</h2>
+<p>What kind of fraud happens at Uber? There are roughly two types, according another <a href="https://www.uber.com/en-IN/blog/project-radar-intelligent-early-fraud-detection/">post</a> on Uber.</p>
+<p>Following are the 2 primary payment fraud types:</p>
+<ul>
+<li>DNS stands for “do not settle”, which occurs when the order has been fulfilled or a trip has been completed, but the payment could not be collected</li>
+<li>Chargeback happens when the payment has been collected, but the user disputes the transaction, and the bank refunds the money</li>
+</ul>
+<p>The blog post we are discussing primarily deals with chargebacks, however it does not provide details on its mechanisms. The authors claim that “collusion” among fraud users is what they are targeting, and also make the claim that fraudulent users are connected and clustered (although they offer no explanation or evidence of the same).</p>
+</section>
+<section id="labeling-a-fraud" class="level2">
+<h2 class="anchored" data-anchor-id="labeling-a-fraud">Labeling a Fraud</h2>
+<p>Data scientists often have ready-made labels for them to train data on, if not they are easily extractable using some rules. In fraud, however, using simple rules to flag fraud is not feasible. It almost always needs domain experts to distinguish fraudulent activity from normal. Finding fraudulent transactions to flag is a full-time job with judgement calls.</p>
+<p>Risk analysts, for this reason, are an integral part of the risk infrastructure even with all the fancy ML algorithms. While models can catch previously seen fraud patterns, they can struggle to catch new/improved fraud patterns. Hence, a combination of rules-based and model-based approach are usually used.</p>
+<p>However, the current blog post is only concerned about the model-based section, and for labelling, it uses the simple flag of a chargeback in a given time range. The authors train a graph neural network to output risk scores for each user, and this score itself is fed into another larger model as a feature for fraud detection (Uber has many models, rules, checkpoints to detect fraud).</p>
+</section>
+<section id="what-are-graph-neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-graph-neural-networks">What Are Graph Neural Networks</h2>
+<p><img src="https://shindeshu.github.io/posts/gnns/assets/uber_network.jpg" width="600"></p>
+<p>GNNs are a type of architecture that is able to model non-euclidean data, or networked data. Think of a social media graph- where each person has their own features (age, likes) and they also have links to other users (friends, following). Using a GNN, we can model user behavior using their own features as well the features of their linked users (network).</p>
+<p>We construct a graph made of nodes and edges. Each node is an entity of our interest, like a user. Each node will have their features (age, likes, etc.). For one node, we will use their own features plus the aggregated features of their neighbors to compute a new representation (embedding) using neural networks. This is one layer of a GNN. We can repeat the process for more layers.</p>
+<p>The final representation (embedding) of each node, now incorporates in itself the community information of that node as well as its own information. This embedding can hence be used for downstream tasks to classify the user (into fraud vs non-fraud, or friend suggestions)</p>
+<p>The blog post we discuss uses the RGCN architecture, which is a modification to allow different types of nodes in a single graph.</p>
+</section>
+<section id="data-and-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-evaluation">Data and Evaluation</h2>
+<p>A single graph is constructed in-memory using drivers and riders. The label of fraud is whether a user has chargeback in a time range. The model outputs two scores (why?): rider risk score, and driver risk score.</p>
+<p>The model was trained on 4 months of data upto a specific date, and tested on the following 6 weeks. Now, they added the two risk scores to the primary production model (which I’m assuming to be a tree-based one), which gave them a precision boost of 15% with “minimal increase in false positives”. In the feature importance list, the two fraud scores were ranked 4th and 39th among 2000 features.</p>
+</section>
+<section id="data-pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="data-pipeline">Data Pipeline</h2>
+<p>When it comes to industrial applications of interesting algorithms, the most interesting part is not the algorithms per se but the data munging and the infrastructure build that is needed to put all the pieces in place. In the case of Graph Neural Networks, understanding the basic theory behind them is one thing, it is entirely different challenge to deploy them in production. Because GNNs work on networked data, and the data at companies is mostly stored in tabular format, it is a challenge to work them in this relational database paradigm. And this isn’t even the major infrastructural challenge.</p>
+<p>The current application involves building a massive single graph containing riders and drivers, and their features and edges. This graph will certainly grow too big to fit in a single computer. How do you do distributed computing on a graph? For massive data that is tabular in nature, there exists solutions like Spark which are standard everywhere. How do you work around on a networked data that is massive? Let’s look at what Uber did.</p>
+<p>First step that they have is to create user tables and relationship tables from their existing data. The user table contains the features for each user, and relationship tables would contain the edges between users.</p>
+<section id="graph-partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="graph-partitioning">Graph Partitioning</h3>
+<p>To deal with the issues arising from an extremely large graph, the team partitions the graph into n sub-graphs. They use Cypher query language for dealing with graphs, and the team augmented the language by adding a partition clause.</p>
+<p>Among the recent users of Uber, they’ll pick some random n users as seed. For each user, they’ll compute the x-hop subgraph of that user, and will assign that to that partition. Hence, they will have n sub-graphs that can fit on n machines.</p>
+<p>However, this also means that some users can be present on more than one sub-graph, and some users (especially the dormant ones) won’t be present in any sub-graph at all. It’s worth pondering if this scheme is losing important information from the users who are not active. The post does not mention what proportion of the original graph is completely untouched by training.</p>
+<p><img src="https://shindeshu.github.io/posts/gnns/assets/uber_graph.png" width="600"></p>
+</section>
+</section>
+<section id="future-directions" class="level2">
+<h2 class="anchored" data-anchor-id="future-directions">Future Directions</h2>
+<p>As the team itself comments, using better architectures than RGCN would be a low hanging fruit. There are architectures and libraries like DGL who now support distributed training and inference on massive graphs. Leveraging them would be a no-brainer, if one is to continue working in this direction.</p>
+<p>Fraud is one of the more complex domains of data science, where there is no one-size-fits-all unlike say transformers in NLP. Hence, it may indeed yield dividends in sticking with GNNs. However the networked paradigm is somewhat different from your usual ML or Deep Learning training flows, hence it remains a steep learning curve.</p>
+</section>
+<section id="uber-risk-models" class="level2">
+<h2 class="anchored" data-anchor-id="uber-risk-models">Uber Risk Models</h2>
+<p>This model, according to the authors, was not deployed to production, despite yielding 15% better metrics. The reason was not mentioned. If one is to speculate, perhaps the data may not be comprehensive and the results not significant enough to warrant an addition of extra infrastructural complexity. Storing massive graphs and the distributed learning associated with them require more resources and a very distinct infrastructure that will cost to maintain.</p>
+<p>So what does tools does Uber actually use for risk? They have wrote about something interesting called <a href="https://www.uber.com/en-IN/blog/project-radar-intelligent-early-fraud-detection/">Project RADAR</a>, a human-in-the-loop system that combines machine learning models with actual risk experts to catch early fraud. This system is able to capture new and evolved fraud patterns as well.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>We have seen an example of using Graph Neural Networks for fraud detection in an actual industrial setting. Even though the particular model did not get deployed to production, there’s still lot that one could learn from this exercise, and who knows, it may work out better for some other domain.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>deep-learning</category>
+  <category>gnn</category>
+  <category>applied-ml</category>
+  <guid>https://shindeshu.github.io/posts/gnns/uber_graphs.html</guid>
+  <pubDate>Thu, 09 Mar 2023 18:30:00 GMT</pubDate>
+</item>
 <item>
   <title>Understanding the Transformer</title>
   <dc:creator>Shubham Shinde</dc:creator>
@@ -2066,6 +2146,7 @@ Epoch 5/5
 
  ]]></description>
   <category>deep-learning</category>
+  <category>graph-nn</category>
   <guid>https://shindeshu.github.io/posts/gnns/intro_to_gnn.html</guid>
   <pubDate>Mon, 24 Jan 2022 18:30:00 GMT</pubDate>
   <media:content url="https://shindeshu.github.io/posts/gnns/graph_img.jpeg" medium="image" type="image/jpeg"/>
