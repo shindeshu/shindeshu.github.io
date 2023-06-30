@@ -23,7 +23,7 @@
 <h2 class="anchored" data-anchor-id="fraud-and-ml">Fraud and ML</h2>
 <p>Fraud remains a persistent concern in various industries within the digital realm. Because fraud can take the shape of many different types depending on the industry, it becomes one of the most complex use-cases of machine learning. Healthcare fraud, for instance, involves doctors colluding with testing centers to assign more tests that they should (among other types). Financial fraud is another quagmire that keeps constantly evolving.</p>
 <p>Uber, considering the volumes of financial transactions, attracts its fair share of fraudsters and hence they have built advanced fraud detection infrastructure. In this blog post, we’ll look at one of the experiments they did with Graph Neural Networks, outline in this Uber <a href="https://www.uber.com/en-IN/blog/fraud-detection/">blog</a>. Yes, this is a blog post about a blog post.</p>
-<p><img src="https://shindeshu.github.io/posts/gnns/assets/uber_photo.jpg" width="600"></p>
+<p><img src="https://shindeshu.github.io/posts/gnns/assets/uber_photo.jpg" class="img-fluid"></p>
 </section>
 <section id="fraud-at-uber" class="level2">
 <h2 class="anchored" data-anchor-id="fraud-at-uber">Fraud at Uber</h2>
@@ -90,6 +90,7 @@
   <category>applied-ml</category>
   <guid>https://shindeshu.github.io/posts/gnns/uber_graphs.html</guid>
   <pubDate>Thu, 09 Mar 2023 18:30:00 GMT</pubDate>
+  <media:content url="https://shindeshu.github.io/posts/gnns/assets/uber_photo.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Understanding the Transformer</title>
