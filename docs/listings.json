@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/cloud/lambda.html",
       "/posts/gnns/uber_graphs.html",
       "/posts/nlp/understanding_transformer.html",
       "/posts/nlp/qa_guide.html",
@@ -16,6 +17,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/cloud/lambda.html",
       "/posts/gnns/uber_graphs.html",
       "/posts/nlp/understanding_transformer.html",
       "/posts/nlp/qa_guide.html",

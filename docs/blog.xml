@@ -10,7 +10,284 @@
 <atom:link href="https://shindeshu.github.io/blog.xml" rel="self" type="application/rss+xml"/>
 <description>Blog for data science related topics</description>
 <generator>quarto-1.1.251</generator>
-<lastBuildDate>Thu, 09 Mar 2023 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 07 Oct 2023 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>A Beginner’s Guide to Deploying Tensorflow Models on AWS Lambda (Free-Tier)</title>
+  <dc:creator>Shubham Shinde</dc:creator>
+  <link>https://shindeshu.github.io/posts/cloud/lambda.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="whats-this-post-about" class="level2">
+<h2 class="anchored" data-anchor-id="whats-this-post-about">What’s This Post About</h2>
+<p>If you are a data scientist, have no idea about cloud, and want to do something hands-on instead of courses- you are in the right place.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/cloud/assets/coverart.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Generated Using SDXL</figcaption><p></p>
+</figure>
+</div>
+<p>In this blogpost, we will signup on AWS Free-tier account and use the Lambda service to deploy a trained ML model within the free-tier limits. The code used in this post is available <a href="https://github.com/shindeshu/aws_lambda_tflite">in this repo</a>.</p>
+<p>Pre-requisites:</p>
+<ol type="1">
+<li><p>You should be able to know how to train a machine learning model. Here, we are taking an already trained keras model and start from that point. It is a CNN model that classifies given image into either <code>cat</code> or <code>dog</code>. But if you are interested in the model training aspect, check out <a href="https://www.kaggle.com/code/shindeshubham85/a-friendly-introduction-to-cnns-in-keras">this kaggle notebook</a>!</p></li>
+<li><p>You should be familiar with basics of Docker and REST API.</p></li>
+</ol>
+<p>The contents of this blogpost:</p>
+<ul>
+<li>Take the trained Keras Model, and convert to tf-lite format (Why? Discussed later.)</li>
+<li>Write and test the inference functions for tf-lite model.</li>
+<li>Create a docker image using an AWS Lambda image as base, and test it out.</li>
+<li>Signup for an AWS Free-tier account. Configure the AWS CLI and ECR (Discussed later.)</li>
+<li>Create an AWS Lambda function using the docker image. Test it out.</li>
+<li>Create an API Gateway and expose it. That is it!</li>
+</ul>
+<p>A visual depiction of the flow:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://shindeshu.github.io/posts/cloud/assets/flow.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Flow</figcaption><p></p>
+</figure>
+</div>
+<p>This process is taken from the chapter 9 of the <a href="https://www.youtube.com/watch?v=MqI8vt3-cag&amp;list=PL3MmuxUbc_hIhxl5Ji8t4O6lPAOpHaCLR">free course “ML Zoomcamp”</a> by Alexey Grigorev, with some modifications. Follow the videos if you want a detailed walkthrough.</p>
+<section id="what-is-aws-lambda-serverless" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-aws-lambda-serverless">What is AWS Lambda / Serverless</h3>
+<p>AWS Lambda is a compute service that lets you run code without provisioning or managing servers.</p>
+<p>All it asks is for you to bring the code- and the service will do everything else- provisioning servers, managing them, auto-scaling them if the demand increases, and shutting them off if they are not in use, or restarting them. Since we don’t need to worry at all about servers, it is also called serverless.</p>
+<p>In the ML scenario, we will bring the code and the model to the service, and it will produce the predictions of our inputs. Instead of giving the code and the model directly, we will first package them inside a docker image, and use the image to deploy on Lambda.</p>
+<p>At the end of this post, we can give a URL of an image to a REST API endpoint, and get back the image classification result.</p>
+</section>
+</section>
+<section id="conversion-to-tf-lite" class="level2">
+<h2 class="anchored" data-anchor-id="conversion-to-tf-lite">Conversion to TF-Lite</h2>
+<section id="why-tf-lite" class="level3">
+<h3 class="anchored" data-anchor-id="why-tf-lite">Why TF-Lite</h3>
+<p>Our starting point is a file called <code>cats_and_dogs.h5</code> which is a keras model trained to classify given image into cat or dog. We can easily load it into our environment using the keras library.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;">import</span> tensorflow</span>
+<span id="cb1-2">model <span class="op" style="color: #5E5E5E;">=</span> tensorflow.keras.models.load_model(<span class="st" style="color: #20794D;">"cats_and_dogs.h5"</span>)</span></code></pre></div>
+<p>However, this may not be the best case for deploying the model. Installation of tensorflow itself can take up a LOT of memory. Importing the library also adds latency. We only need to do inference, while the library contains tools for many operations like training, etc. AWS Lambda does not support GPUs, so we don’t those sections of codebase either.</p>
+<p>Other constraints are the free-tier limits of AWS: Since we are deploying in the cloud, the sizes of our docker image need to be under 500MB.</p>
+<p>One way to remove the boilerplate from the libraries is to convert the model to tf-lite and use the tf-lite library, which we will be employing here.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that AWS Lambda only supports CPUs, not GPUs. So we need to deploy models only if they can perform well on CPUs.</p>
+<p>While TF-Lite supports GPUs, if your deployment is in a GPU-environment, you might be better off with other well-supported compilers like TensorRT.</p>
+</div>
+</div>
+</section>
+<section id="conversion" class="level3">
+<h3 class="anchored" data-anchor-id="conversion">Conversion</h3>
+<p>The code for conversion is pretty straightforward:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;">import</span> tensorflow.lite <span class="im" style="color: #00769E;">as</span> tflite </span>
+<span id="cb2-2">converter <span class="op" style="color: #5E5E5E;">=</span> tflite.TFLiteConverter.from_keras_model(model)</span>
+<span id="cb2-3">tflite_model <span class="op" style="color: #5E5E5E;">=</span> converter.convert()</span>
+<span id="cb2-4"></span>
+<span id="cb2-5"><span class="cf" style="color: #003B4F;">with</span> tf.io.gfile.GFile(<span class="st" style="color: #20794D;">'artifacts/cats_and_dogs.tflite'</span>, <span class="st" style="color: #20794D;">'wb'</span>) <span class="im" style="color: #00769E;">as</span> f:</span>
+<span id="cb2-6">    f.write(tflite_model)</span></code></pre></div>
+<p>The tricky part is feeding the input and retrieving the output. Fortunately its all wrapped up neat here:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;">def</span> load_tflite():</span>
+<span id="cb3-2">    <span class="co" style="color: #5E5E5E;">"""</span></span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;">    this function is used to load the tflite model and initialize the </span></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;">    interpreter, and also return the input and output indexes</span></span>
+<span id="cb3-5"><span class="co" style="color: #5E5E5E;">    """</span></span>
+<span id="cb3-6">    interpreter <span class="op" style="color: #5E5E5E;">=</span> tflite.Interpreter(model_path<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">'cats_and_dogs.tflite'</span>)</span>
+<span id="cb3-7">    interpreter.allocate_tensors()</span>
+<span id="cb3-8">    input_details <span class="op" style="color: #5E5E5E;">=</span> interpreter.get_input_details()</span>
+<span id="cb3-9">    input_index <span class="op" style="color: #5E5E5E;">=</span> input_details[<span class="dv" style="color: #AD0000;">0</span>][<span class="st" style="color: #20794D;">'index'</span>]</span>
+<span id="cb3-10">    output_details <span class="op" style="color: #5E5E5E;">=</span> interpreter.get_output_details()</span>
+<span id="cb3-11">    output_index <span class="op" style="color: #5E5E5E;">=</span> output_details[<span class="dv" style="color: #AD0000;">0</span>][<span class="st" style="color: #20794D;">'index'</span>]</span>
+<span id="cb3-12">    <span class="cf" style="color: #003B4F;">return</span> interpreter, (input_index, output_index)</span>
+<span id="cb3-13"></span>
+<span id="cb3-14"><span class="kw" style="color: #003B4F;">def</span> predict_with_tflite(interpreter, indexes, img):</span>
+<span id="cb3-15">    <span class="co" style="color: #5E5E5E;">"""</span></span>
+<span id="cb3-16"><span class="co" style="color: #5E5E5E;">    this function takes the interpreter, indexes and input image as input</span></span>
+<span id="cb3-17"><span class="co" style="color: #5E5E5E;">    performs the inference, does some postprocessing and returns the result.</span></span>
+<span id="cb3-18"><span class="co" style="color: #5E5E5E;">    """</span></span>
+<span id="cb3-19">    interpreter.set_tensor(indexes[<span class="dv" style="color: #AD0000;">0</span>], img)</span>
+<span id="cb3-20">    interpreter.invoke()</span>
+<span id="cb3-21">    preds <span class="op" style="color: #5E5E5E;">=</span> interpreter.get_tensor(indexes[<span class="dv" style="color: #AD0000;">1</span>])</span>
+<span id="cb3-22">    <span class="cf" style="color: #003B4F;">return</span> postprocess(preds)</span></code></pre></div>
+<p>Another tricky part is the pre-processing function. During training the model, we simply used the <code>keras.preprocessing</code> module to perform the pre-processing. Since we are not installing keras or tensorflow, how can we do the pre-processing?</p>
+<p>Its easy, we do it ourselves. We load the image using PIL library, convert to numpy array, and scale it. The dependencies are light: PIL, and NumPy.</p>
+<p>Now, we have the complete code for inference (<a href="https://github.com/shindeshu/aws_lambda_tflite/tree/main">check the github repo</a>)- including the pre-processing steps, and prediction with the tf-lite model.</p>
+</section>
+<section id="the-docker-image-for-lambda-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-docker-image-for-lambda-function">The Docker Image for Lambda Function</h3>
+<p>Now, we will be creating a docker image to be used in lambda function. (Don’t worry about the AWS Account yet.)</p>
+<p>While preparing a docker image we generally start with a “base image”. This often is based on Ubuntu. But this will not work here. We need to use the official AWS Lambda as base image which is based on CentOS and includes other artifacts related to Lambda. We will prepare our image from this base image, and upload to AWS Lambda for deployment.</p>
+<p>How will we prepare the dockerfile?</p>
+<ol type="1">
+<li>Select the appropriate base image</li>
+<li>Install the dependencies</li>
+<li>Copy the lambda handler file</li>
+<li>Copy the artifacts (model file etc.)</li>
+<li>Specify the CMD command</li>
+</ol>
+<section id="creating-the-lambda-handler-file" class="level4">
+<h4 class="anchored" data-anchor-id="creating-the-lambda-handler-file">Creating the Lambda Handler File</h4>
+<p>Before we start preparing the Dockerfile, we need to write a python script <code>lambda_function.py</code> that will perform all the pre-processing steps, load the model and do prediction. This is going to be the entrypoint script for the Lambda function.</p>
+<p>This script should have a function called <code>lambda_handler</code> that should take the input from API and return result as json.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="kw" style="color: #003B4F;">def</span> lambda_handler(event, context):</span>
+<span id="cb4-2">    url <span class="op" style="color: #5E5E5E;">=</span> event[<span class="st" style="color: #20794D;">'url'</span>]</span>
+<span id="cb4-3">    X <span class="op" style="color: #5E5E5E;">=</span> load_image(url)</span>
+<span id="cb4-4">    result <span class="op" style="color: #5E5E5E;">=</span> predict_with_tflite(X)</span>
+<span id="cb4-5">    <span class="cf" style="color: #003B4F;">return</span> result</span></code></pre></div>
+<p>Here, <code>load_image</code> contains the preprocessing logic and <code>predict_with_tflite</code> contains the prediction steps. Check the complete <code>lambda_function.py</code> file in the github repo.</p>
+</section>
+<section id="resolving-some-errors" class="level4">
+<h4 class="anchored" data-anchor-id="resolving-some-errors">Resolving Some Errors</h4>
+<p>While installing the dependencies, you might come across some errors. This is related to the library <code>tf-lite</code>, the PyPI binaries are based on Ubuntu/Debian OS and not supported for CentOS. Hence, you will have to install this library using wheel files compiled for that OS- which are fortunately available for us on github, <a href="https://github.com/alexeygrigorev/tflite-aws-lambda">compiled by Alexey Grigorev</a>. A copy of the file is also present in the repo we are working from.</p>
+</section>
+</section>
+<section id="build-the-docker-image" class="level3">
+<h3 class="anchored" data-anchor-id="build-the-docker-image">Build the Docker Image</h3>
+<p>Once the required code and model files are ready, we start building the docker image. The sequence of steps is simple:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb5-1"><span class="kw" style="color: #003B4F;">FROM</span> public.ecr.aws/lambda/python:3.8</span>
+<span id="cb5-2"></span>
+<span id="cb5-3"><span class="kw" style="color: #003B4F;">COPY</span> artifacts/tflite_runtime-2.7.0-cp38-cp38-linux_x86_64.whl .</span>
+<span id="cb5-4"></span>
+<span id="cb5-5"><span class="kw" style="color: #003B4F;">RUN</span> <span class="ex" style="color: null;">pip3</span> install tflite_runtime-2.7.0-cp38-cp38-linux_x86_64.whl <span class="at" style="color: #657422;">--no-cache-dir</span></span>
+<span id="cb5-6"><span class="kw" style="color: #003B4F;">RUN</span> <span class="ex" style="color: null;">pip</span> install requests Pillow</span>
+<span id="cb5-7"></span>
+<span id="cb5-8"><span class="kw" style="color: #003B4F;">COPY</span> artifacts/cats_and_dogs.tflite .</span>
+<span id="cb5-9"><span class="kw" style="color: #003B4F;">COPY</span> artifacts/lambda_function.py .</span>
+<span id="cb5-10"></span>
+<span id="cb5-11"><span class="kw" style="color: #003B4F;">CMD</span> [<span class="st" style="color: #20794D;">"lambda_function.lambda_handler"</span>]</span></code></pre></div>
+<p>We build the image using</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;">docker</span> build <span class="at" style="color: #657422;">-t</span> cats_and_dogs .</span></code></pre></div>
+<p>And start running the container using</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;">docker</span> run <span class="at" style="color: #657422;">-it</span> <span class="at" style="color: #657422;">--rm</span> cats_and_dogs:latest <span class="at" style="color: #657422;">-p</span> 8080:8080 </span></code></pre></div>
+</section>
+<section id="testing-the-docker-application" class="level3">
+<h3 class="anchored" data-anchor-id="testing-the-docker-application">Testing the Docker Application</h3>
+<p>Now, the docker container is running, and presumably our model within is running as well. But how do we use it or test it if it’s working?</p>
+<p>We send a request using the python <code>requests</code> library. If you go to our lambda handler script, the <code>event</code> argument is basically the json that we are sending over using a POST request. We retrieve the URL from the json payload, process it to get the prediction, and return the result as json response. Let’s look at the code:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><span class="im" style="color: #00769E;">import</span> requests</span>
+<span id="cb8-2"></span>
+<span id="cb8-3">url <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"http://localhost:8080/2015-03-31/functions/function/invocations"</span> </span>
+<span id="cb8-4"><span class="co" style="color: #5E5E5E;"># this is how the URL for AWS Lambda always looks like</span></span>
+<span id="cb8-5"><span class="co" style="color: #5E5E5E;"># this is the URL where the application inside docker container is listening for requests</span></span>
+<span id="cb8-6"></span>
+<span id="cb8-7">data <span class="op" style="color: #5E5E5E;">=</span> {<span class="st" style="color: #20794D;">"url"</span>: <span class="st" style="color: #20794D;">"https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"</span>}</span>
+<span id="cb8-8"><span class="co" style="color: #5E5E5E;"># this is the input we want to give to the lambda_handler script</span></span>
+<span id="cb8-9"></span>
+<span id="cb8-10">results <span class="op" style="color: #5E5E5E;">=</span> requests.post(url, json<span class="op" style="color: #5E5E5E;">=</span>data).json()</span>
+<span id="cb8-11"><span class="co" style="color: #5E5E5E;"># this is the result after prediction and post-processing.</span></span>
+<span id="cb8-12"></span>
+<span id="cb8-13"><span class="bu" style="color: null;">print</span>(results)</span></code></pre></div>
+<p>If you are seeing a dictionary printed that contains the probabilities of the model classes, the docker container is running successfully! Congratulations - all our offline work is complete. All that’s left is signing up and moving this image to cloud.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that we did not install any client like FastAPI/Flask, yet we are able to listen to a REST API. The base docker image likely has a built-in server.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="setup-your-free-tier-aws-account" class="level2">
+<h2 class="anchored" data-anchor-id="setup-your-free-tier-aws-account">Setup your Free-tier AWS Account</h2>
+<section id="signup-for-a-free-tier-account" class="level3">
+<h3 class="anchored" data-anchor-id="signup-for-a-free-tier-account">Signup for a Free-tier Account</h3>
+<p>If you don’t have any experience in handling cloud, and want to learn- AWS Free-tier is a good option. But it can also be dreaded option, since some might be afraid of racking up large costs accidently. However if you understand the limits, it’s very easy to stay below the specified thresholds and still learn the nuts-and-bolts of AWS using toy projects.</p>
+<p>Before you start creating a free-tier account, it’s best if you go through which services are free and what are their limits- <a href="https://aws.amazon.com/free/">https://aws.amazon.com/free/</a>. Also go through a <a href="https://www.youtube.com/watch?v=SFaSB6vgp8k">video example of setting up an account</a> so there’s less surprises.</p>
+<p>Once the setup is complete, there’s still more steps to do for configuring your workspace.</p>
+</section>
+<section id="creating-an-iam-user" class="level3">
+<h3 class="anchored" data-anchor-id="creating-an-iam-user">Creating an IAM User</h3>
+<p>Once you have the account set up, you will have one user called ‘root’. However it’s a best practice to create custom users called “IAM Users” for development activity. Create one such user with admin access, and create an access key for this user. We will do our development through this access key.</p>
+</section>
+<section id="setup-aws-cli" class="level3">
+<h3 class="anchored" data-anchor-id="setup-aws-cli">Setup AWS-CLI</h3>
+<p>We can use AWS through our browser and the UI, but the best Developer Experience is through AWS Command Line Interface. This allows us to work from the terminal. Setting it up is easy,</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;">pip</span> install awscli</span></code></pre></div>
+<p>Configure it using <code>aws configure</code> and input the access ID and secret access keys you generated earlier. Input a default region (e.g.&nbsp;us-east-1, ap-south-1) and default format (e.g.&nbsp;json).</p>
+</section>
+<section id="create-and-link-amazon-ecr" class="level3">
+<h3 class="anchored" data-anchor-id="create-and-link-amazon-ecr">Create and Link Amazon ECR</h3>
+<p>ECR is Amazon’s container registry, where we can upload docker images. These images we can then use for various applications like AWS Lambda or AWS EKS etc. We will setup ECR and connect it our docker client (Docker Desktop), so that we can upload docker images from docker to ECR.</p>
+<ol type="1">
+<li>We first create an ECR Repo, and <em>note down the URI</em></li>
+</ol>
+<p><code>aws ecr create-repository --repository-name cats_and_dogs_images</code></p>
+<p>You can go to the AWS dashboard in your browser and check if the repository has been created.</p>
+<ol start="2" type="1">
+<li>Authenticate docker to work with ECR.</li>
+</ol>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;">$</span> <span class="va" style="color: #111111;">$(</span><span class="ex" style="color: null;">aws</span> ecr get-login<span class="va" style="color: #111111;">)</span></span></code></pre></div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For windows, Step2 might result in an error. <a href="https://stackoverflow.com/a/65858904">This solution from stackoverflow</a> worked for me.</p>
+</div>
+</div>
+<p>Following these steps, Docker is successfully authenticated with AWS-ECR.</p>
+</section>
+<section id="upload-the-docker-image-to-ecr-repo" class="level3">
+<h3 class="anchored" data-anchor-id="upload-the-docker-image-to-ecr-repo">Upload the Docker Image to ECR Repo</h3>
+<ol type="1">
+<li>Tag the image of interest with the remote repository URI</li>
+</ol>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="ex" style="color: null;">docker</span> tag cats_and_dogs:latest <span class="va" style="color: #111111;">${REMOTE_URI}</span></span></code></pre></div>
+<ol start="2" type="1">
+<li>Push to ECR</li>
+</ol>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="ex" style="color: null;">docker</span> push</span></code></pre></div>
+<p>Check in browser if the image has been published.</p>
+</section>
+</section>
+<section id="creating-the-lambda-function" class="level2">
+<h2 class="anchored" data-anchor-id="creating-the-lambda-function">Creating the Lambda Function</h2>
+<p>Now, your AWS Account is set up and you’ve also uploaded the docker image to ECR. In this section we will use the image to create a lambda function, and also set an API trigger using API Gateway.</p>
+<p>Creating a Lambda function is easy, from the AWS dashboard we go to AWS Lambda -&gt; Create Function -&gt; From Image -&gt; Select the Uploaded image.</p>
+<p><img src="https://shindeshu.github.io/posts/cloud/assets/create.png" class="img-fluid"></p>
+<section id="test-the-image" class="level3">
+<h3 class="anchored" data-anchor-id="test-the-image">Test the Image</h3>
+<p>By default the timeout is 3s, which we need to increase to 30s in the settings. This is because the model loading for the first time may take upto 7s. We can test the lambda function by giving the json payload in the test area.</p>
+<p>If you get the familiar output of classes and probabilities, your Lambda function is working!</p>
+<p>However, currently you can only give the input through the test section. How will the users access the function? How will they connect to Lambda? We can use Amazon’s API Gateway for that.</p>
+</section>
+<section id="create-a-api-gateway" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-api-gateway">Create a API Gateway</h3>
+<p>From Dashboard, go to API Gateway -&gt; REST API -&gt; new resource. Here you define the endpoint name. Then, define the request type (i.e.&nbsp;POST) In POST, integration type should be changed to Lambda function. Give the region name and name of the lambda function we created earlier.</p>
+<p>So you have now exposed the Lambda function using a REST API! You can test it there itself in the request body section.</p>
+<p>But this API Endpoint is still private- we can open it up to other users by going to Actions -&gt; Deploy API. We copy the URL, and test it using python requests library.</p>
+<p>And this is how we deploy an ML model using AWS Lambda!</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>data-science</category>
+  <category>deep-learning</category>
+  <category>cloud</category>
+  <guid>https://shindeshu.github.io/posts/cloud/lambda.html</guid>
+  <pubDate>Sat, 07 Oct 2023 18:30:00 GMT</pubDate>
+  <media:content url="https://shindeshu.github.io/posts/cloud/assets/coverart.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>How Uber Used GNNs to Detect Fraud</title>
   <dc:creator>Shubham Shinde</dc:creator>
@@ -2115,6 +2392,7 @@ Epoch 5/5
 
  ]]></description>
   <category>deep-learning</category>
+  <category>gnn</category>
   <guid>https://shindeshu.github.io/posts/gnns/gnn_from_scratch.html</guid>
   <pubDate>Mon, 24 Jan 2022 18:30:00 GMT</pubDate>
   <media:content url="https://shindeshu.github.io/posts/gnns/graph_cat.jpg" medium="image" type="image/jpeg"/>
@@ -2147,7 +2425,7 @@ Epoch 5/5
 
  ]]></description>
   <category>deep-learning</category>
-  <category>graph-nn</category>
+  <category>gnn</category>
   <guid>https://shindeshu.github.io/posts/gnns/intro_to_gnn.html</guid>
   <pubDate>Mon, 24 Jan 2022 18:30:00 GMT</pubDate>
   <media:content url="https://shindeshu.github.io/posts/gnns/graph_img.jpeg" medium="image" type="image/jpeg"/>
