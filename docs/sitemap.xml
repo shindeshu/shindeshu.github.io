@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://shindeshu.github.io/blog.html</loc>
-    <lastmod>2023-10-21T18:09:40.387Z</lastmod>
+    <lastmod>2024-02-23T18:43:52.422Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/index.html</loc>
-    <lastmod>2023-10-21T18:09:41.534Z</lastmod>
+    <lastmod>2024-02-23T18:39:14.205Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/cloud/lambda.html</loc>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/nlp/qa_guide.html</loc>
-    <lastmod>2023-10-21T18:09:47.591Z</lastmod>
+    <lastmod>2024-02-23T18:35:33.263Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/nlp/understanding_transformer.html</loc>
@@ -47,5 +47,9 @@
   <url>
     <loc>https://shindeshu.github.io/posts/tutorials/keras_cnns_intro.html</loc>
     <lastmod>2023-10-21T18:12:44.048Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shindeshu.github.io/posts/nlp/fandom_rag.html</loc>
+    <lastmod>2024-02-23T18:39:51.897Z</lastmod>
   </url>
 </urlset>
