@@ -352,8 +352,8 @@ After experiences in the meth trade with Krazy-8 and Emilio, Walter and Jesse ev
 <p>With retrieval like above, you already get the related documents for the query, which you can pass to the LLM as context.</p>
 <p>However, there is an additional step in the between that can really improve your retrieval results, which is called reranking.</p>
 <p>Let us say the retriever picks up 20 documents out of 100k that are related to the query. A reranker will then look at those 20 documents, and re-arrange their order based on their importance to the query. This has been seen to improve the retrieval results tremendously in many cases.</p>
-<p>(Then why can’t we use rerankers for the entire data? That’s because they are more compute expensive, and may take relatively more time to return results)</p>
-<p>(For the architectural differences between rerankers and plain similarity search, see <a href="https://www.sbert.net/examples/applications/cross-encoder/README.html">this link</a>)</p>
+<p>(Then why can’t we use rerankers for the entire data? That’s because they are more compute expensive, and may take relatively more time to return results</p>
+<p>For the architectural differences between rerankers and plain similarity search, see <a href="https://www.sbert.net/examples/applications/cross-encoder/README.html">this link</a>)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><span class="co" style="color: #5E5E5E;"># a helper function for reranker</span></span>
 <span id="cb24-2"><span class="im" style="color: #00769E;">import</span> torch</span>
@@ -429,17 +429,11 @@ Top-4 Cross-Encoder Re-ranker hits
 </div>
 <p>In practice, the results may differ. I saw poor results with the smallest reranker (<code>ms-marco-MiniLM-L-6-v2</code>) but the model <code>BAAI/bge-reranker-large</code> gave me better results. Both are better than plain embeddings search.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><span class="co" style="color: #5E5E5E;"># lets store the most similar after reranking for benchmarking</span></span>
-<span id="cb28-2">sims <span class="op" style="color: #5E5E5E;">=</span> [ce_reranker.rerank_documents(query<span class="op" style="color: #5E5E5E;">=</span>q, documents<span class="op" style="color: #5E5E5E;">=</span>db.similarity_search(q, k<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">20</span>), top_k<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">20</span>, print_n<span class="op" style="color: #5E5E5E;">=-</span><span class="dv" style="color: #AD0000;">1</span>) <span class="cf" style="color: #003B4F;">for</span> q <span class="kw" style="color: #003B4F;">in</span> qlist]</span>
-<span id="cb28-3"><span class="cf" style="color: #003B4F;">with</span> <span class="bu" style="color: null;">open</span>(<span class="st" style="color: #20794D;">"reranker_minilm.json"</span>, <span class="st" style="color: #20794D;">"w"</span>) <span class="im" style="color: #00769E;">as</span> fp:</span>
-<span id="cb28-4">    json.dump(<span class="bu" style="color: null;">dict</span>(<span class="bu" style="color: null;">zip</span>(qlist, sims)), fp, indent<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">4</span>)</span></code></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><span class="co" style="color: #5E5E5E;"># note that this reranker class is not compatible with langchain</span></span>
-<span id="cb29-2"><span class="co" style="color: #5E5E5E;"># we simply set up this for quick evaluation of rerankers</span></span>
-<span id="cb29-3"><span class="co" style="color: #5E5E5E;"># later in this notebook we will setup a langchain compatible reranker which will be a part of the chain</span></span>
-<span id="cb29-4"><span class="co" style="color: #5E5E5E;"># hence deleting this</span></span>
-<span id="cb29-5"><span class="kw" style="color: #003B4F;">del</span> ce_reranker</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><span class="co" style="color: #5E5E5E;"># note that this reranker class is not compatible with langchain</span></span>
+<span id="cb28-2"><span class="co" style="color: #5E5E5E;"># we simply set up this for quick evaluation of rerankers</span></span>
+<span id="cb28-3"><span class="co" style="color: #5E5E5E;"># later in this notebook we will setup a langchain compatible reranker which will be a part of the chain</span></span>
+<span id="cb28-4"><span class="co" style="color: #5E5E5E;"># hence deleting this</span></span>
+<span id="cb28-5"><span class="kw" style="color: #003B4F;">del</span> ce_reranker</span></code></pre></div>
 </div>
 <section id="trying-out-colbert" class="level2">
 <h2 class="anchored" data-anchor-id="trying-out-colbert">Trying Out ColBERT</h2>
@@ -469,54 +463,54 @@ Top-4 Cross-Encoder Re-ranker hits
 </ol>
 <p>We go with #2 here, and create a reranker using document compressor class, which we will use in the final chain.</p>
 <div class="cell" data-outputid="f9e95f89-ce89-47cc-9eeb-9a1947a3efd8">
-<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><span class="im" style="color: #00769E;">from</span> __future__ <span class="im" style="color: #00769E;">import</span> annotations</span>
-<span id="cb30-2"><span class="im" style="color: #00769E;">from</span> typing <span class="im" style="color: #00769E;">import</span> Dict, Optional, Sequence</span>
-<span id="cb30-3"><span class="im" style="color: #00769E;">from</span> langchain.schema <span class="im" style="color: #00769E;">import</span> Document</span>
-<span id="cb30-4"></span>
-<span id="cb30-5"><span class="im" style="color: #00769E;">from</span> langchain.callbacks.manager <span class="im" style="color: #00769E;">import</span> Callbacks</span>
-<span id="cb30-6"><span class="im" style="color: #00769E;">from</span> langchain.retrievers.document_compressors.base <span class="im" style="color: #00769E;">import</span> BaseDocumentCompressor</span>
-<span id="cb30-7"></span>
-<span id="cb30-8"><span class="im" style="color: #00769E;">from</span> sentence_transformers <span class="im" style="color: #00769E;">import</span> CrossEncoder</span>
-<span id="cb30-9"><span class="im" style="color: #00769E;">from</span> langchain.pydantic_v1 <span class="im" style="color: #00769E;">import</span> Extra, root_validator</span>
-<span id="cb30-10"></span>
-<span id="cb30-11"><span class="kw" style="color: #003B4F;">class</span> BgeRerank(BaseDocumentCompressor):</span>
-<span id="cb30-12">    <span class="co" style="color: #5E5E5E;"># model_name:str = 'cross-encoder/ms-marco-MiniLM-L-6-v2'</span></span>
-<span id="cb30-13">    model_name:<span class="bu" style="color: null;">str</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">'BAAI/bge-reranker-large'</span></span>
-<span id="cb30-14">    <span class="co" style="color: #5E5E5E;">"""Model name to use for reranking."""</span></span>
-<span id="cb30-15">    top_n: <span class="bu" style="color: null;">int</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">3</span></span>
-<span id="cb30-16">    <span class="co" style="color: #5E5E5E;">"""Number of documents to return."""</span></span>
-<span id="cb30-17">    model:CrossEncoder <span class="op" style="color: #5E5E5E;">=</span> CrossEncoder(model_name)</span>
-<span id="cb30-18">    <span class="co" style="color: #5E5E5E;">"""CrossEncoder instance to use for reranking."""</span></span>
-<span id="cb30-19"></span>
-<span id="cb30-20">    <span class="kw" style="color: #003B4F;">def</span> bge_rerank(<span class="va" style="color: #111111;">self</span>,query,docs):</span>
-<span id="cb30-21">        model_inputs <span class="op" style="color: #5E5E5E;">=</span>  [[query, doc] <span class="cf" style="color: #003B4F;">for</span> doc <span class="kw" style="color: #003B4F;">in</span> docs]</span>
-<span id="cb30-22">        scores <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">self</span>.model.predict(model_inputs)</span>
-<span id="cb30-23">        results <span class="op" style="color: #5E5E5E;">=</span> <span class="bu" style="color: null;">sorted</span>(<span class="bu" style="color: null;">enumerate</span>(scores), key<span class="op" style="color: #5E5E5E;">=</span><span class="kw" style="color: #003B4F;">lambda</span> x: x[<span class="dv" style="color: #AD0000;">1</span>], reverse<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
-<span id="cb30-24">        <span class="cf" style="color: #003B4F;">return</span> results[:<span class="va" style="color: #111111;">self</span>.top_n]</span>
-<span id="cb30-25"></span>
-<span id="cb30-26">    <span class="kw" style="color: #003B4F;">class</span> Config:</span>
-<span id="cb30-27">        <span class="co" style="color: #5E5E5E;">"""Configuration for this pydantic object."""</span></span>
-<span id="cb30-28"></span>
-<span id="cb30-29">        extra <span class="op" style="color: #5E5E5E;">=</span> Extra.forbid</span>
-<span id="cb30-30">        arbitrary_types_allowed <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">True</span></span>
-<span id="cb30-31"></span>
-<span id="cb30-32">    <span class="kw" style="color: #003B4F;">def</span> compress_documents(</span>
-<span id="cb30-33">        <span class="va" style="color: #111111;">self</span>,</span>
-<span id="cb30-34">        documents: Sequence[Document],</span>
-<span id="cb30-35">        query: <span class="bu" style="color: null;">str</span>,</span>
-<span id="cb30-36">        callbacks: Optional[Callbacks] <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">None</span>,</span>
-<span id="cb30-37">    ) <span class="op" style="color: #5E5E5E;">-&gt;</span> Sequence[Document]:</span>
-<span id="cb30-38">        <span class="cf" style="color: #003B4F;">if</span> <span class="bu" style="color: null;">len</span>(documents) <span class="op" style="color: #5E5E5E;">==</span> <span class="dv" style="color: #AD0000;">0</span>:  <span class="co" style="color: #5E5E5E;"># to avoid empty api call</span></span>
-<span id="cb30-39">            <span class="cf" style="color: #003B4F;">return</span> []</span>
-<span id="cb30-40">        doc_list <span class="op" style="color: #5E5E5E;">=</span> <span class="bu" style="color: null;">list</span>(documents)</span>
-<span id="cb30-41">        _docs <span class="op" style="color: #5E5E5E;">=</span> [d.page_content <span class="cf" style="color: #003B4F;">for</span> d <span class="kw" style="color: #003B4F;">in</span> doc_list]</span>
-<span id="cb30-42">        results <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">self</span>.bge_rerank(query, _docs)</span>
-<span id="cb30-43">        final_results <span class="op" style="color: #5E5E5E;">=</span> []</span>
-<span id="cb30-44">        <span class="cf" style="color: #003B4F;">for</span> r <span class="kw" style="color: #003B4F;">in</span> results:</span>
-<span id="cb30-45">            doc <span class="op" style="color: #5E5E5E;">=</span> doc_list[r[<span class="dv" style="color: #AD0000;">0</span>]]</span>
-<span id="cb30-46">            doc.metadata[<span class="st" style="color: #20794D;">"relevance_score"</span>] <span class="op" style="color: #5E5E5E;">=</span> r[<span class="dv" style="color: #AD0000;">1</span>]</span>
-<span id="cb30-47">            final_results.append(doc)</span>
-<span id="cb30-48">        <span class="cf" style="color: #003B4F;">return</span> final_results</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><span class="im" style="color: #00769E;">from</span> __future__ <span class="im" style="color: #00769E;">import</span> annotations</span>
+<span id="cb29-2"><span class="im" style="color: #00769E;">from</span> typing <span class="im" style="color: #00769E;">import</span> Dict, Optional, Sequence</span>
+<span id="cb29-3"><span class="im" style="color: #00769E;">from</span> langchain.schema <span class="im" style="color: #00769E;">import</span> Document</span>
+<span id="cb29-4"></span>
+<span id="cb29-5"><span class="im" style="color: #00769E;">from</span> langchain.callbacks.manager <span class="im" style="color: #00769E;">import</span> Callbacks</span>
+<span id="cb29-6"><span class="im" style="color: #00769E;">from</span> langchain.retrievers.document_compressors.base <span class="im" style="color: #00769E;">import</span> BaseDocumentCompressor</span>
+<span id="cb29-7"></span>
+<span id="cb29-8"><span class="im" style="color: #00769E;">from</span> sentence_transformers <span class="im" style="color: #00769E;">import</span> CrossEncoder</span>
+<span id="cb29-9"><span class="im" style="color: #00769E;">from</span> langchain.pydantic_v1 <span class="im" style="color: #00769E;">import</span> Extra, root_validator</span>
+<span id="cb29-10"></span>
+<span id="cb29-11"><span class="kw" style="color: #003B4F;">class</span> BgeRerank(BaseDocumentCompressor):</span>
+<span id="cb29-12">    <span class="co" style="color: #5E5E5E;"># model_name:str = 'cross-encoder/ms-marco-MiniLM-L-6-v2'</span></span>
+<span id="cb29-13">    model_name:<span class="bu" style="color: null;">str</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">'BAAI/bge-reranker-large'</span></span>
+<span id="cb29-14">    <span class="co" style="color: #5E5E5E;">"""Model name to use for reranking."""</span></span>
+<span id="cb29-15">    top_n: <span class="bu" style="color: null;">int</span> <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">3</span></span>
+<span id="cb29-16">    <span class="co" style="color: #5E5E5E;">"""Number of documents to return."""</span></span>
+<span id="cb29-17">    model:CrossEncoder <span class="op" style="color: #5E5E5E;">=</span> CrossEncoder(model_name)</span>
+<span id="cb29-18">    <span class="co" style="color: #5E5E5E;">"""CrossEncoder instance to use for reranking."""</span></span>
+<span id="cb29-19"></span>
+<span id="cb29-20">    <span class="kw" style="color: #003B4F;">def</span> bge_rerank(<span class="va" style="color: #111111;">self</span>,query,docs):</span>
+<span id="cb29-21">        model_inputs <span class="op" style="color: #5E5E5E;">=</span>  [[query, doc] <span class="cf" style="color: #003B4F;">for</span> doc <span class="kw" style="color: #003B4F;">in</span> docs]</span>
+<span id="cb29-22">        scores <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">self</span>.model.predict(model_inputs)</span>
+<span id="cb29-23">        results <span class="op" style="color: #5E5E5E;">=</span> <span class="bu" style="color: null;">sorted</span>(<span class="bu" style="color: null;">enumerate</span>(scores), key<span class="op" style="color: #5E5E5E;">=</span><span class="kw" style="color: #003B4F;">lambda</span> x: x[<span class="dv" style="color: #AD0000;">1</span>], reverse<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>)</span>
+<span id="cb29-24">        <span class="cf" style="color: #003B4F;">return</span> results[:<span class="va" style="color: #111111;">self</span>.top_n]</span>
+<span id="cb29-25"></span>
+<span id="cb29-26">    <span class="kw" style="color: #003B4F;">class</span> Config:</span>
+<span id="cb29-27">        <span class="co" style="color: #5E5E5E;">"""Configuration for this pydantic object."""</span></span>
+<span id="cb29-28"></span>
+<span id="cb29-29">        extra <span class="op" style="color: #5E5E5E;">=</span> Extra.forbid</span>
+<span id="cb29-30">        arbitrary_types_allowed <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">True</span></span>
+<span id="cb29-31"></span>
+<span id="cb29-32">    <span class="kw" style="color: #003B4F;">def</span> compress_documents(</span>
+<span id="cb29-33">        <span class="va" style="color: #111111;">self</span>,</span>
+<span id="cb29-34">        documents: Sequence[Document],</span>
+<span id="cb29-35">        query: <span class="bu" style="color: null;">str</span>,</span>
+<span id="cb29-36">        callbacks: Optional[Callbacks] <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">None</span>,</span>
+<span id="cb29-37">    ) <span class="op" style="color: #5E5E5E;">-&gt;</span> Sequence[Document]:</span>
+<span id="cb29-38">        <span class="cf" style="color: #003B4F;">if</span> <span class="bu" style="color: null;">len</span>(documents) <span class="op" style="color: #5E5E5E;">==</span> <span class="dv" style="color: #AD0000;">0</span>:  <span class="co" style="color: #5E5E5E;"># to avoid empty api call</span></span>
+<span id="cb29-39">            <span class="cf" style="color: #003B4F;">return</span> []</span>
+<span id="cb29-40">        doc_list <span class="op" style="color: #5E5E5E;">=</span> <span class="bu" style="color: null;">list</span>(documents)</span>
+<span id="cb29-41">        _docs <span class="op" style="color: #5E5E5E;">=</span> [d.page_content <span class="cf" style="color: #003B4F;">for</span> d <span class="kw" style="color: #003B4F;">in</span> doc_list]</span>
+<span id="cb29-42">        results <span class="op" style="color: #5E5E5E;">=</span> <span class="va" style="color: #111111;">self</span>.bge_rerank(query, _docs)</span>
+<span id="cb29-43">        final_results <span class="op" style="color: #5E5E5E;">=</span> []</span>
+<span id="cb29-44">        <span class="cf" style="color: #003B4F;">for</span> r <span class="kw" style="color: #003B4F;">in</span> results:</span>
+<span id="cb29-45">            doc <span class="op" style="color: #5E5E5E;">=</span> doc_list[r[<span class="dv" style="color: #AD0000;">0</span>]]</span>
+<span id="cb29-46">            doc.metadata[<span class="st" style="color: #20794D;">"relevance_score"</span>] <span class="op" style="color: #5E5E5E;">=</span> r[<span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb29-47">            final_results.append(doc)</span>
+<span id="cb29-48">        <span class="cf" style="color: #003B4F;">return</span> final_results</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id":"0049ac41850b48fabd4679f866a9cecb","version_major":2,"version_minor":0}
@@ -549,9 +543,9 @@ Top-4 Cross-Encoder Re-ranker hits
 </div>
 </div>
 <div class="cell" data-outputid="adec7594-3256-42cf-bd93-aa4bd0203d19">
-<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><span class="co" style="color: #5E5E5E;"># initialize and test the reranker</span></span>
-<span id="cb31-2">reranker <span class="op" style="color: #5E5E5E;">=</span> BgeRerank()</span>
-<span id="cb31-3">reranker.compress_documents(documents<span class="op" style="color: #5E5E5E;">=</span>docs, query<span class="op" style="color: #5E5E5E;">=</span>query)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><span class="co" style="color: #5E5E5E;"># initialize and test the reranker</span></span>
+<span id="cb30-2">reranker <span class="op" style="color: #5E5E5E;">=</span> BgeRerank()</span>
+<span id="cb30-3">reranker.compress_documents(documents<span class="op" style="color: #5E5E5E;">=</span>docs, query<span class="op" style="color: #5E5E5E;">=</span>query)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>[Document(page_content='By , obtaining pseudoephedrine for the large-scale production that Walt desires becomes an issue. To circumvent this, Walt decides on an alternate synthesis - reductive amination of phenyl-2-propanone (phenylacetone or P2P) with methylamine. Obtaining methylamine required for this reaction - which is on the DEA watch list, a list of chemicals the DEA has classified as having use in drug manufacture - becomes a major plot line throughout the seasons. While working in the superlab, the methylamine is supplied by Golden Moth Chemical. Walt obtains his P2P from phenylacetic acid and acetic anhydride. The P2P is created in a tube furnace charged with a thorium oxide catalyst. The reductive amination of P2P takes place in the presence of aluminum amalgam. From the 1960s to the mid-1980s, reductive amination was the method of choice for clandestine methamphetamine production. Enterprising biker gangs who dominated the trade at this time mostly ran these operations. (The slang term "crank" for', metadata={'Header 1': 'Blue Sky', 'Header 2': 'The Chemistry', 'Header 3': "Walt's method", 'relevance_score': 0.9652976}),
  Document(page_content="for his family upon his death. Knowing nothing about the drug trade, Walter enlisted the aid of his former student, Jose Miguel Rosas, to sell the meth he produced. Walter's scientific knowledge and dedication to quality lead him to produce crystal meth that is purer and more potent than any competitors'. To avoid the tedious collection of pseudoephedrine required for production, Walter devises an alternative chemical process utilizing methylamine, giving his product a distinctive blue color. His crystal meth dominates the market, leading to confrontations with established drug makers and dealers. Although Walter and Jose began as amateur small-time meth cooks, manufacturing the drug out of a stolen school bus in the jungle-covered outskirts of Bogota, and being met with very limited success, Walter and Jose soon climbed up the drug hierarchy, killing or systematically destroying anyone who impeded them. Because of his drug-related activities, Walter eventually finds himself at odds", metadata={'Header 1': 'Metastasis/Walter Blanco', 'relevance_score': 0.92187774}),
@@ -559,11 +553,11 @@ Top-4 Cross-Encoder Re-ranker hits
 </div>
 </div>
 <div class="cell" data-outputid="13febcac-7b13-492f-89cd-d778ebd49735">
-<div class="sourceCode cell-code" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><span class="co" style="color: #5E5E5E;"># convert the db object to langchain retriever</span></span>
-<span id="cb33-2"><span class="co" style="color: #5E5E5E;"># this db contains all our texts and their embeddings</span></span>
-<span id="cb33-3">retriever <span class="op" style="color: #5E5E5E;">=</span> db.as_retriever() <span class="co" style="color: #5E5E5E;"># search_type="mmr")</span></span>
-<span id="cb33-4"><span class="bu" style="color: null;">print</span>(query, <span class="st" style="color: #20794D;">"</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">"</span>)</span>
-<span id="cb33-5">retriever.invoke(query)[<span class="dv" style="color: #AD0000;">0</span>].page_content</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><span class="co" style="color: #5E5E5E;"># convert the db object to langchain retriever</span></span>
+<span id="cb32-2"><span class="co" style="color: #5E5E5E;"># this db contains all our texts and their embeddings</span></span>
+<span id="cb32-3">retriever <span class="op" style="color: #5E5E5E;">=</span> db.as_retriever() <span class="co" style="color: #5E5E5E;"># search_type="mmr")</span></span>
+<span id="cb32-4"><span class="bu" style="color: null;">print</span>(query, <span class="st" style="color: #20794D;">"</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">"</span>)</span>
+<span id="cb32-5">retriever.invoke(query)[<span class="dv" style="color: #AD0000;">0</span>].page_content</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>which was the synthesization method used by walter to produce meth? 
 </code></pre>
@@ -573,17 +567,17 @@ Top-4 Cross-Encoder Re-ranker hits
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><span class="co" style="color: #5E5E5E;"># combine the retriever and reranker into a single compression retriever</span></span>
-<span id="cb36-2"><span class="im" style="color: #00769E;">from</span> langchain.retrievers <span class="im" style="color: #00769E;">import</span> ContextualCompressionRetriever</span>
-<span id="cb36-3"></span>
-<span id="cb36-4">compression_retriever <span class="op" style="color: #5E5E5E;">=</span> ContextualCompressionRetriever(</span>
-<span id="cb36-5">    base_compressor<span class="op" style="color: #5E5E5E;">=</span>reranker, base_retriever<span class="op" style="color: #5E5E5E;">=</span>retriever</span>
-<span id="cb36-6">)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><span class="co" style="color: #5E5E5E;"># combine the retriever and reranker into a single compression retriever</span></span>
+<span id="cb35-2"><span class="im" style="color: #00769E;">from</span> langchain.retrievers <span class="im" style="color: #00769E;">import</span> ContextualCompressionRetriever</span>
+<span id="cb35-3"></span>
+<span id="cb35-4">compression_retriever <span class="op" style="color: #5E5E5E;">=</span> ContextualCompressionRetriever(</span>
+<span id="cb35-5">    base_compressor<span class="op" style="color: #5E5E5E;">=</span>reranker, base_retriever<span class="op" style="color: #5E5E5E;">=</span>retriever</span>
+<span id="cb35-6">)</span></code></pre></div>
 </div>
 <div class="cell" data-outputid="7560a7df-abf9-4582-fd62-68c699909d17">
-<div class="sourceCode cell-code" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1">idx <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">4</span></span>
-<span id="cb37-2"><span class="bu" style="color: null;">print</span>(queries_by_chatgpt[idx])</span>
-<span id="cb37-3">compression_retriever.get_relevant_documents(queries_by_chatgpt[idx])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1">idx <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">4</span></span>
+<span id="cb36-2"><span class="bu" style="color: null;">print</span>(queries_by_chatgpt[idx])</span>
+<span id="cb36-3">compression_retriever.get_relevant_documents(queries_by_chatgpt[idx])</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>How do the characters in Breaking Bad justify their actions morally?</code></pre>
 </div>
@@ -594,20 +588,20 @@ Top-4 Cross-Encoder Re-ranker hits
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><span class="im" style="color: #00769E;">from</span> langchain <span class="im" style="color: #00769E;">import</span> hub</span>
-<span id="cb40-2"><span class="im" style="color: #00769E;">from</span> langchain_core.runnables <span class="im" style="color: #00769E;">import</span> RunnablePassthrough</span>
-<span id="cb40-3"><span class="im" style="color: #00769E;">from</span> langchain_core.output_parsers <span class="im" style="color: #00769E;">import</span> StrOutputParser</span>
-<span id="cb40-4"><span class="im" style="color: #00769E;">from</span> langchain.llms.huggingface_pipeline <span class="im" style="color: #00769E;">import</span> HuggingFacePipeline</span>
-<span id="cb40-5"><span class="im" style="color: #00769E;">import</span> torch</span>
-<span id="cb40-6"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> AutoModelForCausalLM, AutoTokenizer, pipeline</span>
-<span id="cb40-7"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> BitsAndBytesConfig</span>
-<span id="cb40-8"></span>
-<span id="cb40-9"><span class="co" style="color: #5E5E5E;"># we can manually design our prompt for question-answering using context</span></span>
-<span id="cb40-10"><span class="co" style="color: #5E5E5E;"># or just pull one example from langchain hub</span></span>
-<span id="cb40-11">prompt <span class="op" style="color: #5E5E5E;">=</span> hub.pull(<span class="st" style="color: #20794D;">"rlm/rag-prompt"</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><span class="im" style="color: #00769E;">from</span> langchain <span class="im" style="color: #00769E;">import</span> hub</span>
+<span id="cb39-2"><span class="im" style="color: #00769E;">from</span> langchain_core.runnables <span class="im" style="color: #00769E;">import</span> RunnablePassthrough</span>
+<span id="cb39-3"><span class="im" style="color: #00769E;">from</span> langchain_core.output_parsers <span class="im" style="color: #00769E;">import</span> StrOutputParser</span>
+<span id="cb39-4"><span class="im" style="color: #00769E;">from</span> langchain.llms.huggingface_pipeline <span class="im" style="color: #00769E;">import</span> HuggingFacePipeline</span>
+<span id="cb39-5"><span class="im" style="color: #00769E;">import</span> torch</span>
+<span id="cb39-6"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> AutoModelForCausalLM, AutoTokenizer, pipeline</span>
+<span id="cb39-7"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> BitsAndBytesConfig</span>
+<span id="cb39-8"></span>
+<span id="cb39-9"><span class="co" style="color: #5E5E5E;"># we can manually design our prompt for question-answering using context</span></span>
+<span id="cb39-10"><span class="co" style="color: #5E5E5E;"># or just pull one example from langchain hub</span></span>
+<span id="cb39-11">prompt <span class="op" style="color: #5E5E5E;">=</span> hub.pull(<span class="st" style="color: #20794D;">"rlm/rag-prompt"</span>)</span></code></pre></div>
 </div>
 <div class="cell" data-outputid="dbad0536-bb9e-466b-adb3-dcbaa5ea4db4">
-<div class="sourceCode cell-code" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><span class="bu" style="color: null;">print</span>(prompt.<span class="bu" style="color: null;">format</span>(question<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"QUESTION"</span>, context<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"CONTEXT"</span>))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><span class="bu" style="color: null;">print</span>(prompt.<span class="bu" style="color: null;">format</span>(question<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"QUESTION"</span>, context<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"CONTEXT"</span>))</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Human: You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
 Question: QUESTION 
@@ -632,26 +626,26 @@ Answer:</code></pre>
 <p>However, I was unable to get Mistral-7b AWQ to run, and Mistral-7B GPT-Q model was performing quite terribly. In the end, I go with <code>bitsandbytes</code>. For <code>bitsandbytes</code>, we can load either 8-bit or 4-bit quantized models. We go with 4-bit for better speed.</p>
 <p>We load the models using huggingface. Langchain has a class that easily instantiates an <code>LLM</code> object using huggingface pipeline.</p>
 <div class="cell" data-outputid="731a4cd9-b6e3-47ee-f6f8-556d3ab8f81d">
-<div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> BitsAndBytesConfig</span>
-<span id="cb43-2"></span>
-<span id="cb43-3">model_id <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"mistralai/Mistral-7B-Instruct-v0.2"</span></span>
-<span id="cb43-4"></span>
-<span id="cb43-5">double_quant_config <span class="op" style="color: #5E5E5E;">=</span> BitsAndBytesConfig(</span>
-<span id="cb43-6">    load_in_4bit<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>,</span>
-<span id="cb43-7">    bnb_4bit_use_double_quant<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>,</span>
-<span id="cb43-8">    bnb_4bit_quant_type<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"nf4"</span>,</span>
-<span id="cb43-9">    bnb_4bit_compute_dtype<span class="op" style="color: #5E5E5E;">=</span>torch.bfloat16</span>
-<span id="cb43-10">)</span>
-<span id="cb43-11"></span>
-<span id="cb43-12">model_double_quant <span class="op" style="color: #5E5E5E;">=</span> AutoModelForCausalLM.from_pretrained(model_id,</span>
-<span id="cb43-13">                                                          quantization_config<span class="op" style="color: #5E5E5E;">=</span>double_quant_config,</span>
-<span id="cb43-14">                                                          device_map<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"auto"</span>)</span>
-<span id="cb43-15"></span>
-<span id="cb43-16">tokenizer <span class="op" style="color: #5E5E5E;">=</span> AutoTokenizer.from_pretrained(model_id)</span>
-<span id="cb43-17">pipe <span class="op" style="color: #5E5E5E;">=</span> pipeline(<span class="st" style="color: #20794D;">"text-generation"</span>,</span>
-<span id="cb43-18">                model<span class="op" style="color: #5E5E5E;">=</span>model_double_quant,</span>
-<span id="cb43-19">                tokenizer<span class="op" style="color: #5E5E5E;">=</span>tokenizer,</span>
-<span id="cb43-20">                max_new_tokens<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">200</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><span class="im" style="color: #00769E;">from</span> transformers <span class="im" style="color: #00769E;">import</span> BitsAndBytesConfig</span>
+<span id="cb42-2"></span>
+<span id="cb42-3">model_id <span class="op" style="color: #5E5E5E;">=</span> <span class="st" style="color: #20794D;">"mistralai/Mistral-7B-Instruct-v0.2"</span></span>
+<span id="cb42-4"></span>
+<span id="cb42-5">double_quant_config <span class="op" style="color: #5E5E5E;">=</span> BitsAndBytesConfig(</span>
+<span id="cb42-6">    load_in_4bit<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>,</span>
+<span id="cb42-7">    bnb_4bit_use_double_quant<span class="op" style="color: #5E5E5E;">=</span><span class="va" style="color: #111111;">True</span>,</span>
+<span id="cb42-8">    bnb_4bit_quant_type<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"nf4"</span>,</span>
+<span id="cb42-9">    bnb_4bit_compute_dtype<span class="op" style="color: #5E5E5E;">=</span>torch.bfloat16</span>
+<span id="cb42-10">)</span>
+<span id="cb42-11"></span>
+<span id="cb42-12">model_double_quant <span class="op" style="color: #5E5E5E;">=</span> AutoModelForCausalLM.from_pretrained(model_id,</span>
+<span id="cb42-13">                                                          quantization_config<span class="op" style="color: #5E5E5E;">=</span>double_quant_config,</span>
+<span id="cb42-14">                                                          device_map<span class="op" style="color: #5E5E5E;">=</span><span class="st" style="color: #20794D;">"auto"</span>)</span>
+<span id="cb42-15"></span>
+<span id="cb42-16">tokenizer <span class="op" style="color: #5E5E5E;">=</span> AutoTokenizer.from_pretrained(model_id)</span>
+<span id="cb42-17">pipe <span class="op" style="color: #5E5E5E;">=</span> pipeline(<span class="st" style="color: #20794D;">"text-generation"</span>,</span>
+<span id="cb42-18">                model<span class="op" style="color: #5E5E5E;">=</span>model_double_quant,</span>
+<span id="cb42-19">                tokenizer<span class="op" style="color: #5E5E5E;">=</span>tokenizer,</span>
+<span id="cb42-20">                max_new_tokens<span class="op" style="color: #5E5E5E;">=</span><span class="dv" style="color: #AD0000;">200</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id":"3101b37a1bfc463a97c5c484fa63dc75","version_major":2,"version_minor":0}
@@ -714,7 +708,7 @@ Answer:</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1">llm <span class="op" style="color: #5E5E5E;">=</span> HuggingFacePipeline(pipeline<span class="op" style="color: #5E5E5E;">=</span>pipe)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb43" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1">llm <span class="op" style="color: #5E5E5E;">=</span> HuggingFacePipeline(pipeline<span class="op" style="color: #5E5E5E;">=</span>pipe)</span></code></pre></div>
 </div>
 </section>
 <section id="chaining-in-langchain" class="level1">
@@ -722,26 +716,26 @@ Answer:</code></pre>
 <p>Now that we have the components that make up the system, we need to chain them together so that a query gives us the final answer. We can either do that manually - get output from first component, which is the input to the second component, etc.</p>
 <p>Or use the Langchain’s chaining feature that lets us do that in one line of code:</p>
 <div class="cell" data-outputid="5097fd07-2681-411b-fc20-be991e121263">
-<div class="sourceCode cell-code" id="cb45" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><span class="co" style="color: #5E5E5E;"># test out the retriever+prompt template for debugging</span></span>
-<span id="cb45-2">( {<span class="st" style="color: #20794D;">"context"</span>: compression_retriever, <span class="st" style="color: #20794D;">"question"</span>: RunnablePassthrough()}</span>
-<span id="cb45-3"> <span class="op" style="color: #5E5E5E;">|</span> prompt).invoke(queries_by_chatgpt[<span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span>])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><span class="co" style="color: #5E5E5E;"># test out the retriever+prompt template for debugging</span></span>
+<span id="cb44-2">( {<span class="st" style="color: #20794D;">"context"</span>: compression_retriever, <span class="st" style="color: #20794D;">"question"</span>: RunnablePassthrough()}</span>
+<span id="cb44-3"> <span class="op" style="color: #5E5E5E;">|</span> prompt).invoke(queries_by_chatgpt[<span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span>])</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>ChatPromptValue(messages=[HumanMessage(content='You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don\'t know the answer, just say that you don\'t know. Use three sentences maximum and keep the answer concise.\nQuestion: What role does redemption play in the character arcs of Breaking Bad? \nContext: [Document(page_content=\'He is shown to possess a kingpin\\\'s unbeatable survival skills: sociopathy, cunning, emotional manipulation, meticulousness, and violence - or at least the threat thereof. Bryan Cranston said by the fourth season: "I think Walt\\\'s figured out it\\\'s better to be a pursuer than the pursued. He\\\'s well on his way to badass. Over the course of the series, he\\\'s evolved as a businessman, but he\\\'s turned into a sociopath in both his personal and professional lives. He\\\'s shed basic empathy and has no idea how much his colleagues and wife loathe him." As Walt delves deeper into the criminal underworld he increasingly sees people as expendable pawns, who he either manipulates to further his interests or eliminates. Early on such as in Season 1, Walt has great difficulty bringing himself to murder, but by the end of Season 3, he barely gives killing a second thought as shown by ordering Jesse to murder Gale to ensure their own survival and later was also capable of poisoning a young child without\', metadata={\'Header 1\': \'Walter White\', \'Header 2\': \'Personality and traits\', \'relevance_score\': 0.9915188}), Document(page_content=\'willing to turn a blind eye to what crimes his clients have committed and help them to evade justice and allow them to remain free. Despite this Ed appears to have somewhat of a genuine desire to allow criminals to start a new life free of crime and give them a second chance as seen by his interactions with Jesse after extracting him to Alaska, telling them how not many of them get a chance to start fresh and also to allow Walt to spend the rest of his short life in a relaxed environment. He even provides additional serves to his clients without receiving anything in return such as mailing a letter from Jesse to Brock Cantillo, seemingly as a pure gesture of kindness. In his civilian work he is shown to be a reasonable and caring salesman willing to provide quality service to his customers, which is shown to extend to his criminal extraction services as well.\', metadata={\'Header 1\': \'Ed Galbraith\', \'Header 2\': \'Personality and traits\', \'relevance_score\': 0.74466217}), Document(page_content=\'a kingpin\\\'s unbeatable survival skills: sociopathy, cunning, emotional manipulation, meticulousness, and violence - or at least the threat thereof. Bryan Cranston said by the fourth season: "I think Walt\\\'s figured out it\\\'s better to be a pursuer than the pursued. He\\\'s well on his way to badass. Over the course of the series, he\\\'s evolved as a businessman, but he\\\'s turned into a sociopath in both his personal and professional lives. He\\\'s shed basic empathy and has no idea how much his colleagues and wife loathe him."As Walt delves deeper into the criminal underworld he increasingly sees people as expendable pawns, who he either manipulates to further his interests or eliminates. Early on such as in Season 1, Walt has great difficulty bringing himself to murder, but by the end of Season 3, he barely gives killing a second thought as shown by ordering Jesse to murder Gale to ensure their own survival and later was also capable of poisoning a young child without any remorse at all.\', metadata={\'Header 1\': \'Walter White/Personality and Traits\', \'relevance_score\': 0.07892358})] \nAnswer:')])</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><span class="co" style="color: #5E5E5E;"># create the complete chain for rag</span></span>
-<span id="cb47-2">rag_chain <span class="op" style="color: #5E5E5E;">=</span> ({<span class="st" style="color: #20794D;">"context"</span>: compression_retriever, <span class="st" style="color: #20794D;">"question"</span>: RunnablePassthrough()}</span>
-<span id="cb47-3">             <span class="op" style="color: #5E5E5E;">|</span> prompt</span>
-<span id="cb47-4">             <span class="op" style="color: #5E5E5E;">|</span> llm</span>
-<span id="cb47-5">             <span class="op" style="color: #5E5E5E;">|</span> StrOutputParser())</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb46" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><span class="co" style="color: #5E5E5E;"># create the complete chain for rag</span></span>
+<span id="cb46-2">rag_chain <span class="op" style="color: #5E5E5E;">=</span> ({<span class="st" style="color: #20794D;">"context"</span>: compression_retriever, <span class="st" style="color: #20794D;">"question"</span>: RunnablePassthrough()}</span>
+<span id="cb46-3">             <span class="op" style="color: #5E5E5E;">|</span> prompt</span>
+<span id="cb46-4">             <span class="op" style="color: #5E5E5E;">|</span> llm</span>
+<span id="cb46-5">             <span class="op" style="color: #5E5E5E;">|</span> StrOutputParser())</span></code></pre></div>
 </div>
 <p>Let’s try out an example!</p>
 <div class="cell" data-outputid="03c58ff0-1828-42a5-d47d-4a5a3eadee73">
-<div class="sourceCode cell-code" id="cb48" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><span class="co" style="color: #5E5E5E;"># try out an example</span></span>
-<span id="cb48-2">idx <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
-<span id="cb48-3"><span class="bu" style="color: null;">print</span>(queries[idx])</span>
-<span id="cb48-4">rag_chain.invoke(queries[idx])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb47" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><span class="co" style="color: #5E5E5E;"># try out an example</span></span>
+<span id="cb47-2">idx <span class="op" style="color: #5E5E5E;">=</span> <span class="dv" style="color: #AD0000;">0</span></span>
+<span id="cb47-3"><span class="bu" style="color: null;">print</span>(queries[idx])</span>
+<span id="cb47-4">rag_chain.invoke(queries[idx])</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>how did jane, the girlfriend of jessie, die?</code></pre>
 </div>
@@ -753,9 +747,9 @@ Answer:</code></pre>
 </div>
 </div>
 <div class="cell" data-outputid="3e54fcfb-de69-4d6b-abc5-b444ae660fed">
-<div class="sourceCode cell-code" id="cb52" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1">idx <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">9</span></span>
-<span id="cb52-2"><span class="bu" style="color: null;">print</span>(queries_by_chatgpt[idx])</span>
-<span id="cb52-3">rag_chain.invoke(queries_by_chatgpt[idx])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb51" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1">idx <span class="op" style="color: #5E5E5E;">=</span> <span class="op" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">9</span></span>
+<span id="cb51-2"><span class="bu" style="color: null;">print</span>(queries_by_chatgpt[idx])</span>
+<span id="cb51-3">rag_chain.invoke(queries_by_chatgpt[idx])</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Describe the key events leading to Walter White's transformation into Heisenberg.</code></pre>
 </div>
@@ -772,11 +766,11 @@ Answer:</code></pre>
 <p>But is the context even useful? How do we know the model isn’t able to answer the question without retrieving documents?</p>
 <p>Let’s try!</p>
 <div class="cell" data-outputid="924f63fb-83a4-4e45-faaf-cd0cd70fde15">
-<div class="sourceCode cell-code" id="cb56" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1">chain_without_rag <span class="op" style="color: #5E5E5E;">=</span>  (RunnablePassthrough()</span>
-<span id="cb56-2">    <span class="op" style="color: #5E5E5E;">|</span> llm</span>
-<span id="cb56-3">    <span class="op" style="color: #5E5E5E;">|</span> StrOutputParser()</span>
-<span id="cb56-4">)</span>
-<span id="cb56-5">chain_without_rag.invoke(queries[<span class="dv" style="color: #AD0000;">0</span>])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb55" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1">chain_without_rag <span class="op" style="color: #5E5E5E;">=</span>  (RunnablePassthrough()</span>
+<span id="cb55-2">    <span class="op" style="color: #5E5E5E;">|</span> llm</span>
+<span id="cb55-3">    <span class="op" style="color: #5E5E5E;">|</span> StrOutputParser()</span>
+<span id="cb55-4">)</span>
+<span id="cb55-5">chain_without_rag.invoke(queries[<span class="dv" style="color: #AD0000;">0</span>])</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Setting `pad_token_id` to `eos_token_id`:2 for open-end generation.</code></pre>
 </div>
@@ -785,10 +779,10 @@ Answer:</code></pre>
 </div>
 </div>
 <div class="cell" data-outputid="15b188b6-684b-4c2d-bbd9-089586668406">
-<div class="sourceCode cell-code" id="cb59" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1">(RunnablePassthrough()</span>
-<span id="cb59-2">    <span class="op" style="color: #5E5E5E;">|</span> llm</span>
-<span id="cb59-3">    <span class="op" style="color: #5E5E5E;">|</span> StrOutputParser()</span>
-<span id="cb59-4">).invoke(queries[<span class="dv" style="color: #AD0000;">1</span>])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb58" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1">(RunnablePassthrough()</span>
+<span id="cb58-2">    <span class="op" style="color: #5E5E5E;">|</span> llm</span>
+<span id="cb58-3">    <span class="op" style="color: #5E5E5E;">|</span> StrOutputParser()</span>
+<span id="cb58-4">).invoke(queries[<span class="dv" style="color: #AD0000;">1</span>])</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Setting `pad_token_id` to `eos_token_id`:2 for open-end generation.</code></pre>
 </div>
@@ -803,14 +797,14 @@ Answer:</code></pre>
 <h1>Hybrid Retrieval</h1>
 <p>Remember we had used BM25 retriever at the beginning, and discussed about hybrid retrieval that combines multiple retrievers together. Here, we will try ensembling our BGE-small dense retriever with BM25 retriever, and add the reranker on top of both.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1">ensemble_retriever <span class="op" style="color: #5E5E5E;">=</span> EnsembleRetriever(</span>
-<span id="cb62-2">    retrievers<span class="op" style="color: #5E5E5E;">=</span>[bm25_retriever, retriever], weights<span class="op" style="color: #5E5E5E;">=</span>[<span class="fl" style="color: #AD0000;">0.5</span>, <span class="fl" style="color: #AD0000;">0.5</span>]</span>
-<span id="cb62-3">)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb61" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1">ensemble_retriever <span class="op" style="color: #5E5E5E;">=</span> EnsembleRetriever(</span>
+<span id="cb61-2">    retrievers<span class="op" style="color: #5E5E5E;">=</span>[bm25_retriever, retriever], weights<span class="op" style="color: #5E5E5E;">=</span>[<span class="fl" style="color: #AD0000;">0.5</span>, <span class="fl" style="color: #AD0000;">0.5</span>]</span>
+<span id="cb61-3">)</span></code></pre></div>
 </div>
 <div class="cell" data-outputid="ef590d1d-504e-49d5-ed36-1d316945a469">
-<div class="sourceCode cell-code" id="cb63" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1">query <span class="op" style="color: #5E5E5E;">=</span> queries[<span class="dv" style="color: #AD0000;">1</span>]</span>
-<span id="cb63-2"><span class="bu" style="color: null;">print</span>(query, <span class="st" style="color: #20794D;">"</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">"</span>)</span>
-<span id="cb63-3">ensemble_retriever.invoke(query)[<span class="dv" style="color: #AD0000;">0</span>].page_content</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb62" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1">query <span class="op" style="color: #5E5E5E;">=</span> queries[<span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb62-2"><span class="bu" style="color: null;">print</span>(query, <span class="st" style="color: #20794D;">"</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">"</span>)</span>
+<span id="cb62-3">ensemble_retriever.invoke(query)[<span class="dv" style="color: #AD0000;">0</span>].page_content</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>which actor plays hank schrader? 
 </code></pre>
@@ -821,14 +815,14 @@ Answer:</code></pre>
 </div>
 <p>In this case, the hybrid retriever is giving us worse results than pure embeddings search.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1">compression_retriever_hybrid <span class="op" style="color: #5E5E5E;">=</span> ContextualCompressionRetriever(</span>
-<span id="cb66-2">    base_compressor<span class="op" style="color: #5E5E5E;">=</span>reranker, base_retriever<span class="op" style="color: #5E5E5E;">=</span>ensemble_retriever</span>
-<span id="cb66-3">)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb65" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1">compression_retriever_hybrid <span class="op" style="color: #5E5E5E;">=</span> ContextualCompressionRetriever(</span>
+<span id="cb65-2">    base_compressor<span class="op" style="color: #5E5E5E;">=</span>reranker, base_retriever<span class="op" style="color: #5E5E5E;">=</span>ensemble_retriever</span>
+<span id="cb65-3">)</span></code></pre></div>
 </div>
 <div class="cell" data-outputid="7ff3534a-de01-43be-982a-6e5874818373">
-<div class="sourceCode cell-code" id="cb67" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1">query <span class="op" style="color: #5E5E5E;">=</span> queries[<span class="dv" style="color: #AD0000;">1</span>]</span>
-<span id="cb67-2"><span class="bu" style="color: null;">print</span>(query, <span class="st" style="color: #20794D;">"</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">"</span>)</span>
-<span id="cb67-3">compression_retriever_hybrid.invoke(query)[<span class="dv" style="color: #AD0000;">0</span>].page_content</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb66" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1">query <span class="op" style="color: #5E5E5E;">=</span> queries[<span class="dv" style="color: #AD0000;">1</span>]</span>
+<span id="cb66-2"><span class="bu" style="color: null;">print</span>(query, <span class="st" style="color: #20794D;">"</span><span class="ch" style="color: #20794D;">\n</span><span class="st" style="color: #20794D;">"</span>)</span>
+<span id="cb66-3">compression_retriever_hybrid.invoke(query)[<span class="dv" style="color: #AD0000;">0</span>].page_content</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>which actor plays hank schrader? 
 </code></pre>

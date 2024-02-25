@@ -2,54 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://shindeshu.github.io/blog.html</loc>
-    <lastmod>2024-02-23T18:43:52.422Z</lastmod>
+    <lastmod>2024-02-25T10:40:29.090Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/index.html</loc>
-    <lastmod>2024-02-23T18:39:14.205Z</lastmod>
+    <lastmod>2024-02-25T10:40:31.924Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/cloud/lambda.html</loc>
-    <lastmod>2023-10-21T18:09:42.625Z</lastmod>
+    <lastmod>2024-02-25T10:40:40.247Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/datascience/whytests.html</loc>
-    <lastmod>2023-10-21T18:09:43.704Z</lastmod>
+    <lastmod>2024-02-25T10:40:41.799Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/gnns/gnn_from_scratch.html</loc>
-    <lastmod>2023-10-21T18:09:44.721Z</lastmod>
+    <lastmod>2024-02-25T10:40:43.001Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/gnns/intro_to_gnn.html</loc>
-    <lastmod>2023-10-21T18:09:45.423Z</lastmod>
+    <lastmod>2024-02-25T10:40:44.113Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/gnns/uber_graphs.html</loc>
-    <lastmod>2023-10-21T18:09:46.206Z</lastmod>
-  </url>
-  <url>
-    <loc>https://shindeshu.github.io/posts/nlp/qa_guide.html</loc>
-    <lastmod>2024-02-23T18:35:33.263Z</lastmod>
-  </url>
-  <url>
-    <loc>https://shindeshu.github.io/posts/nlp/understanding_transformer.html</loc>
-    <lastmod>2023-10-21T18:09:48.613Z</lastmod>
-  </url>
-  <url>
-    <loc>https://shindeshu.github.io/posts/roadmap/start.html</loc>
-    <lastmod>2023-10-21T18:12:40.548Z</lastmod>
-  </url>
-  <url>
-    <loc>https://shindeshu.github.io/posts/stable_diff/getting_started_sd.html</loc>
-    <lastmod>2023-10-21T18:12:41.931Z</lastmod>
-  </url>
-  <url>
-    <loc>https://shindeshu.github.io/posts/tutorials/keras_cnns_intro.html</loc>
-    <lastmod>2023-10-21T18:12:44.048Z</lastmod>
+    <lastmod>2024-02-25T10:40:44.938Z</lastmod>
   </url>
   <url>
     <loc>https://shindeshu.github.io/posts/nlp/fandom_rag.html</loc>
-    <lastmod>2024-02-23T18:39:51.897Z</lastmod>
+    <lastmod>2024-02-25T10:40:46.855Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shindeshu.github.io/posts/nlp/qa_guide.html</loc>
+    <lastmod>2024-02-25T10:40:48.157Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shindeshu.github.io/posts/nlp/understanding_transformer.html</loc>
+    <lastmod>2024-02-25T10:40:49.151Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shindeshu.github.io/posts/roadmap/start.html</loc>
+    <lastmod>2024-02-25T10:40:50.211Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shindeshu.github.io/posts/stable_diff/getting_started_sd.html</loc>
+    <lastmod>2024-02-25T10:40:51.258Z</lastmod>
+  </url>
+  <url>
+    <loc>https://shindeshu.github.io/posts/tutorials/keras_cnns_intro.html</loc>
+    <lastmod>2024-02-25T10:40:53.666Z</lastmod>
   </url>
 </urlset>
